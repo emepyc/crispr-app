@@ -1,0 +1,676 @@
+{
+  "data": [
+    {
+      "attributes": {
+        "cancer_type": "Colorectal Carcinoma",
+        "ccle_id": "C2BBE1_LARGE_INTESTINE",
+        "cosmic_id": 910700,
+        "model_name": "C2BBe1",
+        "tcga_desc": "COREAD",
+        "tissue": "Large Intestine"
+      },
+      "id": 1,
+      "links": {
+        "self": "/models/C2BBe1"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/C2BBe1/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Pancreatic Carcinoma",
+        "ccle_id": "PANC0403_PANCREAS",
+        "cosmic_id": 1298476,
+        "model_name": "PANC-04-03",
+        "tcga_desc": "PAAD",
+        "tissue": "Pancreas"
+      },
+      "id": 2,
+      "links": {
+        "self": "/models/PANC-04-03"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/PANC-04-03/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Ewing's Sarcoma",
+        "ccle_id": null,
+        "cosmic_id": 949155,
+        "model_name": "ES8",
+        "tcga_desc": "UNCLASSIFIED",
+        "tissue": "Bone"
+      },
+      "id": 3,
+      "links": {
+        "self": "/models/ES8"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/ES8/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Lung Adenocarcinoma",
+        "ccle_id": "LXF289_LUNG",
+        "cosmic_id": 753592,
+        "model_name": "LXF-289",
+        "tcga_desc": "LUAD",
+        "tissue": "Lung"
+      },
+      "id": 4,
+      "links": {
+        "self": "/models/LXF-289"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/LXF-289/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Lung Adenocarcinoma",
+        "ccle_id": "NCIH1755_LUNG",
+        "cosmic_id": 908475,
+        "model_name": "NCI-H1755",
+        "tcga_desc": "LUAD",
+        "tissue": "Lung"
+      },
+      "id": 5,
+      "links": {
+        "self": "/models/NCI-H1755"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/NCI-H1755/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": null,
+        "ccle_id": null,
+        "cosmic_id": 1287940,
+        "model_name": "A2780ADR",
+        "tcga_desc": "OV",
+        "tissue": null
+      },
+      "id": 6,
+      "links": {
+        "self": "/models/A2780ADR"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/A2780ADR/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Non-Small Cell Lung Carcinoma",
+        "ccle_id": "NCIH2023_LUNG",
+        "cosmic_id": 1240187,
+        "model_name": "NCI-H2023",
+        "tcga_desc": "LUAD",
+        "tissue": "Lung"
+      },
+      "id": 7,
+      "links": {
+        "self": "/models/NCI-H2023"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/NCI-H2023/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Breast Carcinoma",
+        "ccle_id": "HCC38_BREAST",
+        "cosmic_id": 749717,
+        "model_name": "HCC38",
+        "tcga_desc": "BRCA",
+        "tissue": "Breast"
+      },
+      "id": 8,
+      "links": {
+        "self": "/models/HCC38"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/HCC38/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Squamous Cell Lung Carcinoma",
+        "ccle_id": "HCC15_LUNG",
+        "cosmic_id": 1240143,
+        "model_name": "HCC-15",
+        "tcga_desc": "LUSC",
+        "tissue": "Lung"
+      },
+      "id": 9,
+      "links": {
+        "self": "/models/HCC-15"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/HCC-15/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Glioblastoma",
+        "ccle_id": "DKMG_CENTRAL_NERVOUS_SYSTEM",
+        "cosmic_id": 906839,
+        "model_name": "DK-MG",
+        "tcga_desc": "GBM",
+        "tissue": "Central Nervous System"
+      },
+      "id": 10,
+      "links": {
+        "self": "/models/DK-MG"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/DK-MG/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Lung Adenocarcinoma",
+        "ccle_id": "NCIH1975_LUNG",
+        "cosmic_id": 924244,
+        "model_name": "NCI-H1975",
+        "tcga_desc": "LUAD",
+        "tissue": "Lung"
+      },
+      "id": 11,
+      "links": {
+        "self": "/models/NCI-H1975"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/NCI-H1975/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Squamous Cell Lung Carcinoma",
+        "ccle_id": "SW900_LUNG",
+        "cosmic_id": 724879,
+        "model_name": "SW900",
+        "tcga_desc": "LUSC",
+        "tissue": "Lung"
+      },
+      "id": 12,
+      "links": {
+        "self": "/models/SW900"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/SW900/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Squamous Cell Lung Carcinoma",
+        "ccle_id": "LOUNH91_LUNG",
+        "cosmic_id": 1298226,
+        "model_name": "LOU-NH91",
+        "tcga_desc": "LUSC",
+        "tissue": "Lung"
+      },
+      "id": 13,
+      "links": {
+        "self": "/models/LOU-NH91"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/LOU-NH91/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Ovarian Carcinoma",
+        "ccle_id": "CAOV4_OVARY",
+        "cosmic_id": 949090,
+        "model_name": "Caov-4",
+        "tcga_desc": "OV",
+        "tissue": "Ovary"
+      },
+      "id": 14,
+      "links": {
+        "self": "/models/Caov-4"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/Caov-4/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Ewing's Sarcoma",
+        "ccle_id": null,
+        "cosmic_id": 949165,
+        "model_name": "EW-16",
+        "tcga_desc": "UNCLASSIFIED",
+        "tissue": "Bone"
+      },
+      "id": 15,
+      "links": {
+        "self": "/models/EW-16"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/EW-16/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Lung Adenocarcinoma",
+        "ccle_id": "NCIH650_LUNG",
+        "cosmic_id": 722066,
+        "model_name": "NCI-H650",
+        "tcga_desc": "LUAD",
+        "tissue": "Lung"
+      },
+      "id": 16,
+      "links": {
+        "self": "/models/NCI-H650"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/NCI-H650/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Pancreatic Carcinoma",
+        "ccle_id": "MIAPACA2_PANCREAS",
+        "cosmic_id": 724870,
+        "model_name": "MIA-PaCa-2",
+        "tcga_desc": "PAAD",
+        "tissue": "Pancreas"
+      },
+      "id": 17,
+      "links": {
+        "self": "/models/MIA-PaCa-2"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/MIA-PaCa-2/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Pancreatic Carcinoma",
+        "ccle_id": "PATU8902_PANCREAS",
+        "cosmic_id": 1298526,
+        "model_name": "PA-TU-8902",
+        "tcga_desc": "PAAD",
+        "tissue": "Pancreas"
+      },
+      "id": 18,
+      "links": {
+        "self": "/models/PA-TU-8902"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/PA-TU-8902/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Colorectal Carcinoma",
+        "ccle_id": "HCT15_LARGE_INTESTINE",
+        "cosmic_id": 905937,
+        "model_name": "HCT-15",
+        "tcga_desc": "COREAD",
+        "tissue": "Large Intestine"
+      },
+      "id": 19,
+      "links": {
+        "self": "/models/HCT-15"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/HCT-15/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": null,
+        "ccle_id": null,
+        "cosmic_id": 1240171,
+        "model_name": "MCAS",
+        "tcga_desc": "UNCLASSIFIED",
+        "tissue": null
+      },
+      "id": 20,
+      "links": {
+        "self": "/models/MCAS"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/MCAS/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Squamous Cell Lung Carcinoma",
+        "ccle_id": "SKMES1_LUNG",
+        "cosmic_id": 909728,
+        "model_name": "SK-MES-1",
+        "tcga_desc": "LUSC",
+        "tissue": "Lung"
+      },
+      "id": 21,
+      "links": {
+        "self": "/models/SK-MES-1"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/SK-MES-1/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Breast Carcinoma",
+        "ccle_id": "HCC1187_BREAST",
+        "cosmic_id": 749711,
+        "model_name": "HCC1187",
+        "tcga_desc": "BRCA",
+        "tissue": "Breast"
+      },
+      "id": 22,
+      "links": {
+        "self": "/models/HCC1187"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/HCC1187/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Colorectal Carcinoma",
+        "ccle_id": "HT55_LARGE_INTESTINE",
+        "cosmic_id": 907287,
+        "model_name": "HT55",
+        "tcga_desc": "COREAD",
+        "tissue": "Large Intestine"
+      },
+      "id": 23,
+      "links": {
+        "self": "/models/HT55"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/HT55/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Lung Adenocarcinoma",
+        "ccle_id": "NCIH358_LUNG",
+        "cosmic_id": 908465,
+        "model_name": "NCI-H358",
+        "tcga_desc": "LUAD",
+        "tissue": "Lung"
+      },
+      "id": 24,
+      "links": {
+        "self": "/models/NCI-H358"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/NCI-H358/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Colorectal Carcinoma",
+        "ccle_id": "LS1034_LARGE_INTESTINE",
+        "cosmic_id": 917486,
+        "model_name": "LS-1034",
+        "tcga_desc": "COREAD",
+        "tissue": "Large Intestine"
+      },
+      "id": 25,
+      "links": {
+        "self": "/models/LS-1034"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/LS-1034/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Pancreatic Carcinoma",
+        "ccle_id": null,
+        "cosmic_id": 1240208,
+        "model_name": "PL18",
+        "tcga_desc": "PAAD",
+        "tissue": "Pancreas"
+      },
+      "id": 26,
+      "links": {
+        "self": "/models/PL18"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/PL18/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Lung Adenocarcinoma",
+        "ccle_id": "NCIH1355_LUNG",
+        "cosmic_id": 724866,
+        "model_name": "NCI-H1355",
+        "tcga_desc": "LUAD",
+        "tissue": "Lung"
+      },
+      "id": 27,
+      "links": {
+        "self": "/models/NCI-H1355"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/NCI-H1355/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Non-Small Cell Lung Carcinoma",
+        "ccle_id": "NCIH1915_LUNG",
+        "cosmic_id": 1240184,
+        "model_name": "NCI-H1915",
+        "tcga_desc": "UNCLASSIFIED",
+        "tissue": "Lung"
+      },
+      "id": 28,
+      "links": {
+        "self": "/models/NCI-H1915"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/NCI-H1915/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Breast Carcinoma",
+        "ccle_id": "EVSAT_BREAST",
+        "cosmic_id": 906862,
+        "model_name": "EVSA-T",
+        "tcga_desc": "BRCA",
+        "tissue": "Breast"
+      },
+      "id": 29,
+      "links": {
+        "self": "/models/EVSA-T"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/EVSA-T/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    },
+    {
+      "attributes": {
+        "cancer_type": "Pancreatic Carcinoma",
+        "ccle_id": "PANC0327_PANCREAS",
+        "cosmic_id": 925346,
+        "model_name": "PANC-03-27",
+        "tcga_desc": "PAAD",
+        "tissue": "Pancreas"
+      },
+      "id": 30,
+      "links": {
+        "self": "/models/PANC-03-27"
+      },
+      "relationships": {
+        "crispr_data": {
+          "links": {
+            "related": "/models/PANC-03-27/datasets/crispr"
+          }
+        }
+      },
+      "type": "model"
+    }
+  ],
+  "jsonapi": {
+    "version": "1.0"
+  },
+  "links": {
+    "first": "/models",
+    "last": "/models?page%5Bnumber%5D=7",
+    "next": "/models?page%5Bnumber%5D=2",
+    "self": "/models"
+  },
+  "meta": {
+    "count": 196
+  }
+}
