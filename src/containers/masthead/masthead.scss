@@ -17,21 +17,16 @@
       }
       .col-genes {
         color: $color-gene;
-        //a, a:visited {
-        //  color: white !important
-        //}
-        // color: white;
       }
     }
 
   }
 
-
   .navbar-nav {
     .nav-link {
       color: rgba(255, 255, 255, 0.87);
       display: inline-block;
-      &:hover, &:active {
+      &:active, &.active {
         color: white;
         border-bottom: 1px solid white;
       }

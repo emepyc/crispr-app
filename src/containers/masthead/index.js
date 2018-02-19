@@ -1,5 +1,6 @@
 import React from 'react';
 import cancer_dep_map from './DependencyMapLogo.png';
+import { NavLink } from 'react-router-dom';
 import mastheadCss from './masthead.css';
 
 const Masthead = () => {
@@ -20,15 +21,24 @@ const Masthead = () => {
         {/*<div className="w-100 d-sm-none">*/}
         {/*</div>*/}
 
-        <div className="ml-md-auto mt-md-2">
-          <ul className="navbar-nav">
-            <li className="ml-md-5 nav-item"><a className="nav-link" aria-current="false" href="/">Home</a></li>
-            <li className="ml-md-5 nav-item"><a className="nav-link active" aria-current="true"
-                                            href="/programmes">Programmes</a></li>
-            <li className="ml-md-5 nav-item"><a className="nav-link" aria-current="false" href="/contributors">Contributors</a>
-            </li>
-          </ul>
+        <div className="ml-md-1 my-auto">
+          <header className="navbar-nav">
+            <NavLink to="/" activeClassName="active" exact className="ml-md-3 nav-item nav-link">Home</NavLink>
+            <NavLink to="/about-us" activeClassName="active" className="ml-md-1 nav-item nav-link">About</NavLink>
+            <NavLink to="/downloads" activeClassName="active" className="ml-md-1 nav-item nav-link">Downloads</NavLink>
+          </header>
         </div>
+
+        {/*<div className="ml-md-auto mt-md-2">*/}
+          {/*<ul className="navbar-nav">*/}
+            {/*<li className="ml-md-5 nav-item"><a className="nav-link" aria-current="false" href="/">Home</a></li>*/}
+            {/*<li className="ml-md-5 nav-item"><a className="nav-link active" aria-current="true"*/}
+                                            {/*href="/programmes">Programmes</a></li>*/}
+            {/*<li className="ml-md-5 nav-item"><a className="nav-link" aria-current="false" href="/contributors">Contributors</a>*/}
+            {/*</li>*/}
+          {/*</ul>*/}
+        {/*</div>*/}
+
       </div>
     </nav>
   )
