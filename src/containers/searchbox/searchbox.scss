@@ -1,0 +1,35 @@
+@import '../utils.scss';
+
+.autosuggest-container {
+  display: inline-block;
+  margin-top: 20px;
+}
+
+.search-icon-container {
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 10px;
+  background-color: $color-background-light;
+  border-top-right-radius: 10px;
+
+}
+
+input {
+  width: 20em;
+  padding: 5px;
+  background-color: $color-background-light;
+  border: none;
+  border-bottom-left-radius: 10px;
+}
+
+
+.intro-search-examples {
+  margin-top: 10px;
+  font-size: 0.8em;
+  color: $color-text-secondary;
+  a {
+    color: $secondary-color;
+    margin-left: 10px;
+  }
+}

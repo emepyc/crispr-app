@@ -1,0 +1,13 @@
+.container {
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+.container .header-container {
+  margin-top: 70px;
+}
+.container .header-container .col-genes {
+  color: #00a113;
+}
+.container .header-container .secondary {
+  color: #666666;
+}
