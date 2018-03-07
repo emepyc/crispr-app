@@ -86,7 +86,7 @@ class Searchbox extends React.Component {
     };
 
     return (
-      <div>
+      <div className="text-center">
         <div className="autosuggest-container">
           <Autosuggest
             suggestions={suggestions}

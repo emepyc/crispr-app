@@ -13,7 +13,8 @@
 }
 
 input {
-  width: 20em;
+  width: 30em;
+  font-size: 1.2em;
   padding: 5px;
   background-color: #f5f7fc;
   border: none;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchTissues } from './actions/tissues';
+import PieChart from '../pieChart';
 
 class TissuesPieChart extends React.Component {
   constructor() {
@@ -21,15 +22,14 @@ class TissuesPieChart extends React.Component {
 
     return (
       <div>
-        Pie chart for tissues goes here
-        {/*<PieChart tissues={tissues} />*/}
-        <ul>
-          {this.props.tissues.map(tissue => (
-            <li key={tissue.tissue}>
-              {tissue.tissue}:{tissue.counts}
-            </li>
-          ))}
-        </ul>
+        <PieChart tissues={this.props.tissues} />
+        {/*<ul>*/}
+        {/*{this.props.tissues.map(tissue => (*/}
+        {/*<li key={tissue.tissue}>*/}
+        {/*{tissue.tissue}:{tissue.counts}*/}
+        {/*</li>*/}
+        {/*))}*/}
+        {/*</ul>*/}
       </div>
     );
   }

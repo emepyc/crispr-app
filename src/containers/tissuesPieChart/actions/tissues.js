@@ -24,10 +24,11 @@ export function tissuesFetchDataSuccess(tissues) {
 export function fetchTissues() {
   // We return a function instead of an action object
   return dispatch => {
+    dispatch(tissuesIsLoading(true));
     axios
       .get(`${TISSUES_BASEURL}/tissues`)
       .then(tissues => {
-        console.log(tissues);
+        tissues.data.forEach(d => (d.id = d.tissue.split(' ').join('_')));
         dispatch(tissuesIsLoading(false));
         dispatch(tissuesFetchDataSuccess(tissues.data));
       })

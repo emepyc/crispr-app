@@ -7,13 +7,12 @@ import Searchbox from '../searchbox';
 import DepmapGenesHeader from '../depmapGenesHeader';
 import TissuesPieChart from '../tissuesPiechart';
 
-const Home = props => (
+const Home = () => (
   <Container>
     <Row>
-      <Col sm="12" md={{ size: 8, offset: 2 }} className="text-center">
-        <DepmapGenesHeader />
+      <Col sm="12" md={{ size: 12, offset: 0 }}>
+        <DepmapGenesHeader className="text-center" />
         <Searchbox />
-
         <TissuesPieChart />
         {/*<p>Welcome home!</p>*/}
         {/*<button onClick={() => props.changePage()}>*/}

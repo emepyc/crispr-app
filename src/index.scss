@@ -1,5 +1,10 @@
+@import './containers/utils.scss';
+
 body {
+  // background: $bg-light;
+  font-size: 0.9em;
+  color: $font-color;
+  font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
 }

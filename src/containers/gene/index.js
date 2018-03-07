@@ -1,5 +1,6 @@
 import React from 'react';
 import { Row, Col } from 'reactstrap';
+import GeneInfo from '../geneInfo';
 
 class GenePage extends React.Component {
   constructor(props) {
@@ -12,13 +13,12 @@ class GenePage extends React.Component {
       <div>
         <Row>
           <Col sm="12" md="2">
-            Gene info goes here
+            <GeneInfo gene={geneName} />
           </Col>
           <Col sm="12" md="10">
             Gene associations go here
           </Col>
         </Row>
-        Gene Information for {geneName} goes here
       </div>
     );
   }
