@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Container, Row, Col } from 'reactstrap';
 import Searchbox from '../searchbox';
 import DepmapGenesHeader from '../depmapGenesHeader';
-import TissuesPieChart from '../tissuesPiechart';
+import TissuesSummary from '../tissuesSummary';
 
 const Home = () => (
   <Container>
@@ -13,7 +13,7 @@ const Home = () => (
       <Col sm="12" md={{ size: 12, offset: 0 }}>
         <DepmapGenesHeader className="text-center" />
         <Searchbox />
-        <TissuesPieChart />
+        <TissuesSummary />
         {/*<p>Welcome home!</p>*/}
         {/*<button onClick={() => props.changePage()}>*/}
         {/*Go to about page via redux*/}

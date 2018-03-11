@@ -5,10 +5,16 @@
  */
 
 const jsf = require('json-schema-faker');
-const mockDataSchema = require('./schema');
+const schema = require('./schema');
 const fs = require('fs');
+const formats = require('./formats');
 
-const json = JSON.stringify(jsf(mockDataSchema));
+jsf.format('corrected_fold_change', formats['corrected_fold_change']);
+jsf.format('gene', formats['gene']);
+jsf.format('model', formats['model']);
+jsf.format('normalised_essentiality', formats['normalised_essentiality']);
+
+const json = JSON.stringify(jsf(schema));
 
 fs.writeFile("mockData/db.json", json, function (err) {
   if (err) {

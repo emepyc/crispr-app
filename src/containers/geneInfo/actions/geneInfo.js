@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const GENE_INFO_BASEURL = 'http://127.0.0.1:3111';
+const API_BASEURL = process.env.REACT_APP_API_BASEURL;
 
 export function geneInfoHasErrored(bool) {
   return {
@@ -24,14 +24,16 @@ export function geneInfoFetchDataSuccess(geneInfo) {
 }
 
 export function fetchGeneInfo(gene) {
-  console.log(`gene to get info... ${gene}`);
   return dispatch => {
     dispatch(geneInfoIsLoading(true));
+    console.log('making the call');
     axios
-      .get(`${GENE_INFO_BASEURL}/geneInfo/${gene}`)
+      .get(`${API_BASEURL}/genes/${gene}`, {
+        responseType: 'json'
+      })
       .then(geneInfo => {
         dispatch(geneInfoIsLoading(false));
-        dispatch(geneInfoFetchDataSuccess(geneInfo));
+        dispatch(geneInfoFetchDataSuccess(geneInfo.data));
       })
       .catch(() => {
         console.log('catched!!');

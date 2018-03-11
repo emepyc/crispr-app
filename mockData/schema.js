@@ -92,9 +92,44 @@ const schema = {
         },
         "required": ["tissue", "counts"]
       }
+    },
+    "essentialities": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10,
+      "uniqueItems": false,
+      "items": {
+        "type": "object",
+        "properties": {
+          "attributes": {
+            "type": "object",
+            "properties": {
+              "corrected_fold_changed": {
+                "type": "string",
+                "format": "corrected_fold_change"
+              },
+              "gene_symbol": {
+                "type": "string",
+                "format": "gene"
+              },
+              "model_name": {
+                "type": "string",
+                "format": "model"
+              },
+              "normalised_essentiality": {
+                "type": "string",
+                "format": "normalised_essentiality"
+              }
+            },
+            "required": ["corrected_fold_changed", "gene_symbol", "model_name", "normalised_essentiality"]
+          }
+        },
+        "required": ["attributes"]
+      }
     }
   },
-  "required": ["tissues", "geneInfo"]
+  "required": ["tissues", "geneInfo", "essentialities"]
 };
+
 
 module.exports = schema;

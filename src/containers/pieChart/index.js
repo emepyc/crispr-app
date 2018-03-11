@@ -97,8 +97,8 @@ class PieChart extends React.Component {
         <Col className="my-auto" xs="6">
           <div ref="piechart-container" />
         </Col>
-        <Col xs="6" className="d-none d-lg-block">
-          <ul className="my-auto">
+        <Col xs="6" className="d-none d-lg-block my-auto">
+          <ul>
             {this.props.tissues.map((tissue, index) => (
               <li key={tissue.tissue}>
                 <span
