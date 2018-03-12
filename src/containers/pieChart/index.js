@@ -41,7 +41,7 @@ class PieChart extends React.Component {
   plotPieChart(tissues) {
     const pieChartWidth = this.state.containerWidth;
 
-    // Fast way of removing any previous content
+    // Fast way of removing previous content
     const element = this.refs['piechart-container'];
     if (element) {
       while (element.firstChild) {
@@ -62,7 +62,7 @@ class PieChart extends React.Component {
     const color = d3.scaleOrdinal(schemePaired);
     const pie = d3
       .pie()
-      .sort(null)
+      .sortValues((a, b) => b - a)
       .value(d => d.counts);
 
     const path = d3
@@ -99,44 +99,33 @@ class PieChart extends React.Component {
         </Col>
         <Col xs="6" className="d-none d-lg-block my-auto">
           <ul>
-            {this.props.tissues.map((tissue, index) => (
-              <li key={tissue.tissue}>
-                <span
-                  style={{ color: schemePaired[index % 12] }}
-                  className={`tissue-label text-left ${tissue.id}`}
-                  onMouseOver={() => this.setFocus({ data: { id: tissue.id } })}
-                  onMouseOut={this.removeFocus}
-                >
-                  {tissue.tissue}:{tissue.counts}
-                </span>
-              </li>
-            ))}
+            {this.props.tissues
+              .sort((a, b) => b.counts - a.counts)
+              .map((tissue, index) => (
+                <li key={tissue.tissue}>
+                  <span
+                    style={{ color: schemePaired[index % 12] }}
+                    className={`tissue-label text-left ${tissue.id}`}
+                    onMouseOver={() =>
+                      this.setFocus({ data: { id: tissue.id } })
+                    }
+                    onMouseOut={this.removeFocus}
+                  >
+                    {tissue.tissue}:{tissue.counts}
+                  </span>
+                </li>
+              ))}
           </ul>
         </Col>
       </Row>
     );
 
-    const tissuesCard = (
-      <Card header={tissuesContainerHeader} body={tissuesContainerBody} />
-    );
-
-    const genesContainerHeader = <span>Genes</span>;
-    const genesContainerBody = <Row />;
-
-    const genesCard = (
-      <Card header={genesContainerHeader} body={genesContainerBody} />
-    );
-
     const element = (
-      <Row className="stats-container">
-        <Col xs="12" lg="6">
-          {tissuesCard}
-        </Col>
-        <Col xs="12" lg="6">
-          {genesCard}
-        </Col>
-      </Row>
+      <div>
+        <Card header={tissuesContainerHeader} body={tissuesContainerBody} />
+      </div>
     );
+
     if (this.props.tissues && this.props.tissues.length) {
       this.plotPieChart(this.props.tissues);
     }

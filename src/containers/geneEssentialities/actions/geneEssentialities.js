@@ -26,8 +26,10 @@ export function geneEssentialitiesFetchDataSuccess(geneEssentialities) {
 export function fetchGeneEssentialities(gene) {
   return dispatch => {
     dispatch(geneEssentialitiesIsLoading(true));
+    // axios
+    //   .get(`${API_BASEURL}/genes/${gene}/datasets/crispr?page[size]=0`)
     axios
-      .get(`${API_BASEURL}/genes/${gene}/datasets/crispr`)
+      .get(`${API_BASEURL}/genes/${gene}/datasets/crispr?page[size]=0`)
       .then(geneEssentialities => {
         dispatch(geneEssentialitiesIsLoading(false));
         dispatch(geneEssentialitiesFetchDataSuccess(geneEssentialities.data));

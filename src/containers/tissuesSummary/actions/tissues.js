@@ -26,7 +26,7 @@ export function fetchTissues() {
   return dispatch => {
     dispatch(tissuesIsLoading(true));
     axios
-      .get(`${API_BASEURL}/models`)
+      .get(`${API_BASEURL}/models?page[size]=0`)
       .then(models => {
         const tissuesObj = {};
         models.data.data.forEach(m => {

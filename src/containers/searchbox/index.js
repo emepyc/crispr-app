@@ -36,7 +36,9 @@ const getSuggestions = value => {
 const getSuggestionValue = suggestion => suggestion.name;
 
 // render the suggestions
-const renderSuggestion = suggestion => <div>{suggestion.name}</div>;
+const renderSuggestion = suggestion => (
+  <div className="search-suggestion-box text-left">{suggestion.name}</div>
+);
 
 class Searchbox extends React.Component {
   constructor(props) {

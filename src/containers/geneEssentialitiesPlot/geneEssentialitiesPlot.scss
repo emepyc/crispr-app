@@ -1,0 +1,21 @@
+.essentialities-plot-container {
+  position: relative;
+  height: 500px;
+  width: 500px;
+
+  .star-plot-toplevel-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    &.leave-space {
+      margin-left: 50px;
+      margin-top: -50px;
+    }
+    &.top {
+      z-index: 2;
+    }
+    rect {
+      opacity: 0;
+    }
+  }
+}

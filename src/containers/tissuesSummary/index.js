@@ -23,13 +23,6 @@ class TissuesPieChart extends React.Component {
     return (
       <div>
         <PieChart tissues={this.props.tissues} />
-        {/*<ul>*/}
-        {/*{this.props.tissues.map(tissue => (*/}
-        {/*<li key={tissue.tissue}>*/}
-        {/*{tissue.tissue}:{tissue.counts}*/}
-        {/*</li>*/}
-        {/*))}*/}
-        {/*</ul>*/}
       </div>
     );
   }
@@ -50,4 +43,3 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TissuesPieChart);
-// export default TissuesPieChart;
