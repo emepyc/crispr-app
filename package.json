@@ -16,6 +16,7 @@
     "json-schema-faker": "^0.5.0-rc13",
     "json-server": "^0.12.1",
     "lint-staged": "^6.1.0",
+    "lodash.debounce": "^4.0.8",
     "node-sass-chokidar": "^0.0.3",
     "prettier": "^1.10.2",
     "prop-types": "^15.6.1",
