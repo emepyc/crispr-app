@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchTissues } from './actions/tissues';
-import PieChart from '../pieChart';
+import TissuesSummaryDisplay from '../tissuesSummaryDisplay';
 
 class TissuesPieChart extends React.Component {
   constructor() {
@@ -22,7 +22,7 @@ class TissuesPieChart extends React.Component {
 
     return (
       <div>
-        <PieChart tissues={this.props.tissues} />
+        <TissuesSummaryDisplay />
       </div>
     );
   }

@@ -5,6 +5,8 @@ import Home from '../home';
 import About from '../about';
 import Downloads from '../downloads';
 import Gene from '../gene';
+// import Model from '../model';
+import Table from '../tablePage';
 
 const App = () => (
   <div>
@@ -21,6 +23,7 @@ const App = () => (
       <Route exact path="/about-us" component={About} />
       <Route exact path="/downloads" component={Downloads} />
       <Route path="/gene" component={Gene} />
+      <Route path="/table" component={Table} />
     </main>
   </div>
 );

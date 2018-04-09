@@ -8,6 +8,7 @@ import store, { history } from './store/store';
 import App from './containers/app';
 // import App from './App';
 import './index.css';
+
 // TODO: Re-enable for production
 // import registerServiceWorker from './registerServiceWorker';
 

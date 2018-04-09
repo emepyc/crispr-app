@@ -1,14 +1,13 @@
 import React from 'react';
-import depmapGenesHeaderCss from './depmapGenesHeader.css';
+import './depmapGenesHeader.css';
 
 const header = () => (
   <div className="text-center header-container">
     <h2>
-      DepMap <span className="col-genes"> | </span>Genes
+      <span className={'depMap-name'}>DepMap</span>{' '}
+      <span className="genes-subname"> | Genes</span>
     </h2>
-    <p className="lead secondary">
-      Genetic screens to identify cancer dependencies
-    </p>
+    <p className="lead">Genetic screens to identify cancer dependencies</p>
   </div>
 );
 

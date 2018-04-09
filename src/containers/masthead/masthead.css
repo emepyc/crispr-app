@@ -1,21 +1,59 @@
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #a3a3a3;
+  opacity: 1;
+  /* Firefox */
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #a3a3a3;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #a3a3a3;
+}
+
 .navbar.bg-dark {
-  border-top: 5px solid #003F83;
-  background: -webkit-gradient(linear, left top, right top, from(#1A1110), color-stop(58%, #003F83), to(#003F83));
-  background: -webkit-linear-gradient(left, #1A1110 0%, #003F83 58%, #003F83 100%);
-  background: -o-linear-gradient(left, #1A1110 0%, #003F83 58%, #003F83 100%);
-  background: linear-gradient(to right, #1A1110 0%, #003F83 58%, #003F83 100%); }
-  .navbar.bg-dark .container {
-    -ms-flex-align: start;
-    align-items: flex-start; }
-    .navbar.bg-dark .container .depmap-genes a, .navbar.bg-dark .container .depmap-genes a:visited {
-      color: white !important; }
-    .navbar.bg-dark .container .depmap-genes .col-genes {
-      color: #00a113; }
-  .navbar.bg-dark .navbar-nav .nav-link {
-    color: rgba(255, 255, 255, 0.87);
-    display: inline-block; }
-    .navbar.bg-dark .navbar-nav .nav-link:active, .navbar.bg-dark .navbar-nav .nav-link.active {
-      color: white;
-      border-bottom: 1px solid white; }
-  .navbar.bg-dark .navbar-nav .open ul {
-    margin-left: 0; }
+  border-top: 5px solid #003f83;
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(#1a1110),
+    color-stop(58%, #00a113),
+    to(#00a113)
+  );
+  background: -webkit-linear-gradient(
+    left,
+    #1a1110 0%,
+    #00a113 58%,
+    #00a113 100%
+  );
+  background: -o-linear-gradient(left, #1a1110 0%, #00a113 58%, #00a113 100%);
+  background: linear-gradient(to right, #1a1110 0%, #00a113 58%, #00a113 100%);
+}
+.navbar.bg-dark .container {
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+.navbar.bg-dark .container .depmap-genes a,
+.navbar.bg-dark .container .depmap-genes a:visited {
+  color: white !important;
+}
+.navbar.bg-dark .container .depmap-genes .col-genes {
+  color: #00a113;
+}
+.navbar.bg-dark .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.87);
+  display: inline-block;
+}
+.navbar.bg-dark .navbar-nav .nav-link:active,
+.navbar.bg-dark .navbar-nav .nav-link.active {
+  color: white;
+  border-bottom: 1px solid white;
+}
+.navbar.bg-dark .navbar-nav .open ul {
+  margin-left: 0;
+}

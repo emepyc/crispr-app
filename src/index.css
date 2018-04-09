@@ -1,7 +1,54 @@
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #a3a3a3;
+  opacity: 1;
+  /* Firefox */
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #a3a3a3;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #a3a3a3;
+}
+
 body {
-  font-size: 0.9em;
+  font-size: 1em;
   color: #666666;
   font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
+}
+
+.page-header {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.home-backdrop {
+  background-image: url('./home-backdrop.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: -webkit-radial-gradient(
+      #469d32 0%,
+      #469d32 30%,
+      rgba(70, 157, 50, 0) 100%
+    ),
+    url('./home-backdrop.svg');
+  background-image: -o-radial-gradient(
+      #469d32 0%,
+      #469d32 30%,
+      rgba(70, 157, 50, 0) 100%
+    ),
+    url('./home-backdrop.svg');
+  background-image: radial-gradient(
+      #469d32 0%,
+      #469d32 30%,
+      rgba(70, 157, 50, 0) 100%
+    ),
+    url('./home-backdrop.svg');
 }

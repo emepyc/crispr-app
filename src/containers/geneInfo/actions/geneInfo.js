@@ -26,7 +26,6 @@ export function geneInfoFetchDataSuccess(geneInfo) {
 export function fetchGeneInfo(gene) {
   return dispatch => {
     dispatch(geneInfoIsLoading(true));
-    console.log('making the call');
     axios
       .get(`${API_BASEURL}/genes/${gene}`, {
         responseType: 'json'
@@ -36,7 +35,6 @@ export function fetchGeneInfo(gene) {
         dispatch(geneInfoFetchDataSuccess(geneInfo.data));
       })
       .catch(() => {
-        console.log('catched!!');
         dispatch(geneInfoHasErrored(true));
       });
   };

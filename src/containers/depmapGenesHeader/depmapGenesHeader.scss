@@ -1,16 +1,25 @@
 @import '../utils.scss';
 
-.container {
-  -ms-flex-align: start;
-  align-items: flex-start;
+//.container {
+//  -ms-flex-align: start;
+//  align-items: flex-start;
+//
+.header-container {
+  color: white;
 
-  .header-container {
-    margin-top: 70px;
-    .col-genes {
-      color: $color-gene;
-    }
-    .secondary {
-      color: $color-text-secondary;
-    }
+  margin-top: 70px;
+
+  .depMap-name {
+    font-weight: bold;
+  }
+
+  .genes-subname {
+    font-weight: 100;
+  }
+
+  .col-genes {
+    color: $color-gene;
   }
 }
+
+//}

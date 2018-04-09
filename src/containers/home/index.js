@@ -1,32 +1,26 @@
 import React from 'react';
-import { push } from 'react-router-redux';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { Container, Row, Col } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 import Searchbox from '../searchbox';
 import DepmapGenesHeader from '../depmapGenesHeader';
-// import TissuesSummary from '../tissuesSummary';
-import HomeSummaries from '../homeSummaries';
+import HomeSection from '../homeSection';
+import TissuesSummary from '../tissuesSummary';
 
 const Home = () => (
-  <Container>
-    <Row>
-      <Col sm="12" md={{ size: 12, offset: 0 }}>
+  <Row>
+    <Col xs="12" md={{ size: 12, offset: 0 }}>
+      <HomeSection
+        customClass={'home-backdrop'}
+        customStyle={{ padding: '100px 25px 100px 25px' }}
+      >
         <DepmapGenesHeader className="text-center" />
         <Searchbox />
-        <HomeSummaries />
-        {/*<TissuesSummary />*/}
-      </Col>
-    </Row>
-  </Container>
+      </HomeSection>
+
+      <HomeSection>
+        <TissuesSummary />
+      </HomeSection>
+    </Col>
+  </Row>
 );
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      changePage: () => push('/about-us')
-    },
-    dispatch
-  );
-
-export default connect(null, mapDispatchToProps)(Home);
+export default Home;

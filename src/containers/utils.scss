@@ -1,7 +1,15 @@
 // General elements
-// Blue in masthead
+
 $primary-color: #1A1110;
-$secondary-color: #003F83;
+
+// Depmap genes green
+$background-main: #469d32;
+$secondary-color: #00a113;
+$background-light: #D0EDD4;
+$background-lightest: #F2F8EC;
+
+// Blue in masthead
+// $secondary-color: #003F83;
 
 $color-gene : #00a113;
 $color-text-secondary: #666666;
@@ -9,3 +17,19 @@ $color-background-light: #F5F7FC;
 
 $bg-light: #f4f4f4;
 $font-color: #666666;
+$font-color-light: #a3a3a3;
+
+
+// General placeholder
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: $font-color-light;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: $font-color-light;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: $font-color-light;
+}

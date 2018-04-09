@@ -1,6 +1,7 @@
 @import '../utils.scss';
 
 @mixin input-icon ($right) {
+  color: $background-main;
   position: absolute;
   line-height: inherit;
   width: 34px;
@@ -22,11 +23,54 @@
     display: table;
     border-collapse: separate;
 
+    .react-autosuggest__suggestions-container--open {
+      position: absolute;
+      z-index: 1000;
+      font-size: 0.8em;
+      width: 100%;
+      background-color: white;
+      border: 1px solid #f8f9fa;
+      padding: 10px;
+      border-radius: 2px;
+      overflow: hidden;
+      -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+      margin-top: 2px;
+    }
+
+    .search-suggestion-box {
+      padding: 2px 10px 2px 10px;
+    }
+
+    .suggestions-description {
+      margin-left: 15px;
+      color: $font-color-light;
+    }
+
+    .react-autosuggest__section-container {
+      margin-bottom: 15px;
+    }
+
+    .react-autosuggest__suggestions-list {
+      list-style-type: none;
+      padding: 5px;
+      margin: 0;
+    }
+
+    .react-autosuggest__suggestion--highlighted {
+      background-color: $background-lightest;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
     input {
       outline: none;
       width: 30em;
-      padding: 5px;
-      background-color: $color-background-light;
+      color: $font-color;
+      padding: 5px 5px 5px 15px;
+      background-color: $background-lightest;
       border: none;
       border-bottom-left-radius: 10px;
       border-top-right-radius: 10px;
@@ -35,69 +79,25 @@
   }
 
   .search-icon {
-    // position: absolute;
-    //right: 10px;
-    //top: 0;
-    //line-height: inherit;
-    //height: 34px;
-    //width: 34px;
-    //padding: 6px 0 6px 0;
-    @include input-icon(10px);
+     @include input-icon(-30px);
   }
 
   .progress-spinner {
-    //position: absolute;
-    //right: 35px;
-    //top: 0;
-    //line-height: inherit;
-    //padding: 6px 0 6px 0;
-    //z-index: 2;
     pointer-events: none;
-    //text-align: center;
-    //width: 34px;
-    //height: 34px;
-    @include input-icon(35px);
-  }
-
-  .listbox {
-
+    @include input-icon(-5px);
   }
 
   .intro-search-examples {
     margin-top: 10px;
     font-size: 0.8em;
-    color: $color-text-secondary;
+    color: white;
     a {
-      color: $secondary-color;
+      color: white;
       margin-left: 10px;
     }
   }
 
 }
-
-
-
-
-//// .search-suggestion-box {
-//#react-autowhatever-1 {
-//  color: #5c5a69;
-//  position: absolute;
-//  background: #FFF;
-//  //width: 100%;
-//  border: 1px solid #CCC;
-//  border-radius: 4px;
-//  padding: 5px;
-//  margin: 2px 0 0;
-//  list-style: none;
-//  font-size: 14px;
-//  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-//  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-//  -ms-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-//  -o-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-//  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-//  background-clip: padding-box;
-//  z-index: 10;
-//}
 
 
 

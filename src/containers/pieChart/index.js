@@ -1,9 +1,26 @@
 import React from 'react';
-import Card from '../card';
+// import Card from '../card';
+import { connect } from 'react-redux';
+import { history } from '../../store/store';
 import { Row, Col } from 'reactstrap';
 import * as d3 from 'd3';
-import { schemePaired } from 'd3-scale-chromatic';
-import PieChartCss from './pieChart.css';
+// import {schemePaired} from 'd3-scale-chromatic';
+import './pieChart.css';
+import { tableTissueFilter } from '../table/actions/table';
+const schemePaired = [
+  '#1395ba',
+  '#0f5b78',
+  '#0d3c55',
+  '#c02e1d',
+  '#d94e1f',
+  '#f16c20',
+  '#ef8b2c',
+  '#ecaa38',
+  '#ebc844',
+  '#a2b86c',
+  '#5ca793',
+  '#1395ba'
+];
 
 class PieChart extends React.Component {
   constructor(props) {
@@ -26,6 +43,14 @@ class PieChart extends React.Component {
   resize = () => {
     this.setState({
       containerWidth: this.refs['piechart-container'].offsetWidth
+    });
+  };
+
+  gotoTable = d => {
+    this.props.setTissue(d.data.id);
+    history.push({
+      pathname: '/table'
+      // search: `?tissue=${d.data.id}`
     });
   };
 
@@ -87,17 +112,23 @@ class PieChart extends React.Component {
       .attr('fill', (d, i) => color(i))
       .on('mouseover', d => {
         this.setFocus(d);
+      })
+      .on('click', d => {
+        this.gotoTable(d);
       });
   }
 
   render() {
-    const tissuesContainerHeader = <span>Tissues</span>;
     const tissuesContainerBody = (
       <Row>
         <Col className="my-auto" xs="6">
           <div ref="piechart-container" />
         </Col>
-        <Col xs="6" className="d-none d-lg-block my-auto">
+        <Col
+          style={{ borderRight: '1px solid green', padding: '20px' }}
+          xs="6"
+          className="d-none d-lg-block my-auto"
+        >
           <ul>
             {this.props.tissues
               .sort((a, b) => b.counts - a.counts)
@@ -106,6 +137,7 @@ class PieChart extends React.Component {
                   <span
                     style={{ color: schemePaired[index % 12] }}
                     className={`tissue-label text-left ${tissue.id}`}
+                    onClick={() => this.gotoTable({ data: { id: tissue.id } })}
                     onMouseOver={() =>
                       this.setFocus({ data: { id: tissue.id } })
                     }
@@ -120,11 +152,7 @@ class PieChart extends React.Component {
       </Row>
     );
 
-    const element = (
-      <div>
-        <Card header={tissuesContainerHeader} body={tissuesContainerBody} />
-      </div>
-    );
+    const element = <div>{tissuesContainerBody}</div>;
 
     if (this.props.tissues && this.props.tissues.length) {
       this.plotPieChart(this.props.tissues);
@@ -134,4 +162,16 @@ class PieChart extends React.Component {
   }
 }
 
-export default PieChart;
+const mapStateToProps = state => {
+  return {
+    tissues: state.tissues
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setTissue: tissue => dispatch(tableTissueFilter(tissue))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PieChart);

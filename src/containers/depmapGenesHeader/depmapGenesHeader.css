@@ -1,13 +1,30 @@
-.container {
-  -ms-flex-align: start;
-  align-items: flex-start;
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #a3a3a3;
+  opacity: 1;
+  /* Firefox */
 }
-.container .header-container {
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #a3a3a3;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #a3a3a3;
+}
+
+.header-container {
+  color: white;
   margin-top: 70px;
 }
-.container .header-container .col-genes {
-  color: #00a113;
+.header-container .depMap-name {
+  font-weight: bold;
 }
-.container .header-container .secondary {
-  color: #666666;
+.header-container .genes-subname {
+  font-weight: 100;
+}
+.header-container .col-genes {
+  color: #00a113;
 }

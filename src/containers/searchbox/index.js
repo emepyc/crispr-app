@@ -1,39 +1,17 @@
 import React from 'react';
-import { push } from 'react-router-redux';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+// import {push} from 'react-router-redux';
+// import {bindActionCreators} from 'redux';
+// import {connect} from 'react-redux';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faSearch from '@fortawesome/fontawesome-free-solid/faSearch';
 import faSpinner from '@fortawesome/fontawesome-free-solid/faSpinner';
 import Autosuggest from 'react-autosuggest';
 import axios from 'axios';
 import debounce from 'lodash/debounce';
-import SearchboxCss from './searchbox.css';
+import './searchbox.css';
 
 const API_BASEURL = process.env.REACT_APP_API_BASEURL;
-
-// TODO: For now this is hardcoded here, but needs to be retrieved asynchronously from the API (or create mock data)
-// const genes = [
-//   {
-//     name: 'BRAF',
-//     id: 'ENSG00000157764'
-//   },
-//   {
-//     name: 'PTEN',
-//     id: 'ENSG00000171862'
-//   }
-// ];
-
-// const getSuggestions = value => {
-//   const inputValue = value.trim().toLowerCase();
-//   const inputLength = inputValue.length;
-//
-//   return inputLength === 0
-//     ? []
-//     : genes.filter(
-//         gene => gene.name.toLowerCase().slice(0, inputLength) === inputValue
-//       );
-// };
 
 // When suggestion is clicked, Autosuggest needs to populate the input
 // based on the clicked suggestion. Teach Autosuggest how to calculate the
@@ -41,13 +19,22 @@ const API_BASEURL = process.env.REACT_APP_API_BASEURL;
 const getSuggestionValue = suggestion => suggestion.name;
 
 // render the suggestions
-// TODO: This is using direct href for linking to the gene or model page. Wouldn't it be better to use this.gotoGenePage or this.gotoModelPage instead?
 const renderSuggestion = suggestion => (
-  <div className="search-suggestion-box text-left">
-    <a href={`/gene/${suggestion.attributes.symbol}`}>
-      {suggestion.attributes.symbol || suggestion.attributes.model_name}
-    </a>
-  </div>
+  <Link to={`/gene/${suggestion.attributes.symbol}`}>
+    <div className="search-suggestion-box text-left">
+      <span>
+        {suggestion.attributes.symbol || suggestion.attributes.model_name}
+      </span>
+      <span className={'suggestions-description pull-right'}>
+        {suggestion.attributes.symbol && (
+          <span>{suggestion.attributes.name}</span>
+        )}
+        {suggestion.attributes.model_name && (
+          <span>Tissue: {suggestion.attributes.tissue}</span>
+        )}
+      </span>
+    </div>
+  </Link>
 );
 
 const getSectionSuggestions = section => section.items;
@@ -61,8 +48,6 @@ const renderSectionTitle = section => (
 class Searchbox extends React.Component {
   constructor(props) {
     super(props);
-
-    this.gotoGenePage = this.props.gotoGenePage.bind(this);
 
     this.loadSuggestions = debounce(this.loadSuggestions, 300);
 
@@ -89,14 +74,6 @@ class Searchbox extends React.Component {
     this.setState({
       isLoading: true
     });
-
-    // Fake request
-    // this.lastRequestId = setTimeout(() => {
-    //   this.setState({
-    //     isLoading: false,
-    //     suggestions: getMatchingLanguages(value)
-    //   });
-    // }, 1000);
 
     const genesPromise = axios
       .get(
@@ -159,6 +136,7 @@ class Searchbox extends React.Component {
     // Autosuggest will pass through all these props to the input.
     const inputProps = {
       placeholder: 'Type a gene or a cell line',
+      autoFocus: true,
       value,
       onChange: this.onChange
     };
@@ -173,7 +151,6 @@ class Searchbox extends React.Component {
             getSuggestionValue={getSuggestionValue}
             renderSuggestion={renderSuggestion}
             inputProps={inputProps}
-            theme={SearchboxCss}
             shouldRenderSuggestions={q => q && q.length > 1}
             highlightFirstSuggestion={true}
             multiSection={true}
@@ -192,35 +169,21 @@ class Searchbox extends React.Component {
 
         <p className="intro-search-examples">
           Try:
-          <a href="" onClick={() => this.gotoGenePage('BRAF')}>
-            BRAF
-          </a>
-          <a href="" onClick={() => this.gotoGenePage('PTEN')}>
-            PTEN
-          </a>
+          <Link to={'/gene/BRAF'}>BRAF</Link>
+          <Link to={'/gene/PTEN'}>PTEN</Link>
         </p>
       </div>
     );
   }
 }
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      gotoGenePage: gene => push(`/gene/${gene}`)
-    },
-    dispatch
-  );
-
-// const Searchbox = () => (
-//   <Form>
-//     <FormGroup>
-//       {/*<Label for="searchQuery">Search</Label>*/}
-//       <Input type="text" name="searchQuery" id="query" placeholder="Search for a gene or cell name" />
-//     </FormGroup>
-//     <FontAwesomeIcon icon={faSearch} />
+// const mapDispatchToProps = dispatch =>
+//   bindActionCreators(
+//     {
+//       gotoGenePage: gene => push(`/gene/${gene}`)
+//     },
+//     dispatch
+//   );
 //
-//   </Form>
-// );
-
-export default connect(null, mapDispatchToProps)(Searchbox);
+// export default connect(null, mapDispatchToProps)(Searchbox);
+export default Searchbox;

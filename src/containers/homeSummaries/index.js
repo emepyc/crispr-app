@@ -3,7 +3,7 @@ import Card from '../card';
 import { Row, Col } from 'reactstrap';
 import TissuesSummary from '../tissuesSummary';
 
-const homeSummaries = props => {
+const homeSummaries = () => {
   const genesContainerHeader = <span>Genes</span>;
   const genesContainerBody = <Row />;
 

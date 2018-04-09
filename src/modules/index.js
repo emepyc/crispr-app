@@ -8,6 +8,8 @@ import {
   geneEssentialitiesIsLoading
 } from './geneEssentialities';
 
+import { tableStart, tableTissue } from './table';
+
 export default combineReducers({
   routing: routerReducer,
   tissues,
@@ -20,5 +22,8 @@ export default combineReducers({
 
   geneEssentialities,
   geneEssentialitiesHasErrored,
-  geneEssentialitiesIsLoading
+  geneEssentialitiesIsLoading,
+
+  tableStart,
+  tableTissue
 });

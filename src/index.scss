@@ -1,10 +1,39 @@
 @import './containers/utils.scss';
 
 body {
-  // background: $bg-light;
-  font-size: 0.9em;
+  font-size: 1em;
   color: $font-color;
   font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
+}
+
+.page-header {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.home-backdrop {
+  background-image: url("./home-backdrop.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+    background-image: -webkit-radial-gradient(
+                    rgba(70, 157, 50, 1) 0%,
+                    rgba(70, 157, 50, 1) 30%,
+                    rgba(70, 157, 50, 0) 100%
+    ),
+    url('./home-backdrop.svg');
+    background-image: -o-radial-gradient(
+                    rgba(70, 157, 50, 1) 0%,
+                    rgba(70, 157, 50, 1) 30%,
+                    rgba(70, 157, 50, 0) 100%
+    ),
+    url('./home-backdrop.svg');
+    background-image: radial-gradient(
+                    rgba(70, 157, 50, 1) 0%,
+                    rgba(70, 157, 50, 1) 30%,
+                    rgba(70, 157, 50, 0) 100%
+    ),
+    url('./home-backdrop.svg');
 }
