@@ -7,7 +7,7 @@ class valuesFilter extends React.Component {
   }
 
   render() {
-    return <p>Hello</p>;
+    return <p>...</p>;
   }
 }
 

@@ -12,6 +12,6 @@ export default [
   {
     title: 'Value',
     name: 'value',
-    api: 'bagel_bf_qn'
+    api: 'bagel_bf_scaled'
   }
 ];

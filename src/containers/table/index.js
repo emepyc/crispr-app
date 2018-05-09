@@ -43,7 +43,7 @@ function formatData(data) {
     row.push(r.attributes.model_name);
 
     // value
-    row.push(r.attributes.bagel_bf_qn);
+    row.push(r.attributes.bagel_bf_scaled);
 
     rows.push(row);
   });
