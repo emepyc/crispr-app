@@ -31,7 +31,7 @@ class geneEssentialitiesPlot extends React.Component {
   }
 
   hideTooltip(el) {
-    // el.style("display", "none");
+    el.style('display', 'none');
   }
 
   plotEssentialities(data) {
@@ -185,8 +185,9 @@ class geneEssentialitiesPlot extends React.Component {
             whiteSpace: 'nowrap',
             backgroundColor: 'white',
             padding: '0.3rem 0.5rem',
-            'border-radius': '3px',
-            'box-shadow': 'gray 0px 1px 2px'
+            borderRadius: '3px',
+            boxShadow: 'gray 0px 1px 2px',
+            display: 'none'
           }}
         />
       </div>
