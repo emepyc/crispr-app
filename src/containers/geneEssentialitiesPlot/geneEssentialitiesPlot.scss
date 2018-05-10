@@ -9,13 +9,15 @@
     top: 0;
     &.leave-space {
       margin-left: 50px;
-      margin-top: -50px;
+      // margin-top: -50px;
     }
     &.top {
       z-index: 2;
     }
     rect {
       opacity: 0;
+      margin-left: 50px;
+      margin-top: -50px;
     }
   }
 }

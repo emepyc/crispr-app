@@ -10,11 +10,12 @@
 }
 .essentialities-plot-container .star-plot-toplevel-container.leave-space {
   margin-left: 50px;
-  margin-top: -50px;
 }
 .essentialities-plot-container .star-plot-toplevel-container.top {
   z-index: 2;
 }
 .essentialities-plot-container .star-plot-toplevel-container rect {
   opacity: 0;
+  margin-left: 50px;
+  margin-top: -50px;
 }

@@ -3,20 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="66941e94-9690-40a3-938a-2f40bcfb22a3" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/card/card.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/card/card.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/depmapGenesHeader/depmapGenesHeader.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/depmapGenesHeader/depmapGenesHeader.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/displayGeneInfo/displayGeneInfo.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/displayGeneInfo/displayGeneInfo.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/geneEssentialitiesDetails/geneEssentialitiesDetails.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/geneEssentialitiesDetails/geneEssentialitiesDetails.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/geneEssentialitiesDetails/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/geneEssentialitiesDetails/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/containers/geneEssentialitiesPlot/geneEssentialitiesPlot.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/geneEssentialitiesPlot/geneEssentialitiesPlot.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/geneEssentialitiesSummary/geneEssentialitiesSummary.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/geneEssentialitiesSummary/geneEssentialitiesSummary.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/masthead/masthead.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/masthead/masthead.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/pieChart/pieChart.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pieChart/pieChart.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/searchbox/searchbox.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/searchbox/searchbox.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/table/columns.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/table/columns.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/table/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/table/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/utils.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/utils.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/valuesFilter/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/valuesFilter/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/geneEssentialitiesPlot/geneEssentialitiesPlot.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/geneEssentialitiesPlot/geneEssentialitiesPlot.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/geneEssentialitiesPlot/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/geneEssentialitiesPlot/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -29,7 +21,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.38171667">
+    <splitter split-orientation="horizontal" split-proportion="0.4752825">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
@@ -69,8 +61,8 @@
           <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/containers/tissuesSummaryDisplay/index.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="375">
-                  <caret line="29" selection-start-line="29" selection-end-line="29" />
+                <state relative-caret-position="165">
+                  <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
                   <folding>
                     <element signature="e#0#26#0" expanded="true" />
                   </folding>
@@ -78,11 +70,35 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/containers/pieChart/index.js">
+          <file leaf-file-name="geneEssentialitiesPlot.scss" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/containers/geneEssentialitiesPlot/geneEssentialitiesPlot.scss">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="767">
-                  <caret line="59" column="4" selection-start-line="59" selection-start-column="4" selection-end-line="59" selection-end-column="4" />
+                <state relative-caret-position="255">
+                  <caret line="17" column="16" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="16" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/containers/geneEssentialitiesPlot/index.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="358">
+                  <caret line="80" selection-start-line="80" selection-end-line="80" />
+                  <folding>
+                    <element signature="e#0#26#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/containers/geneEssentialitiesDetails/index.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="360">
+                  <caret line="24" selection-start-line="24" selection-end-line="24" />
+                  <folding>
+                    <element signature="e#0#26#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -103,7 +119,7 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+          <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/containers/tissuesSummaryDescription/index.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="105">
@@ -116,7 +132,7 @@
             <entry file="file://$PROJECT_DIR$/src/containers/tissueChip/index.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="765">
-                  <caret line="58" lean-forward="true" selection-start-line="58" selection-end-line="58" />
+                  <caret line="58" selection-start-line="58" selection-end-line="58" />
                   <folding>
                     <element signature="e#0#26#0" expanded="true" />
                   </folding>
@@ -124,7 +140,7 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+          <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/containers/table/index.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="273">
@@ -132,6 +148,15 @@
                   <folding>
                     <element signature="e#0#26#0" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="geneEssentialitiesPlot.css" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/containers/geneEssentialitiesPlot/geneEssentialitiesPlot.css">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="240">
+                  <caret line="16" selection-start-line="16" selection-end-line="16" />
                 </state>
               </provider>
             </entry>
@@ -152,7 +177,7 @@
             <entry file="file://$PROJECT_DIR$/src/containers/table/columns.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="255">
-                  <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+                  <caret line="17" selection-start-line="17" selection-end-line="17" />
                 </state>
               </provider>
             </entry>
@@ -182,27 +207,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>columns.js</find>
-      <find>margin-bo</find>
-      <find>gotoGenePage</find>
-      <find>symbol</find>
-      <find>inputProps</find>
-      <find>goto</find>
-      <find>push</find>
-      <find>bindActionCreators</find>
-      <find>input</find>
-      <find>radius</find>
-      <find>high</find>
-      <find>highlighte</find>
-      <find>Card</find>
-      <find>rad</find>
-      <find>max-height</find>
-      <find>.secondary</find>
-      <find>intro-search-container</find>
-      <find>intro-search-</find>
-      <find>color</find>
-      <find>search-icon</find>
-      <find>469</find>
       <find>intro-search</find>
       <find>offset</find>
       <find>description</find>
@@ -212,6 +216,27 @@
       <find>setState</find>
       <find>hello</find>
       <find>bagel</find>
+      <find>Fold change</find>
+      <find>width</find>
+      <find>scale</find>
+      <find>Scale</find>
+      <find>color</find>
+      <find>ctx</find>
+      <find>didMount</find>
+      <find>pieChart</find>
+      <find>geneEssentialitiesPlot</find>
+      <find>console</find>
+      <find>mouseover</find>
+      <find>click</find>
+      <find>data.</find>
+      <find>data</find>
+      <find>plotEssen</find>
+      <find>pane</find>
+      <find>attribute</find>
+      <find>axis</find>
+      <find>canvas</find>
+      <find>opacity</find>
+      <find>console.log</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -227,9 +252,6 @@
         <option value="$PROJECT_DIR$/src/containers/tissuesSummary/actions/tissues.js" />
         <option value="$PROJECT_DIR$/src/containers/geneEssentialities/index.js" />
         <option value="$PROJECT_DIR$/src/containers/geneEssentialitiesDetails/geneEssentialitiesDetails.scss" />
-        <option value="$PROJECT_DIR$/src/containers/geneEssentialitiesDetails/index.js" />
-        <option value="$PROJECT_DIR$/src/containers/geneEssentialitiesPlot/geneEssentialitiesPlot.scss" />
-        <option value="$PROJECT_DIR$/src/containers/geneEssentialitiesPlot/index.js" />
         <option value="$PROJECT_DIR$/src/containers/geneEssentialitiesSummary/index.js" />
         <option value="$PROJECT_DIR$/src/containers/TissuesCard/index.js" />
         <option value="$PROJECT_DIR$/src/containers/genesTable/index.js" />
@@ -274,6 +296,9 @@
         <option value="$PROJECT_DIR$/src/containers/valuesFilter/index.js" />
         <option value="$PROJECT_DIR$/src/containers/table/columns.js" />
         <option value="$PROJECT_DIR$/src/containers/table/index.js" />
+        <option value="$PROJECT_DIR$/src/containers/geneEssentialitiesDetails/index.js" />
+        <option value="$PROJECT_DIR$/src/containers/geneEssentialitiesPlot/geneEssentialitiesPlot.scss" />
+        <option value="$PROJECT_DIR$/src/containers/geneEssentialitiesPlot/index.js" />
       </list>
     </option>
   </component>
@@ -322,6 +347,13 @@
               <item name="crispr-cas9" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="containers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="crispr-cas9" type="b2602c69:ProjectViewProjectNode" />
+              <item name="crispr-cas9" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="containers" type="462c0819:PsiDirectoryNode" />
+              <item name="geneEssentialitiesPlot" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="crispr-cas9" type="b2602c69:ProjectViewProjectNode" />
@@ -430,12 +462,12 @@
       <workItem from="1523007587802" duration="7744000" />
       <workItem from="1523051511816" duration="6587000" />
       <workItem from="1523132757806" duration="20660000" />
-      <workItem from="1525901172029" duration="39000" />
+      <workItem from="1525901172029" duration="10256000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="256610000" />
+    <option name="totallyTimeSpent" value="266827000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="941" extended-state="6" />
@@ -443,6 +475,7 @@
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.14647378" />
       <window_info anchor="bottom" id="TODO" order="10" />
+      <window_info anchor="bottom" id="Docker" order="3" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="0" side_tool="true" />
       <window_info anchor="bottom" id="Find" order="5" />
       <window_info anchor="bottom" id="Run" order="6" />
@@ -453,7 +486,6 @@
       <window_info anchor="bottom" id="Debug" order="7" weight="0.39930955" />
       <window_info id="Favorites" order="1" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" order="3" show_stripe_button="false" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -473,44 +505,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/containers/valuesFilter/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/react-router-redux/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="266" selection-start-line="3" selection-start-column="266" selection-end-line="3" selection-end-column="266" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/containers/gene/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="40" selection-start-line="5" selection-start-column="40" selection-end-line="5" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/containers/app/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/datatables.net-buttons-bs4/css/buttons.bootstrap4.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="70" column="12" selection-start-line="70" selection-start-column="6" selection-end-line="70" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/containers/table/dataTable.scss" />
     <entry file="file://$PROJECT_DIR$/src/containers/tablePage/index.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -559,6 +553,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="6" column="35" lean-forward="true" selection-start-line="6" selection-end-line="7" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -615,6 +612,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="9" selection-start-line="10" selection-start-column="9" selection-end-line="10" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -637,6 +637,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -749,23 +752,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" column="10" lean-forward="true" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/containers/tissuesSummaryDisplay/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/containers/pieChart/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="767">
-          <caret line="59" column="4" selection-start-line="59" selection-start-column="4" selection-end-line="59" selection-end-column="4" />
         </state>
       </provider>
     </entry>
@@ -773,6 +762,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="24" selection-start-line="24" selection-end-line="24" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -796,17 +788,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/containers/tissuesSummaryDescription/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="21" column="12" selection-start-line="21" selection-start-column="12" selection-end-line="21" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/containers/tissueChip/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="765">
-          <caret line="58" lean-forward="true" selection-start-line="58" selection-end-line="58" />
+          <caret line="58" selection-start-line="58" selection-end-line="58" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
@@ -826,7 +811,7 @@
     <entry file="file://$PROJECT_DIR$/src/containers/table/columns.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
         </state>
       </provider>
     </entry>
@@ -834,6 +819,74 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
           <caret line="45" column="41" selection-start-line="45" selection-start-column="41" selection-end-line="45" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/pieChart/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1513">
+          <caret line="29" column="24" lean-forward="true" selection-start-line="29" selection-start-column="24" selection-end-line="29" selection-end-column="24" />
+          <folding>
+            <element signature="e#259#283#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/tissuesSummaryDisplay/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/geneEssentialitiesDetails/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/geneEssentialitiesPlot/geneEssentialitiesPlot.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/static/js/main.1143ab06.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="8433" selection-start-line="8433" selection-end-line="8433" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/tissuesSummaryDescription/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="21" column="12" selection-start-line="21" selection-start-column="12" selection-end-line="21" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/geneEssentialitiesPlot/geneEssentialitiesPlot.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="16" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/geneEssentialitiesPlot/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="358">
+          <caret line="80" selection-start-line="80" selection-end-line="80" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>

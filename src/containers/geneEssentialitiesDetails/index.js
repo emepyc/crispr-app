@@ -1,10 +1,10 @@
 import React from 'react';
 import Card from '../card';
-import geneEssentialitiesDetailsCss from './geneEssentialitiesDetails.css';
+import './geneEssentialitiesDetails.css';
 import GeneEssentialitiesPlot from '../geneEssentialitiesPlot';
 
 const geneEssentialitiesDetails = props => {
-  if (!props.data) {
+  if (!props.data.data) {
     return <div />;
   }
   const header = <div>Screening results</div>;
