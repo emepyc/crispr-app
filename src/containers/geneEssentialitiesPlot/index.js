@@ -14,6 +14,7 @@ class geneEssentialitiesPlot extends React.Component {
     this.height = 500;
     this.marginTop = 50;
     this.marginLeft = 50;
+    this.brushHeight = 50;
   }
 
   componentDidMount() {
@@ -35,10 +36,11 @@ class geneEssentialitiesPlot extends React.Component {
   }
 
   plotEssentialities(data) {
-    const { marginTop, marginLeft, width, height } = this;
+    const { marginTop, marginLeft, width, height, brushHeight } = this;
     const elementSvg = this.refs['essentialities-plot-svg'];
     const elementCanvas = this.refs['essentialities-plot-canvas'];
     const elementTooltip = this.refs['essentialities-plot-tooltip'];
+    const elementBrush = this.refs['essentialities-plot-brush'];
 
     // Fast way to remove prev content
     // if (elementCanvas) {
@@ -46,6 +48,38 @@ class geneEssentialitiesPlot extends React.Component {
     //     elementCanvas.removeChild(elementCanvas.firstChild);
     //   }
     // }`
+
+    //create brush function redraw scatterplot with selection
+    function brushed() {
+      const selection = d3.event.selection;
+      xScale.domain(selection.map(xScaleBrush.invert, xScaleBrush));
+      plotOnCanvas();
+    }
+
+    function plotOnCanvas() {
+      // Nodes display
+      ctx.clearRect(0, 0, width - marginLeft, height - marginTop);
+      ctx.save();
+      for (let i = 0; i < dataWithI.length; i++) {
+        const d = dataWithI[i];
+        ctx.beginPath();
+        ctx.arc(
+          xScale(d.index),
+          yScale(d.attributes[attribute]),
+          nodeRadius,
+          0,
+          2 * Math.PI,
+          false
+        );
+        ctx.fillStyle =
+          d.attributes[attribute] < 0.05 ? signifNodeColor : insignifNodeColor;
+        ctx.fill();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle =
+          d.attributes[attribute] < 0.05 ? signifNodeColor : insignifNodeColor;
+        ctx.stroke();
+      }
+    }
 
     const attribute = 'fc_corrected';
 
@@ -65,9 +99,9 @@ class geneEssentialitiesPlot extends React.Component {
     svg
       .append('rect')
       .attr('x', marginLeft)
-      .attr('y', -marginTop)
+      .attr('y', 0)
       .attr('width', width)
-      .attr('height', height)
+      .attr('height', height - marginTop)
       .on('mousemove', () => {
         const ev = d3.event;
 
@@ -88,10 +122,6 @@ class geneEssentialitiesPlot extends React.Component {
       })
       .on('mouseout', () => {
         this.hideTooltip(tooltip);
-      })
-      .on('click', () => {
-        console.log('clicked at...');
-        console.log(d3.event);
       });
 
     const canvas = d3.select(elementCanvas);
@@ -110,6 +140,23 @@ class geneEssentialitiesPlot extends React.Component {
       .scaleLinear()
       .range([0, width - marginLeft])
       .domain([0, dataWithI.length]);
+
+    const xScaleBrush = d3
+      .scaleLinear()
+      .range([0, width - marginLeft])
+      .domain([0, dataWithI.length]);
+
+    const brush = d3
+      .brushX()
+      .extent([[0, 0], [width - marginLeft, 50]])
+      .on('brush', brushed);
+
+    d3
+      .select(elementBrush)
+      .append('g')
+      .attr('class', 'brush')
+      .call(brush)
+      .call(brush.move, xScale.range());
 
     const xAxis = d3.axisBottom(xScale);
     const yAxis = d3.axisLeft(yScale);
@@ -138,62 +185,48 @@ class geneEssentialitiesPlot extends React.Component {
       .attr('text-anchor', 'middle')
       .text('Fold change');
 
-    // Nodes display
-    ctx.save();
-    for (let i = 0; i < dataWithI.length; i++) {
-      const d = dataWithI[i];
-      ctx.beginPath();
-      ctx.arc(
-        xScale(d.index),
-        yScale(d.attributes[attribute]),
-        nodeRadius,
-        0,
-        2 * Math.PI,
-        false
-      );
-      ctx.fillStyle =
-        d.attributes[attribute] < 0.05 ? signifNodeColor : insignifNodeColor;
-      ctx.fill();
-      ctx.lineWidth = 1;
-      ctx.strokeStyle =
-        d.attributes[attribute] < 0.05 ? signifNodeColor : insignifNodeColor;
-      ctx.stroke();
-    }
+    plotOnCanvas();
   }
 
   render() {
     const { marginTop, marginLeft, width, height } = this;
-    const template = (
-      <div className="essentialities-plot-container">
-        <canvas
-          ref="essentialities-plot-canvas"
-          className="star-plot-toplevel-container leave-space"
-          height={height - marginTop}
+    return (
+      <React.Fragment>
+        <svg
+          ref="essentialities-plot-brush"
+          className="leave-space"
+          height="50"
           width={width - marginLeft}
         />
-        <svg
-          ref="essentialities-plot-svg"
-          className="star-plot-toplevel-container top"
-          height={height}
-          width={width}
-        />
-        <div
-          ref="essentialities-plot-tooltip"
-          className="essentialities-tooltip"
-          style={{
-            position: 'absolute',
-            whiteSpace: 'nowrap',
-            backgroundColor: 'white',
-            padding: '0.3rem 0.5rem',
-            borderRadius: '3px',
-            boxShadow: 'gray 0px 1px 2px',
-            display: 'none'
-          }}
-        />
-      </div>
+        <div className="essentialities-plot-container">
+          <canvas
+            ref="essentialities-plot-canvas"
+            className="star-plot-toplevel-container leave-space"
+            height={height - marginTop}
+            width={width - marginLeft}
+          />
+          <svg
+            ref="essentialities-plot-svg"
+            className="star-plot-toplevel-container top"
+            height={height}
+            width={width}
+          />
+          <div
+            ref="essentialities-plot-tooltip"
+            className="essentialities-tooltip"
+            style={{
+              position: 'absolute',
+              whiteSpace: 'nowrap',
+              backgroundColor: 'white',
+              padding: '0.3rem 0.5rem',
+              borderRadius: '3px',
+              boxShadow: 'gray 0px 1px 2px',
+              display: 'none'
+            }}
+          />
+        </div>
+      </React.Fragment>
     );
-
-    return template;
   }
 }
 
