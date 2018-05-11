@@ -49,13 +49,6 @@ class geneEssentialitiesPlot extends React.Component {
     //   }
     // }`
 
-    //create brush function redraw scatterplot with selection
-    function brushed() {
-      const selection = d3.event.selection;
-      xScale.domain(selection.map(xScaleBrush.invert, xScaleBrush));
-      plotOnCanvas();
-    }
-
     function plotOnCanvas() {
       // Nodes display
       ctx.clearRect(0, 0, width - marginLeft, height - marginTop);
@@ -124,6 +117,23 @@ class geneEssentialitiesPlot extends React.Component {
         this.hideTooltip(tooltip);
       });
 
+    const brushLine = d3
+      .area()
+      .curve(d3.curveMonotoneX)
+      .x(d => xScaleBrush(d.index))
+      .y0(50)
+      .y1(d => yScaleBrush(d.attributes[attribute]));
+
+    //create brush function redraw scatterplot with selection
+    function brushed() {
+      const selection = d3.event.selection;
+      xScale.domain(selection.map(xScaleBrush.invert, xScaleBrush));
+      plotOnCanvas();
+      if (axisBottom) {
+        axisBottom.call(xAxis);
+      }
+    }
+
     const canvas = d3.select(elementCanvas);
     const ctx = canvas.node().getContext('2d');
     const insignifNodeColor = '#758E4F';
@@ -146,13 +156,25 @@ class geneEssentialitiesPlot extends React.Component {
       .range([0, width - marginLeft])
       .domain([0, dataWithI.length]);
 
+    const yScaleBrush = d3
+      .scaleLinear()
+      .range([0, 50])
+      .domain([yExtent[1], yExtent[0]]);
+
     const brush = d3
       .brushX()
       .extent([[0, 0], [width - marginLeft, 50]])
       .on('brush', brushed);
 
-    d3
-      .select(elementBrush)
+    const brushSelection = d3.select(elementBrush);
+
+    brushSelection
+      .append('path')
+      .datum(dataWithI)
+      .attr('class', 'line')
+      .attr('d', brushLine);
+
+    brushSelection
       .append('g')
       .attr('class', 'brush')
       .call(brush)
@@ -160,10 +182,12 @@ class geneEssentialitiesPlot extends React.Component {
 
     const xAxis = d3.axisBottom(xScale);
     const yAxis = d3.axisLeft(yScale);
-    svg
+    const axisBottom = svg
       .append('g')
+      .attr('id', 'axisBottom')
       .attr('transform', `translate(${marginLeft},${height - marginTop})`)
       .call(xAxis);
+
     svg
       .append('g')
       .attr('transform', `translate(${marginLeft},0)`)
@@ -172,7 +196,7 @@ class geneEssentialitiesPlot extends React.Component {
     // x scale title
     svg
       .append('text')
-      .attr('transform', `translate(${width / 2}, ${height})`)
+      .attr('transform', `translate(${width / 2}, ${height - 10})`)
       .attr('text-anchor', 'middle')
       .text('Cell lines');
 
@@ -197,7 +221,9 @@ class geneEssentialitiesPlot extends React.Component {
           className="leave-space"
           height="50"
           width={width - marginLeft}
-        />
+        >
+          <g ref="" />
+        </svg>
         <div className="essentialities-plot-container">
           <canvas
             ref="essentialities-plot-canvas"

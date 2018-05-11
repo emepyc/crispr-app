@@ -24,14 +24,10 @@
 
 .leave-space {
     margin-left: 50px;
+    path {
+      fill: none;
+      stroke: #003F83;
+      stroke-width: 2px;
+    }
 }
 
-//.essentialities-brush {
-//    position:relative;
-//
-//    .leave-space {
-//      position: absolute;
-//      top: 0;
-//      left: 50px;
-//    }
-//}
