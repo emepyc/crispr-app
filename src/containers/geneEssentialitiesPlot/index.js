@@ -41,6 +41,8 @@ class geneEssentialitiesPlot extends React.Component {
     const elementCanvas = this.refs['essentialities-plot-canvas'];
     const elementTooltip = this.refs['essentialities-plot-tooltip'];
     const elementBrush = this.refs['essentialities-plot-brush'];
+    const guideX = this.refs['essentialities-plot-xline'];
+    const guideY = this.refs['essentialities-plot-yline'];
 
     // Fast way to remove prev content
     // if (elementCanvas) {
@@ -71,6 +73,10 @@ class geneEssentialitiesPlot extends React.Component {
         ctx.strokeStyle =
           d.attributes[attribute] < 0.05 ? signifNodeColor : insignifNodeColor;
         ctx.stroke();
+
+        if (axisBottom) {
+          axisBottom.call(xAxis);
+        }
       }
     }
 
@@ -89,11 +95,12 @@ class geneEssentialitiesPlot extends React.Component {
       d => d.attributes[attribute]
     );
     const svg = d3.select(elementSvg);
+
     svg
       .append('rect')
       .attr('x', marginLeft)
       .attr('y', 0)
-      .attr('width', width)
+      .attr('width', width - marginLeft)
       .attr('height', height - marginTop)
       .on('mousemove', () => {
         const ev = d3.event;
@@ -106,8 +113,19 @@ class geneEssentialitiesPlot extends React.Component {
         const closest = quadTree.find(xClicked, yClicked);
         const closestX = closest.index;
         const closestY = closest.attributes[attribute];
+
+        // Show the guide
+        const guideXpos = xScale(closestX) + marginLeft;
+        const guideYpos = yScale(closestY);
+        guideX.setAttribute('x1', guideXpos);
+        guideX.setAttribute('x2', guideXpos);
+        guideX.style.display = 'block';
+        guideY.setAttribute('y1', guideYpos);
+        guideY.setAttribute('y2', guideYpos);
+        guideY.style.display = 'block';
+
         this.showTooltip(
-          xScale(closestX),
+          xScale(closestX) + marginLeft,
           yScale(closestY),
           tooltip,
           `${closest.attributes.model_name}`
@@ -115,6 +133,8 @@ class geneEssentialitiesPlot extends React.Component {
       })
       .on('mouseout', () => {
         this.hideTooltip(tooltip);
+        guideX.style.display = 'none';
+        guideY.style.display = 'none';
       });
 
     const brushLine = d3
@@ -129,10 +149,9 @@ class geneEssentialitiesPlot extends React.Component {
       const selection = d3.event.selection;
       xScale.domain(selection.map(xScaleBrush.invert, xScaleBrush));
       plotOnCanvas();
-      if (axisBottom) {
-        axisBottom.call(xAxis);
-      }
     }
+
+    console.log(dataWithI);
 
     const canvas = d3.select(elementCanvas);
     const ctx = canvas.node().getContext('2d');
@@ -141,15 +160,15 @@ class geneEssentialitiesPlot extends React.Component {
     const nodeRadius = 3;
 
     const yExtent = d3.extent(dataWithI, d => d.attributes[attribute]);
-    const yScale = d3
-      .scaleLinear()
-      .range([0, height - marginTop])
-      .domain([yExtent[1], yExtent[0]]);
-
     const xScale = d3
       .scaleLinear()
       .range([0, width - marginLeft])
       .domain([0, dataWithI.length]);
+
+    const yScale = d3
+      .scaleLinear()
+      .range([0, height - marginTop])
+      .domain([yExtent[1], yExtent[0]]);
 
     const xScaleBrush = d3
       .scaleLinear()
@@ -180,13 +199,14 @@ class geneEssentialitiesPlot extends React.Component {
       .call(brush)
       .call(brush.move, xScale.range());
 
-    const xAxis = d3.axisBottom(xScale);
+    const xAxis = d3.axisBottom(xScale).tickFormat(d3.format('.0f'));
+
     const yAxis = d3.axisLeft(yScale);
+
     const axisBottom = svg
       .append('g')
       .attr('id', 'axisBottom')
-      .attr('transform', `translate(${marginLeft},${height - marginTop})`)
-      .call(xAxis);
+      .attr('transform', `translate(${marginLeft},${height - marginTop})`);
 
     svg
       .append('g')
@@ -236,7 +256,24 @@ class geneEssentialitiesPlot extends React.Component {
             className="star-plot-toplevel-container top"
             height={height}
             width={width}
-          />
+          >
+            <line
+              ref="essentialities-plot-xline"
+              x1="0"
+              x2="0"
+              y1="0"
+              y2={height - marginTop}
+              style={{ stroke: '#eeeeee', strokeWidth: '2px' }}
+            />
+            <line
+              ref="essentialities-plot-yline"
+              x1={marginLeft}
+              x2={width}
+              y1="0"
+              y2="0"
+              style={{ stroke: '#eeeeee', strokeWidth: '2px' }}
+            />
+          </svg>
           <div
             ref="essentialities-plot-tooltip"
             className="essentialities-tooltip"
