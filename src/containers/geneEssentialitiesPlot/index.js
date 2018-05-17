@@ -1,42 +1,174 @@
 import React from 'react';
 import * as d3 from 'd3';
 import sortBy from 'lodash.sortby';
+import find from 'lodash.find';
 import './geneEssentialitiesPlot.css';
+import { connect } from 'react-redux';
+import { selectRow } from '../customTable/actions/customTable';
 
 class geneEssentialitiesPlot extends React.Component {
   constructor(props) {
     super(props);
 
-    // this.state = {
-    //   containerWidth: -1
-    // };
-    this.width = 500;
+    this.state = {
+      containerWidth: 100
+    };
+
+    // this.width = 500;
     this.height = 500;
     this.marginTop = 50;
     this.marginLeft = 50;
     this.brushHeight = 50;
+
+    this.insignifNodeColor = '#758E4F';
+    this.signifNodeColor = '#FFCC00';
+    this.nodeRadius = 3;
+
+    this.ctx = null;
+    this.xScale = null;
+    this.yScale = null;
+    this.xAxis = null;
+    this.axisBottom = null;
+
+    this.data = [];
+    this.attribute = 'fc_corrected';
   }
+
+  resize = () => {
+    const container = this.refs['plot-container'];
+
+    this.setState(
+      {
+        containerWidth: container.offsetWidth
+      },
+      () => this.plotEssentialities(this.props.data.data)
+    );
+  };
 
   componentDidMount() {
     if (this.props.data.data && this.props.data.data.length) {
-      this.plotEssentialities(this.props.data.data);
+      this.resize();
+      window.addEventListener('resize', this.resize);
     }
   }
 
-  showTooltip(x, y, el, msg) {
+  componentDidUpdate() {
+    if (this.ctx) {
+      this.plotOnCanvas();
+    }
+  }
+
+  showTooltip = (x, y, el, msg) => {
     el
       .text(msg)
       .style('left', `${x}px`)
       .style('top', `${y}px`)
       .style('display', 'block');
-  }
+  };
 
-  hideTooltip(el) {
+  hideTooltip = el => {
     el.style('display', 'none');
-  }
+  };
+
+  plotOnCanvas = () => {
+    const {
+      ctx,
+      marginLeft,
+      height,
+      marginTop,
+      xAxis,
+      xScale,
+      yScale,
+      data,
+      signifNodeColor,
+      insignifNodeColor,
+      nodeRadius,
+      attribute,
+      axisBottom
+    } = this;
+    const { containerWidth } = this.state;
+    const { selectedEssentiality } = this.props;
+
+    // Nodes display
+    ctx.clearRect(0, 0, containerWidth - marginLeft, height - marginTop);
+    ctx.save();
+    for (let i = 0; i < data.length; i++) {
+      const d = data[i];
+      ctx.beginPath();
+      ctx.arc(
+        xScale(d.index),
+        yScale(d.attributes[attribute]),
+        nodeRadius,
+        0,
+        2 * Math.PI,
+        false
+      );
+      ctx.fillStyle =
+        d.attributes[attribute] < 0.05 ? signifNodeColor : insignifNodeColor;
+      ctx.fill();
+      ctx.lineWidth = 1;
+      ctx.strokeStyle =
+        d.attributes[attribute] < 0.05 ? signifNodeColor : insignifNodeColor;
+      ctx.stroke();
+
+      if (axisBottom) {
+        axisBottom.call(xAxis);
+      }
+    }
+    // selected node
+    if (selectedEssentiality) {
+      // TODO: Needs a more performant way of finding X
+      const selectedNode = find(
+        data,
+        d => d.attributes.model_name === selectedEssentiality[1]
+      );
+      this.highlightNode(selectedNode);
+      // ctx.beginPath();
+      // ctx.arc(
+      //   xScale(selectedNode.index),
+      //   yScale(selectedEssentiality[2]),
+      //   nodeRadius + 5,
+      //   0,
+      //   2 * Math.PI,
+      //   false
+      // );
+      // ctx.strokeStyle =
+      //   nodeRadius < 0.05 ? signifNodeColor : insignifNodeColor;
+      // ctx.stroke();
+    }
+  };
+
+  highlightNode = node => {
+    const { marginLeft } = this;
+    const closestX = node.index;
+    const closestY = node.attributes[this.attribute];
+
+    const elementTooltip = this.refs['essentialities-plot-tooltip'];
+    const guideX = this.refs['essentialities-plot-xline'];
+    const guideY = this.refs['essentialities-plot-yline'];
+    const tooltip = d3.select(elementTooltip);
+
+    // Show the guide
+    const guideXpos = this.xScale(closestX) + marginLeft;
+    const guideYpos = this.yScale(closestY);
+    guideX.setAttribute('x1', guideXpos);
+    guideX.setAttribute('x2', guideXpos);
+    guideX.style.display = 'block';
+    guideY.setAttribute('y1', guideYpos);
+    guideY.setAttribute('y2', guideYpos);
+    guideY.style.display = 'block';
+
+    this.showTooltip(
+      this.xScale(closestX) + marginLeft,
+      this.yScale(closestY),
+      tooltip,
+      `${node.attributes.model_name}` // TODO: parameterise
+    );
+  };
 
   plotEssentialities(data) {
-    const { marginTop, marginLeft, width, height, brushHeight } = this;
+    const { marginTop, marginLeft, height, brushHeight } = this;
+    const { containerWidth } = this.state;
     const elementSvg = this.refs['essentialities-plot-svg'];
     const elementCanvas = this.refs['essentialities-plot-canvas'];
     const elementTooltip = this.refs['essentialities-plot-tooltip'];
@@ -44,55 +176,17 @@ class geneEssentialitiesPlot extends React.Component {
     const guideX = this.refs['essentialities-plot-xline'];
     const guideY = this.refs['essentialities-plot-yline'];
 
-    // Fast way to remove prev content
-    // if (elementCanvas) {
-    //   while (elementCanvas.firstChild) {
-    //     elementCanvas.removeChild(elementCanvas.firstChild);
-    //   }
-    // }`
+    const dataSorted = sortBy(data, rec => rec.attributes[this.attribute]);
 
-    function plotOnCanvas() {
-      // Nodes display
-      ctx.clearRect(0, 0, width - marginLeft, height - marginTop);
-      ctx.save();
-      for (let i = 0; i < dataWithI.length; i++) {
-        const d = dataWithI[i];
-        ctx.beginPath();
-        ctx.arc(
-          xScale(d.index),
-          yScale(d.attributes[attribute]),
-          nodeRadius,
-          0,
-          2 * Math.PI,
-          false
-        );
-        ctx.fillStyle =
-          d.attributes[attribute] < 0.05 ? signifNodeColor : insignifNodeColor;
-        ctx.fill();
-        ctx.lineWidth = 1;
-        ctx.strokeStyle =
-          d.attributes[attribute] < 0.05 ? signifNodeColor : insignifNodeColor;
-        ctx.stroke();
-
-        if (axisBottom) {
-          axisBottom.call(xAxis);
-        }
-      }
-    }
-
-    const attribute = 'fc_corrected';
-
-    const dataSorted = sortBy(data, rec => rec.attributes[attribute]);
-
-    const dataWithI = dataSorted.map((d, i) => {
+    this.data = dataSorted.map((d, i) => {
       return { ...d, index: i };
     });
 
     const tooltip = d3.select(elementTooltip);
     const quadTree = d3.quadtree(
-      dataWithI,
+      this.data,
       d => d.index,
-      d => d.attributes[attribute]
+      d => d.attributes[this.attribute]
     );
     const svg = d3.select(elementSvg);
 
@@ -100,36 +194,23 @@ class geneEssentialitiesPlot extends React.Component {
       .append('rect')
       .attr('x', marginLeft)
       .attr('y', 0)
-      .attr('width', width - marginLeft)
+      .attr('width', containerWidth - marginLeft)
       .attr('height', height - marginTop)
       .on('mousemove', () => {
         const ev = d3.event;
 
         // map the clicked point to the data space
-        const xClicked = xScale.invert(ev.offsetX - marginLeft);
-        const yClicked = yScale.invert(ev.offsetY);
+        const xClicked = this.xScale.invert(ev.offsetX - marginLeft);
+        const yClicked = this.yScale.invert(ev.offsetY);
 
         // find the closest point in the dataset to the clicked point
         const closest = quadTree.find(xClicked, yClicked);
-        const closestX = closest.index;
-        const closestY = closest.attributes[attribute];
-
-        // Show the guide
-        const guideXpos = xScale(closestX) + marginLeft;
-        const guideYpos = yScale(closestY);
-        guideX.setAttribute('x1', guideXpos);
-        guideX.setAttribute('x2', guideXpos);
-        guideX.style.display = 'block';
-        guideY.setAttribute('y1', guideYpos);
-        guideY.setAttribute('y2', guideYpos);
-        guideY.style.display = 'block';
-
-        this.showTooltip(
-          xScale(closestX) + marginLeft,
-          yScale(closestY),
-          tooltip,
-          `${closest.attributes.model_name}`
-        );
+        this.highlightNode(closest);
+        this.props.selectRow([
+          closest.attributes.gene_symbol,
+          closest.attributes.model_name,
+          closest.attributes[this.attribute]
+        ]);
       })
       .on('mouseout', () => {
         this.hideTooltip(tooltip);
@@ -141,55 +222,50 @@ class geneEssentialitiesPlot extends React.Component {
       .area()
       .curve(d3.curveMonotoneX)
       .x(d => xScaleBrush(d.index))
-      .y0(50)
-      .y1(d => yScaleBrush(d.attributes[attribute]));
+      .y0(brushHeight)
+      .y1(d => yScaleBrush(d.attributes[this.attribute]));
 
     //create brush function redraw scatterplot with selection
-    function brushed() {
+    const brushed = () => {
       const selection = d3.event.selection;
-      xScale.domain(selection.map(xScaleBrush.invert, xScaleBrush));
-      plotOnCanvas();
-    }
-
-    console.log(dataWithI);
+      this.xScale.domain(selection.map(xScaleBrush.invert, xScaleBrush));
+      this.plotOnCanvas();
+    };
 
     const canvas = d3.select(elementCanvas);
-    const ctx = canvas.node().getContext('2d');
-    const insignifNodeColor = '#758E4F';
-    const signifNodeColor = '#FFCC00';
-    const nodeRadius = 3;
+    this.ctx = canvas.node().getContext('2d');
 
-    const yExtent = d3.extent(dataWithI, d => d.attributes[attribute]);
-    const xScale = d3
+    const yExtent = d3.extent(this.data, d => d.attributes[this.attribute]);
+    this.xScale = d3
       .scaleLinear()
-      .range([0, width - marginLeft])
-      .domain([0, dataWithI.length]);
+      .range([0, containerWidth - marginLeft])
+      .domain([0, this.data.length]);
 
-    const yScale = d3
+    this.yScale = d3
       .scaleLinear()
       .range([0, height - marginTop])
       .domain([yExtent[1], yExtent[0]]);
 
     const xScaleBrush = d3
       .scaleLinear()
-      .range([0, width - marginLeft])
-      .domain([0, dataWithI.length]);
+      .range([0, containerWidth - marginLeft])
+      .domain([0, this.data.length]);
 
     const yScaleBrush = d3
       .scaleLinear()
-      .range([0, 50])
+      .range([0, brushHeight])
       .domain([yExtent[1], yExtent[0]]);
 
     const brush = d3
       .brushX()
-      .extent([[0, 0], [width - marginLeft, 50]])
+      .extent([[0, 0], [containerWidth - marginLeft, brushHeight]])
       .on('brush', brushed);
 
     const brushSelection = d3.select(elementBrush);
 
     brushSelection
       .append('path')
-      .datum(dataWithI)
+      .datum(this.data)
       .attr('class', 'line')
       .attr('d', brushLine);
 
@@ -197,13 +273,13 @@ class geneEssentialitiesPlot extends React.Component {
       .append('g')
       .attr('class', 'brush')
       .call(brush)
-      .call(brush.move, xScale.range());
+      .call(brush.move, this.xScale.range());
 
-    const xAxis = d3.axisBottom(xScale).tickFormat(d3.format('.0f'));
+    this.xAxis = d3.axisBottom(this.xScale).tickFormat(d3.format('.0f'));
 
-    const yAxis = d3.axisLeft(yScale);
+    this.yAxis = d3.axisLeft(this.yScale);
 
-    const axisBottom = svg
+    this.axisBottom = svg
       .append('g')
       .attr('id', 'axisBottom')
       .attr('transform', `translate(${marginLeft},${height - marginTop})`);
@@ -211,12 +287,12 @@ class geneEssentialitiesPlot extends React.Component {
     svg
       .append('g')
       .attr('transform', `translate(${marginLeft},0)`)
-      .call(yAxis);
+      .call(this.yAxis);
 
     // x scale title
     svg
       .append('text')
-      .attr('transform', `translate(${width / 2}, ${height - 10})`)
+      .attr('transform', `translate(${containerWidth / 2}, ${height - 10})`)
       .attr('text-anchor', 'middle')
       .text('Cell lines');
 
@@ -229,33 +305,33 @@ class geneEssentialitiesPlot extends React.Component {
       .attr('text-anchor', 'middle')
       .text('Fold change');
 
-    plotOnCanvas();
+    this.plotOnCanvas();
   }
 
   render() {
-    const { marginTop, marginLeft, width, height } = this;
+    const { marginTop, marginLeft, height, brushHeight } = this;
+    const { containerWidth } = this.state;
+
     return (
-      <React.Fragment>
+      <div ref="plot-container">
         <svg
           ref="essentialities-plot-brush"
           className="leave-space"
-          height="50"
-          width={width - marginLeft}
-        >
-          <g ref="" />
-        </svg>
+          height={brushHeight}
+          width={containerWidth - marginLeft}
+        />
         <div className="essentialities-plot-container">
           <canvas
             ref="essentialities-plot-canvas"
             className="star-plot-toplevel-container leave-space"
             height={height - marginTop}
-            width={width - marginLeft}
+            width={containerWidth - marginLeft}
           />
           <svg
             ref="essentialities-plot-svg"
             className="star-plot-toplevel-container top"
             height={height}
-            width={width}
+            width={containerWidth}
           >
             <line
               ref="essentialities-plot-xline"
@@ -263,15 +339,15 @@ class geneEssentialitiesPlot extends React.Component {
               x2="0"
               y1="0"
               y2={height - marginTop}
-              style={{ stroke: '#eeeeee', strokeWidth: '2px' }}
+              style={{ display: 'none', stroke: '#eeeeee', strokeWidth: '2px' }}
             />
             <line
               ref="essentialities-plot-yline"
               x1={marginLeft}
-              x2={width}
+              x2={containerWidth}
               y1="0"
               y2="0"
-              style={{ stroke: '#eeeeee', strokeWidth: '2px' }}
+              style={{ display: 'none', stroke: '#eeeeee', strokeWidth: '2px' }}
             />
           </svg>
           <div
@@ -288,9 +364,25 @@ class geneEssentialitiesPlot extends React.Component {
             }}
           />
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
 
-export default geneEssentialitiesPlot;
+const mapStateToProps = state => {
+  return {
+    selectedEssentiality: state.rowSelected
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    selectRow: rowData => dispatch(selectRow(rowData))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  geneEssentialitiesPlot
+);
+
+// export default geneEssentialitiesPlot;

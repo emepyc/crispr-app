@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 // import {tableStartChanged, tableTissueFilter} from './actions/table';
+import { Link } from 'react-router-dom';
 import { tableTissueFilter } from './actions/table';
 import { Row, Col, Card } from 'reactstrap';
 import $ from 'jquery';
@@ -32,11 +33,15 @@ function formatData(data) {
     const row = [];
 
     // gene
-    // row.push(`<a href="${r.relationships.gene.links.related}">${r.attributes.gene_symbol}</a>`);
     row.push(
-      `<a href=/gene/${r.attributes.gene_symbol}>${
-        r.attributes.gene_symbol
-      }</a>`
+      `<Link to=/gene/${r.attributes.gene_symbol}?model=${
+        r.attributes.model_name
+      }>
+        ${r.attributes.gene_symbol}
+      </Link>`
+      // `<a href=/gene/${r.attributes.gene_symbol}?model=${r.attributes.model_name}>${
+      //   r.attributes.gene_symbol
+      // }</a>`
     );
 
     // model

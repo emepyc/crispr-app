@@ -2,6 +2,8 @@ import React from 'react';
 import Card from '../card';
 import './geneEssentialitiesDetails.css';
 import GeneEssentialitiesPlot from '../geneEssentialitiesPlot';
+import CustomTable from '../customTable';
+import { Row, Col } from 'reactstrap';
 
 const geneEssentialitiesDetails = props => {
   if (!props.data.data) {
@@ -16,7 +18,14 @@ const geneEssentialitiesDetails = props => {
 
   return (
     <div className="gene-essentialities-details-container">
-      <Card header={header} body={body} />
+      <Row>
+        <Col xs={12} lg={6} className="my-auto">
+          <Card header={header} body={body} />
+        </Col>
+        <Col xs={12} lg={6} className="my-auto">
+          <CustomTable />
+        </Col>
+      </Row>
     </div>
   );
 };

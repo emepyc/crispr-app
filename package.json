@@ -24,6 +24,7 @@
     "jszip": "^3.1.5",
     "lint-staged": "^6.1.0",
     "lodash.debounce": "^4.0.8",
+    "lodash.find": "^4.6.0",
     "lodash.sortby": "^4.7.0",
     "node-sass-chokidar": "^0.0.3",
     "pdfmake": "^0.1.36",

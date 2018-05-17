@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from '../card';
-import geneEssentialitiesSummaryCss from './geneEssentialitiesSummary.css';
+import './geneEssentialitiesSummary.css';
 
 const geneEssentialitiesSummary = props => {
   if (!props.data) {
@@ -16,6 +16,7 @@ const geneEssentialitiesSummary = props => {
       <div>etc...</div>
     </div>
   );
+
   return (
     <div className="gene-essentialities-summary-container">
       <Card header={header} body={body} />

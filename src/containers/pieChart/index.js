@@ -1,10 +1,9 @@
 import React from 'react';
-// import Card from '../card';
 import { connect } from 'react-redux';
 import { history } from '../../store/store';
 import { Row, Col } from 'reactstrap';
 import * as d3 from 'd3';
-// import {schemePaired} from 'd3-scale-chromatic';
+
 import './pieChart.css';
 import { tableTissueFilter } from '../table/actions/table';
 const schemePaired = [
@@ -67,6 +66,7 @@ class PieChart extends React.Component {
     const pieChartWidth = this.state.containerWidth;
 
     // Fast way of removing previous content
+    // TODO: Shouldn't this be to resize?
     const element = this.refs['piechart-container'];
     if (element) {
       while (element.firstChild) {
