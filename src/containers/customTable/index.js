@@ -87,7 +87,7 @@ class CustomTable extends React.Component {
       const tissueClean = params.tissue.split('_').join(' ');
       return axios
         .get(
-          `${API_BASEURL}/models?filter=[{"name":"tissue","op":"eq","val":"${tissueClean}"}]`
+          `${API_BASEURL}/models?filter=[{"name":"tissue","op":"eq","val":"${tissueClean}"}]&page[size]=0`
         )
         .then(resp => {
           return {

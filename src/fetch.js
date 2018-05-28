@@ -10,11 +10,7 @@ const paramToApiParam = {
 };
 
 function expandParams(params) {
-  console.log('params to expand...');
-  console.log(params);
   if (params.tissue) {
-    console.log('expanding tissues with tissue...');
-    console.log(params);
     // TODO: this is the reverse of the process happened when fetching the tissues data. There may be better alternatives to just substituting back and forth
     const tissueClean = params.tissue.split('_').join(' ');
     return axios
@@ -22,13 +18,8 @@ function expandParams(params) {
         `${API_BASEURL}/models`,
         {
           params: {
-            filter: [
-              {
-                name: 'tissue',
-                op: 'eq',
-                vale: tissueClean
-              }
-            ]
+            filter: `[{"name":"tissue","op":"eq","val":"${tissueClean}"}]`,
+            'page[size]': 0
           }
         }
         // `${API_BASEURL}/models?filter=[{"name":"tissue","op":"eq","val":"${tissueClean}"}]`
@@ -49,9 +40,7 @@ function expandParams(params) {
 export function paramsToFilter(params) {
   return expandParams(params).then(expandedParams => {
     const { tissue, ...validParams } = expandedParams; // Tissue can not go in the filters
-    console.log('paramsNoEmpty');
     const paramsNoEmpty = pickBy(validParams, param => param !== undefined);
-    console.log(paramsNoEmpty);
     return Object.keys(paramsNoEmpty).map(param => {
       return {
         name: paramToApiParam[param],

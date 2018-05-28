@@ -35,6 +35,9 @@ class geneEssentialitiesPlot extends React.Component {
     this.attribute = 'fc_corrected';
   }
 
+  // Remove previous elements (axis, etc)
+  cleanPlot = () => {};
+
   resize = () => {
     const container = this.refs['plot-container'];
 
@@ -44,6 +47,7 @@ class geneEssentialitiesPlot extends React.Component {
       },
       () => {
         if (this.props.data.length) {
+          this.cleanPlot();
           this.plotEssentialities(this.props.data);
         }
       }
@@ -65,7 +69,11 @@ class geneEssentialitiesPlot extends React.Component {
       prevProps.selectedEssentiality !== this.props.selectedEssentiality
     ) {
       const selectedNode = this.rowToNode(this.props.selectedEssentiality);
-      this.highlightNode(selectedNode);
+      if (selectedNode) {
+        // console.log('selected node from component did update is...');
+        // console.log(selectedNode);
+        this.highlightNode(selectedNode);
+      }
     }
   }
 
@@ -99,8 +107,8 @@ class geneEssentialitiesPlot extends React.Component {
       signifNodeColor,
       insignifNodeColor,
       nodeRadius,
-      attribute,
-      axisBottom
+      attribute
+      // axisBottom
     } = this;
     const { containerWidth } = this.state;
     const { selectedEssentiality } = this.props;
@@ -126,14 +134,21 @@ class geneEssentialitiesPlot extends React.Component {
       ctx.strokeStyle =
         d.attributes[attribute] < 0.05 ? signifNodeColor : insignifNodeColor;
       ctx.stroke();
-
-      if (axisBottom) {
-        axisBottom.call(xAxis);
-      }
     }
+
+    if (xAxis) {
+      const axisBottom = d3
+        .select(this.refs['essentialities-plot-axis-bottom'])
+        .attr('transform', `translate(${marginLeft},${height - marginTop})`);
+      axisBottom.call(this.xAxis);
+    }
+
     // selected node
     if (selectedEssentiality) {
-      this.highlightNode(this.rowToNode(selectedEssentiality));
+      const nodeToHighlight = this.rowToNode(selectedEssentiality);
+      if (nodeToHighlight) {
+        this.highlightNode(nodeToHighlight);
+      }
     }
   };
 
@@ -176,6 +191,10 @@ class geneEssentialitiesPlot extends React.Component {
     const elementBrush = this.refs['essentialities-plot-brush'];
     const guideX = this.refs['essentialities-plot-xline'];
     const guideY = this.refs['essentialities-plot-yline'];
+    // const axisBottom = this.refs['essentialities-plot-axis-bottom'];
+    const axisLeft = this.refs['essentialities-plot-axis-left'];
+    const xAxisLabel = this.refs['x-axis-label'];
+    const yAxisLabel = this.refs['y-axis-label'];
 
     const dataSorted = sortBy(data, rec => rec.attributes[this.attribute]);
 
@@ -277,34 +296,47 @@ class geneEssentialitiesPlot extends React.Component {
       .call(brush.move, this.xScale.range());
 
     this.xAxis = d3.axisBottom(this.xScale).tickFormat(d3.format('.0f'));
-
     this.yAxis = d3.axisLeft(this.yScale);
 
-    this.axisBottom = svg
-      .append('g')
-      .attr('id', 'axisBottom')
-      .attr('transform', `translate(${marginLeft},${height - marginTop})`);
+    // const axisBottom = d3.select(this.refs['essentialities-plot-axis-bottom'])
+    //     .attr('transform', `translate(${marginLeft},${height - marginTop})`);
+    // axisBottom.call(this.xAxis);
 
-    svg
-      .append('g')
-      .attr('transform', `translate(${marginLeft},0)`)
-      .call(this.yAxis);
+    // this.axisBottom = svg
+    //     .append('g')
+    //     .attr('id', 'axisBottom')
+    //     .attr('transform', `translate(${marginLeft},${height - marginTop})`);
+
+    // svg
+    //     .append('g')
+    //     .attr('transform', `translate(${marginLeft},0)`)
+    //     .call(this.yAxis);
 
     // x scale title
-    svg
-      .append('text')
-      .attr('transform', `translate(${containerWidth / 2}, ${height - 10})`)
-      .attr('text-anchor', 'middle')
-      .text('Cell lines');
+    // svg
+    //     .append('text')
+    //     .attr('transform', `translate(${containerWidth / 2}, ${height - 10})`)
+    //     .attr('text-anchor', 'middle')
+    //     .text('Cell lines');
+
+    d3.select(axisLeft).call(this.yAxis);
+
+    d3
+      .select(xAxisLabel)
+      .attr('transform', `translate(${containerWidth / 2}, ${height - 10})`);
+
+    d3
+      .select(yAxisLabel)
+      .attr('transform', `translate(15, ${height / 2}) rotate(-90)`);
 
     // y scale title
-    svg
-      .append('text')
-      .attr('transform', `translate(15, ${height / 2}) rotate(-90)`)
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('text-anchor', 'middle')
-      .text('Fold change');
+    // svg
+    //     .append('text')
+    //     .attr('transform', `translate(15, ${height / 2}) rotate(-90)`)
+    //     .attr('x', 0)
+    //     .attr('y', 0)
+    //     .attr('text-anchor', 'middle')
+    //     .text('Fold change');
 
     this.plotOnCanvas();
   }
@@ -350,6 +382,20 @@ class geneEssentialitiesPlot extends React.Component {
               y2="0"
               style={{ display: 'none', stroke: '#eeeeee', strokeWidth: '2px' }}
             />
+            <g ref="essentialities-plot-axis-bottom" />
+
+            <g
+              ref="essentialities-plot-axis-left"
+              transform={`translate(${marginLeft},0)`}
+            />
+
+            <text ref="x-axis-label" x="0" y="0" textAnchor="middle">
+              Cell lines
+            </text>
+
+            <text ref="y-axis-label" x="0" y="0" textAnchor="middle">
+              Fold change
+            </text>
           </svg>
           <div
             ref="essentialities-plot-tooltip"
