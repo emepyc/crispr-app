@@ -48,8 +48,8 @@ class PieChart extends React.Component {
   gotoTable = d => {
     this.props.setTissue(d.data.id);
     history.push({
-      pathname: '/table'
-      // search: `?tissue=${d.data.id}`
+      pathname: '/table',
+      search: `?tissue=${d.data.id}`
     });
   };
 

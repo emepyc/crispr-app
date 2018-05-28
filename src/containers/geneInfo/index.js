@@ -9,7 +9,17 @@ class GeneInfo extends React.Component {
   }
 
   componentDidMount() {
+    if (this.props.gene) {
+      this.props.fetchGeneInfo(this.props.gene);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!this.props.gene || prevProps.gene === this.props.gene) {
+      return;
+    }
     this.props.fetchGeneInfo(this.props.gene);
+    // TODO: Set Params in URL
   }
 
   render() {

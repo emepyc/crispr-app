@@ -3,13 +3,15 @@ import { connect } from 'react-redux';
 import { fetchGeneEssentialities } from './actions/geneEssentialities';
 import GeneEssentialitiesSummary from '../geneEssentialitiesSummary';
 import GeneEssentialitiesDetails from '../geneEssentialitiesDetails';
+import Filters from '../filters';
 
 class GeneEssentialities extends React.Component {
   constructor(props) {
     super(props);
 
+    // TODO: Convert to functional
     this.summary = data => {
-      if (!data.data) {
+      if (!data.length) {
         return {
           models: {}
         };
@@ -19,14 +21,14 @@ class GeneEssentialities extends React.Component {
       // Number of models
       const modelsTotal = {};
       const modelsSignif = {};
-      data.data.forEach(m => {
+      data.forEach(m => {
         const mId = m.attributes.model_name;
         if (!modelsTotal[mId]) {
           modelsTotal[mId] = 0;
         }
         modelsTotal[mId] += 1;
 
-        if (m.attributes.mageck_fdr < 0.05) {
+        if (m.attributes.fc_corrected < 0.05) {
           if (!modelsSignif[mId]) {
             modelsSignif[mId] = 0;
           }
@@ -41,15 +43,27 @@ class GeneEssentialities extends React.Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.gene && prevProps.gene !== this.props.gene) {
+      this.props.fetchGeneEssentialities(this.props.gene, this.props.tissue);
+    }
+
+    if (this.props.tissue && prevProps.tissue !== this.props.tissue) {
+      this.props.fetchGeneEssentialities(this.props.gene, this.props.tissue);
+    }
+  }
+
   componentDidMount() {
-    this.props.fetchGeneEssentialities(this.props.gene);
+    if (this.props.gene) {
+      this.props.fetchGeneEssentialities(this.props.gene, this.props.tissue);
+    }
   }
 
   render() {
     if (this.props.hasErrored) {
       return (
         <p>
-          Sorry! there was a problem loading the gene essentialities for{' '}
+          Sorry! there was a problem loading the gene essentialities for
           {this.props.gene}
         </p>
       );
@@ -60,7 +74,7 @@ class GeneEssentialities extends React.Component {
     }
 
     return (
-      <div>
+      <React.Fragment>
         <div>
           <GeneEssentialitiesSummary
             gene={this.props.gene}
@@ -68,12 +82,17 @@ class GeneEssentialities extends React.Component {
           />
         </div>
         <div>
+          <Filters tissue={this.props.tissue} />
+        </div>
+        <div>
           <GeneEssentialitiesDetails
             gene={this.props.gene}
+            model={this.props.model}
+            tissue={this.props.tissue}
             data={this.props.geneEssentialities}
           />
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
@@ -88,7 +107,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchGeneEssentialities: gene => dispatch(fetchGeneEssentialities(gene))
+    fetchGeneEssentialities: (gene, tissue) =>
+      dispatch(fetchGeneEssentialities(gene, tissue))
   };
 };
 

@@ -18,7 +18,7 @@ export function geneEssentialitiesIsLoading(state = false, action) {
   }
 }
 
-export function geneEssentialities(state = {}, action) {
+export function geneEssentialities(state = [], action) {
   switch (action.type) {
     case 'GENE_ESSENTIALITIES_FETCH_DATA_SUCCESS':
       return action.geneEssentialities;

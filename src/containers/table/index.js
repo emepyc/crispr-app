@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 // import {tableStartChanged, tableTissueFilter} from './actions/table';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { tableTissueFilter } from './actions/table';
 import { Row, Col, Card } from 'reactstrap';
 import $ from 'jquery';
@@ -12,13 +12,14 @@ import queryString from 'query-string';
 import FilterBox from '../filterBox';
 import TissuesChips from '../tissueChip';
 import ValuesFilter from '../valuesFilter';
+import Promise from 'es6-promise';
 
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faDownload from '@fortawesome/fontawesome-free-solid/faDownload';
-import dt from 'datatables.net';
-import * as dtbs from 'datatables.net-bs4';
-import * as dtbsb from 'datatables.net-buttons-bs4';
-import * as dtbsr from 'datatables.net-responsive-bs4';
+import 'datatables.net';
+import 'datatables.net-bs4';
+import 'datatables.net-buttons-bs4';
+import 'datatables.net-responsive-bs4';
 import 'datatables.net-keytable-bs4/css/keyTable.bootstrap4.min.css';
 import 'datatables.net-bs4/css/dataTables.bootstrap4.css';
 // TODO: Not working on pagination buttons??
@@ -32,16 +33,13 @@ function formatData(data) {
   data.forEach(r => {
     const row = [];
 
-    // gene
+    // genePage
     row.push(
       `<Link to=/gene/${r.attributes.gene_symbol}?model=${
         r.attributes.model_name
       }>
         ${r.attributes.gene_symbol}
       </Link>`
-      // `<a href=/gene/${r.attributes.gene_symbol}?model=${r.attributes.model_name}>${
-      //   r.attributes.gene_symbol
-      // }</a>`
     );
 
     // model

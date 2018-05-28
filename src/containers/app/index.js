@@ -4,7 +4,7 @@ import Masthead from '../masthead/';
 import Home from '../home';
 import About from '../about';
 import Downloads from '../downloads';
-import Gene from '../gene';
+import Gene from '../genePage';
 // import Model from '../model';
 import Table from '../tablePage';
 

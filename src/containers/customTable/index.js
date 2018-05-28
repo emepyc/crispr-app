@@ -1,13 +1,13 @@
 import React from 'react';
-import pickBy from 'lodash/pickBy';
-import identity from 'lodash/identity';
+import pickBy from 'lodash.pickby';
+import identity from 'lodash.identity';
 import { connect } from 'react-redux';
-import { Table, Nav, NavItem, NavLink } from 'reactstrap';
+import { Table, Nav, NavLink } from 'reactstrap';
 import axios from 'axios';
 import classnames from 'classnames';
-// import cols from './columns';
-import { withRouter } from 'react-router';
-import { selectRow } from './actions/customTable';
+import { selectRow, setGene } from './actions/customTable';
+import Promise from 'es6-promise';
+import { Link } from 'react-router-dom';
 
 const API_BASEURL = process.env.REACT_APP_API_BASEURL;
 
@@ -47,6 +47,7 @@ class CustomTable extends React.Component {
 
   fetch = () => {
     const { sort, filter, pageSize, pageNumber } = this.state;
+    console.warn('fetch!!!');
     const params = {
       sort,
       filter,
@@ -80,44 +81,70 @@ class CustomTable extends React.Component {
       );
   };
 
-  getTerm = (pathname, type) => {
-    const index = pathname.indexOf(`${type}/`);
-    if (index !== -1) {
-      const parts = pathname.split('/');
-      return parts[parts.length - 1];
+  expandParams = params => {
+    if (params.tissue) {
+      // TODO: this is the reverse of the process happened when fetching the tissues data. There may be better alternatives to just substituting back and forth
+      const tissueClean = params.tissue.split('_').join(' ');
+      return axios
+        .get(
+          `${API_BASEURL}/models?filter=[{"name":"tissue","op":"eq","val":"${tissueClean}"}]`
+        )
+        .then(resp => {
+          return {
+            ...params,
+            model: [
+              ...(params.model || []),
+              ...resp.data.data.map(rec => rec.attributes.model_name)
+            ]
+          };
+        });
     }
+    return Promise.resolve(params);
   };
 
   paramsToFilter = params => {
-    return Object.keys(params).map(param => {
-      return {
-        name: paramToApiParam[param],
-        op: 'in_',
-        val: [params[param]]
-      };
+    return this.expandParams(params).then(expandedParams => {
+      const { tissue, ...validParams } = expandedParams; // Tissue can not go in the filters
+      return Object.keys(validParams).map(param => {
+        return {
+          name: paramToApiParam[param],
+          op: 'in_',
+          val: Array.isArray(expandedParams[param])
+            ? [...expandedParams[param]]
+            : [expandedParams[param]]
+        };
+      });
     });
   };
 
-  getParamsFromUrl = loc => {
-    const gene = this.getTerm(loc.pathname, 'gene');
-    const model = this.getTerm(loc.pathname, 'model');
-
-    return pickBy({ gene, model }, identity);
+  getParams = () => {
+    const { gene, tissue } = this.props;
+    const params = {
+      tissue,
+      gene
+    };
+    this.paramsToFilter(pickBy(params, identity)).then(filters => {
+      this.setState(
+        {
+          filter: JSON.stringify(filters)
+        },
+        this.fetch
+      );
+    });
   };
 
   componentDidMount() {
-    const params = this.getParamsFromUrl(this.props.location);
-    const filter = this.paramsToFilter(params);
-    this.setState(
-      {
-        filter: JSON.stringify(filter)
-      },
-      this.fetch
-    );
+    this.getParams();
   }
 
-  componentWillUnmount() {
-    this.props.selectRow(null);
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.tissue === this.props.tissue &&
+      prevProps.gene === this.props.gene
+    ) {
+      return;
+    }
+    this.getParams();
   }
 
   goPrev = () => {
@@ -195,7 +222,14 @@ class CustomTable extends React.Component {
                   style={style}
                   onMouseOver={() => this.mouseOver(row)}
                 >
-                  <th scope="row">{row[0]}</th>
+                  <th scope="row">
+                    <Link
+                      onClick={() => this.props.setGene(row[0])}
+                      to={`/gene/${row[0]}?model=${row[1]}`}
+                    >
+                      {row[0]}
+                    </Link>
+                  </th>
                   <td>{row[1]}</td>
                   <td>{row[2]}</td>
                 </tr>
@@ -208,13 +242,6 @@ class CustomTable extends React.Component {
   }
 }
 
-// const mapStateToProps = state => {
-//   return {
-//     ntissues: state.tissues.length,
-//     nmodels: d3.sum(state.tissues, t => t.counts)
-//   };
-// };
-
 const mapStateToProps = state => {
   return {
     selectedEssentiality: state.rowSelected
@@ -223,13 +250,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    selectRow: rowData => dispatch(selectRow(rowData))
+    selectRow: rowData => dispatch(selectRow(rowData)),
+    setGene: gene => dispatch(setGene(gene))
   };
 };
 
-const CustomTableWithRouter = withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(CustomTable)
-);
-export default CustomTableWithRouter;
-
-// export default connect(mapStateToProps)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(CustomTable);

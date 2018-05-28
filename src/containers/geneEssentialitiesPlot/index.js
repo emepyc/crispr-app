@@ -2,9 +2,10 @@ import React from 'react';
 import * as d3 from 'd3';
 import sortBy from 'lodash.sortby';
 import find from 'lodash.find';
-import './geneEssentialitiesPlot.css';
 import { connect } from 'react-redux';
 import { selectRow } from '../customTable/actions/customTable';
+
+import './geneEssentialitiesPlot.css';
 
 class geneEssentialitiesPlot extends React.Component {
   constructor(props) {
@@ -41,20 +42,30 @@ class geneEssentialitiesPlot extends React.Component {
       {
         containerWidth: container.offsetWidth
       },
-      () => this.plotEssentialities(this.props.data.data)
+      () => {
+        if (this.props.data.length) {
+          this.plotEssentialities(this.props.data);
+        }
+      }
     );
   };
 
   componentDidMount() {
-    if (this.props.data.data && this.props.data.data.length) {
-      this.resize();
-      window.addEventListener('resize', this.resize);
-    }
+    this.resize();
+    window.addEventListener('resize', this.resize);
   }
 
-  componentDidUpdate() {
-    if (this.ctx) {
-      this.plotOnCanvas();
+  componentDidUpdate(prevProps) {
+    if (this.props.data && prevProps.data !== this.props.data) {
+      this.resize();
+    }
+
+    if (
+      this.props.selectedEssentiality &&
+      prevProps.selectedEssentiality !== this.props.selectedEssentiality
+    ) {
+      const selectedNode = this.rowToNode(this.props.selectedEssentiality);
+      this.highlightNode(selectedNode);
     }
   }
 
@@ -68,6 +79,11 @@ class geneEssentialitiesPlot extends React.Component {
 
   hideTooltip = el => {
     el.style('display', 'none');
+  };
+
+  // TODO: Needs a more performant way of finding X
+  rowToNode = row => {
+    return find(this.data, d => d.attributes.model_name === row[1]);
   };
 
   plotOnCanvas = () => {
@@ -117,24 +133,7 @@ class geneEssentialitiesPlot extends React.Component {
     }
     // selected node
     if (selectedEssentiality) {
-      // TODO: Needs a more performant way of finding X
-      const selectedNode = find(
-        data,
-        d => d.attributes.model_name === selectedEssentiality[1]
-      );
-      this.highlightNode(selectedNode);
-      // ctx.beginPath();
-      // ctx.arc(
-      //   xScale(selectedNode.index),
-      //   yScale(selectedEssentiality[2]),
-      //   nodeRadius + 5,
-      //   0,
-      //   2 * Math.PI,
-      //   false
-      // );
-      // ctx.strokeStyle =
-      //   nodeRadius < 0.05 ? signifNodeColor : insignifNodeColor;
-      // ctx.stroke();
+      this.highlightNode(this.rowToNode(selectedEssentiality));
     }
   };
 
@@ -167,6 +166,8 @@ class geneEssentialitiesPlot extends React.Component {
   };
 
   plotEssentialities(data) {
+    console.log('in plot essentialities data is...');
+    console.log(data);
     const { marginTop, marginLeft, height, brushHeight } = this;
     const { containerWidth } = this.state;
     const elementSvg = this.refs['essentialities-plot-svg'];

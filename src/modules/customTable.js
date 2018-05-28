@@ -7,3 +7,13 @@ export function rowSelected(state = null, action) {
       return state;
   }
 }
+
+export function geneSelected(state = null, action) {
+  switch (action.type) {
+    case 'GENE_SELECTED':
+      return action.gene;
+
+    default:
+      return state;
+  }
+}

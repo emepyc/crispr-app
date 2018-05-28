@@ -6,7 +6,7 @@ import CustomTable from '../customTable';
 import { Row, Col } from 'reactstrap';
 
 const geneEssentialitiesDetails = props => {
-  if (!props.data.data) {
+  if (!props.data) {
     return <div />;
   }
   const header = <div>Screening results</div>;
@@ -23,7 +23,7 @@ const geneEssentialitiesDetails = props => {
           <Card header={header} body={body} />
         </Col>
         <Col xs={12} lg={6} className="my-auto">
-          <CustomTable />
+          <CustomTable gene={props.gene} tissue={props.tissue} />
         </Col>
       </Row>
     </div>

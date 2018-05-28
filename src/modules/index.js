@@ -7,7 +7,7 @@ import {
   geneEssentialitiesHasErrored,
   geneEssentialitiesIsLoading
 } from './geneEssentialities';
-import { rowSelected } from './customTable';
+import { rowSelected, geneSelected } from './customTable';
 
 import { tableStart, tableTissue } from './table';
 
@@ -28,5 +28,6 @@ export default combineReducers({
   tableStart,
   tableTissue,
 
-  rowSelected
+  rowSelected,
+  geneSelected
 });

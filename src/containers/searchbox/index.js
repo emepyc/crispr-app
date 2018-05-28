@@ -135,7 +135,7 @@ class Searchbox extends React.Component {
 
     // Autosuggest will pass through all these props to the input.
     const inputProps = {
-      placeholder: 'Type a gene or a cell line',
+      placeholder: 'Type a genePage or a cell line',
       autoFocus: true,
       value,
       onChange: this.onChange
@@ -169,8 +169,8 @@ class Searchbox extends React.Component {
 
         <p className="intro-search-examples">
           Try:
-          <Link to={'/gene/BRAF'}>BRAF</Link>
-          <Link to={'/gene/PTEN'}>PTEN</Link>
+          <Link to={'/genePage/BRAF'}>BRAF</Link>
+          <Link to={'/genePage/PTEN'}>PTEN</Link>
         </p>
       </div>
     );
@@ -180,7 +180,7 @@ class Searchbox extends React.Component {
 // const mapDispatchToProps = dispatch =>
 //   bindActionCreators(
 //     {
-//       gotoGenePage: gene => push(`/gene/${gene}`)
+//       gotoGenePage: genePage => push(`/genePage/${genePage}`)
 //     },
 //     dispatch
 //   );

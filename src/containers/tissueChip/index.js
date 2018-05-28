@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { FormGroup, Input } from 'reactstrap';
 import { tableTissueFilter } from '../table/actions/table';
 import { fetchTissues } from '../tissuesSummary/actions/tissues';
+// import { withRouter } from 'react-router';
 
 import { history } from '../../store/store';
 import queryString from 'query-string';
@@ -12,22 +13,42 @@ class Chip extends React.Component {
     super(props);
   }
 
+  // getTerm = (loc, type) => {
+  //   // The term can be in the pathname (table is part of the genePage or model pages
+  //   // or in the search (table page)
+  //   const index = loc.pathname.indexOf(`${type}/`);
+  //   if (index !== -1) {
+  //     const parts = loc.pathname.split('/');
+  //     return parts[parts.length - 1];
+  //   }
+  //
+  //   const search = queryString.parse(loc.search);
+  //   return search[type];
+  // };
+
+  // getTissuesFromUrl = loc => {
+  //   return this.getTerm(loc, 'tissue');
+  // };
+
   tissueChanged = ev => {
-    setParamsInUrl(
-      {
-        tissue: ev.target.value
-      },
-      history
-    );
-    this.props.setTissue(ev.target.value).then(() => {
-      this.props.table.ajax.reload();
-    });
+    const newTissue = ev.target.value;
+    // setParamsInUrl(
+    //   {
+    //     tissue: newTissue
+    //   },
+    //   history
+    // );
+    this.props.setTissue(newTissue);
   };
 
   componentDidMount() {
-    if (!this.props.tissues.length) {
-      this.props.fetchTissues();
-    }
+    // const tissue = this.getTissuesFromUrl(this.props.location);
+    const { tissue } = this.props;
+    // this.props.setTissue(tissue);
+    this.props.fetchTissues();
+    // if (!this.props.tissues.length) {
+    //   this.props.fetchTissues();
+    // }
   }
 
   render() {
@@ -35,6 +56,9 @@ class Chip extends React.Component {
       { tissue: 'No tissue selected', id: '' },
       ...this.props.tissues
     ];
+
+    const { tissue } = this.props;
+
     return (
       <div>
         <FormGroup>
@@ -42,7 +66,7 @@ class Chip extends React.Component {
             type="select"
             name="select"
             id="tissueSelect"
-            value={this.props.tissue}
+            value={tissue || ''}
             onChange={this.tissueChanged}
           >
             {tissuesOptions.map(t => (
@@ -57,21 +81,9 @@ class Chip extends React.Component {
   }
 }
 
-const setParamsInUrl = (newParams, history) => {
-  const oldQueryParams = queryString.parse(history.location.search);
-  const newQueryParams = queryString.stringify({
-    ...oldQueryParams,
-    ...newParams
-  });
-  history.replace({
-    ...history.location,
-    search: newQueryParams
-  });
-};
-
 const mapStateToProps = state => {
   return {
-    tissue: state.tableTissue,
+    // tissue: state.tableTissue,
     tissues: state.tissues
   };
 };
@@ -83,5 +95,10 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-// export default Chip;
+// const ChipWithRouter = withRouter(
+//   connect(mapStateToProps, mapDispatchToProps)(Chip)
+// );
+
 export default connect(mapStateToProps, mapDispatchToProps)(Chip);
+
+// export default ChipWithRouter;
