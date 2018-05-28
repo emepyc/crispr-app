@@ -156,7 +156,6 @@ class geneEssentialitiesPlot extends React.Component {
     const { marginLeft } = this;
     const closestX = node.index;
     const closestY = node.attributes[this.attribute];
-
     const elementTooltip = this.refs['essentialities-plot-tooltip'];
     const guideX = this.refs['essentialities-plot-xline'];
     const guideY = this.refs['essentialities-plot-yline'];
@@ -218,8 +217,11 @@ class geneEssentialitiesPlot extends React.Component {
     const elementBrush = this.refs['essentialities-plot-brush'];
     // const axisBottom = this.refs['essentialities-plot-axis-bottom'];
     const axisLeft = this.refs['essentialities-plot-axis-left'];
-    const xAxisLabel = this.refs['x-axis-label'];
-    const yAxisLabel = this.refs['y-axis-label'];
+    // const xAxisLabel = this.refs['x-axis-label'];
+    // const yAxisLabel = this.refs['y-axis-label'];
+    const eventsContainer = this.refs['essentialities-plot-events-container'];
+    const brushLineElement = this.refs['essentialities-plot-brush-line'];
+    const brushContainer = this.refs['essentialities-plot-brush-container'];
 
     const dataSorted = sortBy(data, rec => rec.attributes[this.attribute]);
 
@@ -235,12 +237,8 @@ class geneEssentialitiesPlot extends React.Component {
     );
     const svg = d3.select(elementSvg);
 
-    svg
-      .append('rect')
-      .attr('x', marginLeft)
-      .attr('y', 0)
-      .attr('width', containerWidth - marginLeft)
-      .attr('height', height - marginTop)
+    d3
+      .select(eventsContainer)
       .on('mousemove', this.mouseMoveOnCanvas)
       .on('mouseout', this.mouseOutOnCanvas);
 
@@ -287,19 +285,30 @@ class geneEssentialitiesPlot extends React.Component {
       .extent([[0, 0], [containerWidth - marginLeft, brushHeight]])
       .on('brush', brushed);
 
-    const brushSelection = d3.select(elementBrush);
+    // const brushSelection = d3.select(elementBrush);
 
-    brushSelection
-      .append('path')
+    d3
+      .select(brushLineElement)
       .datum(this.data)
       .attr('class', 'line')
       .attr('d', brushLine);
 
-    brushSelection
-      .append('g')
-      .attr('class', 'brush')
+    d3
+      .select(brushContainer)
       .call(brush)
       .call(brush.move, this.xScale.range());
+
+    // brushSelection
+    //   .append('path')
+    //   .datum(this.data)
+    //   .attr('class', 'line')
+    //   .attr('d', brushLine);
+
+    // brushSelection
+    //   .append('g')
+    //   .attr('class', 'brush')
+    //   .call(brush)
+    //   .call(brush.move, this.xScale.range());
 
     this.xAxis = d3.axisBottom(this.xScale).tickFormat(d3.format('.0f'));
     this.yAxis = d3.axisLeft(this.yScale);
@@ -327,13 +336,13 @@ class geneEssentialitiesPlot extends React.Component {
 
     d3.select(axisLeft).call(this.yAxis);
 
-    d3
-      .select(xAxisLabel)
-      .attr('transform', `translate(${containerWidth / 2}, ${height - 10})`);
+    // d3
+    //   .select(xAxisLabel)
+    //   .attr('transform', `translate(${containerWidth / 2}, ${height - 10})`);
 
-    d3
-      .select(yAxisLabel)
-      .attr('transform', `translate(15, ${height / 2}) rotate(-90)`);
+    // d3
+    //   .select(yAxisLabel)
+    //   .attr('transform', `translate(15, ${height / 2}) rotate(-90)`);
 
     // y scale title
     // svg
@@ -358,7 +367,10 @@ class geneEssentialitiesPlot extends React.Component {
           className="leave-space"
           height={brushHeight}
           width={containerWidth - marginLeft}
-        />
+        >
+          <path ref="essentialities-plot-brush-line" className="line" />
+          <g ref="essentialities-plot-brush-container" className="brush" />
+        </svg>
         <div className="essentialities-plot-container">
           <canvas
             ref="essentialities-plot-canvas"
@@ -372,7 +384,13 @@ class geneEssentialitiesPlot extends React.Component {
             height={height}
             width={containerWidth}
           >
-            <rect y="0" />
+            <rect
+              ref="essentialities-plot-events-container"
+              x={marginLeft}
+              y="0"
+              width={containerWidth - marginLeft}
+              height={height - marginTop}
+            />
             <line
               ref="essentialities-plot-xline"
               x1="0"
@@ -396,11 +414,23 @@ class geneEssentialitiesPlot extends React.Component {
               transform={`translate(${marginLeft},0)`}
             />
 
-            <text ref="x-axis-label" x="0" y="0" textAnchor="middle">
+            <text
+              ref="x-axis-label"
+              x="0"
+              y="0"
+              textAnchor="middle"
+              transform={`translate(${containerWidth / 2}, ${height - 10})`}
+            >
               Cell lines
             </text>
 
-            <text ref="y-axis-label" x="0" y="0" textAnchor="middle">
+            <text
+              ref="y-axis-label"
+              x="0"
+              y="0"
+              textAnchor="middle"
+              transform={`translate(15, ${height / 2}) rotate(-90)`}
+            >
               Fold change
             </text>
           </svg>
