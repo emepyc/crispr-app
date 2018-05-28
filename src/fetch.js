@@ -1,6 +1,5 @@
 import axios from 'axios';
 import pickBy from 'lodash.pickby';
-import identity from 'lodash.identity';
 
 const API_BASEURL = process.env.REACT_APP_API_BASEURL;
 

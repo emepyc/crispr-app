@@ -180,6 +180,33 @@ class geneEssentialitiesPlot extends React.Component {
     );
   };
 
+  mouseOutOnCanvas = () => {
+    const guideX = this.refs['essentialities-plot-xline'];
+    const guideY = this.refs['essentialities-plot-yline'];
+    const elementTooltip = this.refs['essentialities-plot-tooltip'];
+
+    this.hideTooltip(d3.select(elementTooltip));
+    guideX.style.display = 'none';
+    guideY.style.display = 'none';
+  };
+
+  mouseMoveOnCanvas = () => {
+    const ev = d3.event;
+
+    // map the clicked point to the data space
+    const xClicked = this.xScale.invert(ev.offsetX - this.marginLeft);
+    const yClicked = this.yScale.invert(ev.offsetY);
+
+    // find the closest point in the dataset to the clicked point
+    const closest = this.quadTree.find(xClicked, yClicked);
+    this.highlightNode(closest);
+    this.props.selectRow([
+      closest.attributes.gene_symbol,
+      closest.attributes.model_name,
+      closest.attributes[this.attribute]
+    ]);
+  };
+
   plotEssentialities(data) {
     console.log('in plot essentialities data is...');
     console.log(data);
@@ -187,10 +214,8 @@ class geneEssentialitiesPlot extends React.Component {
     const { containerWidth } = this.state;
     const elementSvg = this.refs['essentialities-plot-svg'];
     const elementCanvas = this.refs['essentialities-plot-canvas'];
-    const elementTooltip = this.refs['essentialities-plot-tooltip'];
+    // const elementTooltip = this.refs['essentialities-plot-tooltip'];
     const elementBrush = this.refs['essentialities-plot-brush'];
-    const guideX = this.refs['essentialities-plot-xline'];
-    const guideY = this.refs['essentialities-plot-yline'];
     // const axisBottom = this.refs['essentialities-plot-axis-bottom'];
     const axisLeft = this.refs['essentialities-plot-axis-left'];
     const xAxisLabel = this.refs['x-axis-label'];
@@ -202,8 +227,8 @@ class geneEssentialitiesPlot extends React.Component {
       return { ...d, index: i };
     });
 
-    const tooltip = d3.select(elementTooltip);
-    const quadTree = d3.quadtree(
+    // this.tooltip = d3.select(elementTooltip);
+    this.quadTree = d3.quadtree(
       this.data,
       d => d.index,
       d => d.attributes[this.attribute]
@@ -216,27 +241,8 @@ class geneEssentialitiesPlot extends React.Component {
       .attr('y', 0)
       .attr('width', containerWidth - marginLeft)
       .attr('height', height - marginTop)
-      .on('mousemove', () => {
-        const ev = d3.event;
-
-        // map the clicked point to the data space
-        const xClicked = this.xScale.invert(ev.offsetX - marginLeft);
-        const yClicked = this.yScale.invert(ev.offsetY);
-
-        // find the closest point in the dataset to the clicked point
-        const closest = quadTree.find(xClicked, yClicked);
-        this.highlightNode(closest);
-        this.props.selectRow([
-          closest.attributes.gene_symbol,
-          closest.attributes.model_name,
-          closest.attributes[this.attribute]
-        ]);
-      })
-      .on('mouseout', () => {
-        this.hideTooltip(tooltip);
-        guideX.style.display = 'none';
-        guideY.style.display = 'none';
-      });
+      .on('mousemove', this.mouseMoveOnCanvas)
+      .on('mouseout', this.mouseOutOnCanvas);
 
     const brushLine = d3
       .area()
@@ -366,6 +372,7 @@ class geneEssentialitiesPlot extends React.Component {
             height={height}
             width={containerWidth}
           >
+            <rect y="0" />
             <line
               ref="essentialities-plot-xline"
               x1="0"
