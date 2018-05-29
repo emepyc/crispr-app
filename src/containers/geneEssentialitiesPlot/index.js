@@ -285,8 +285,6 @@ class geneEssentialitiesPlot extends React.Component {
       .extent([[0, 0], [containerWidth - marginLeft, brushHeight]])
       .on('brush', brushed);
 
-    // const brushSelection = d3.select(elementBrush);
-
     d3
       .select(brushLineElement)
       .datum(this.data)
@@ -298,60 +296,9 @@ class geneEssentialitiesPlot extends React.Component {
       .call(brush)
       .call(brush.move, this.xScale.range());
 
-    // brushSelection
-    //   .append('path')
-    //   .datum(this.data)
-    //   .attr('class', 'line')
-    //   .attr('d', brushLine);
-
-    // brushSelection
-    //   .append('g')
-    //   .attr('class', 'brush')
-    //   .call(brush)
-    //   .call(brush.move, this.xScale.range());
-
     this.xAxis = d3.axisBottom(this.xScale).tickFormat(d3.format('.0f'));
     this.yAxis = d3.axisLeft(this.yScale);
-
-    // const axisBottom = d3.select(this.refs['essentialities-plot-axis-bottom'])
-    //     .attr('transform', `translate(${marginLeft},${height - marginTop})`);
-    // axisBottom.call(this.xAxis);
-
-    // this.axisBottom = svg
-    //     .append('g')
-    //     .attr('id', 'axisBottom')
-    //     .attr('transform', `translate(${marginLeft},${height - marginTop})`);
-
-    // svg
-    //     .append('g')
-    //     .attr('transform', `translate(${marginLeft},0)`)
-    //     .call(this.yAxis);
-
-    // x scale title
-    // svg
-    //     .append('text')
-    //     .attr('transform', `translate(${containerWidth / 2}, ${height - 10})`)
-    //     .attr('text-anchor', 'middle')
-    //     .text('Cell lines');
-
     d3.select(axisLeft).call(this.yAxis);
-
-    // d3
-    //   .select(xAxisLabel)
-    //   .attr('transform', `translate(${containerWidth / 2}, ${height - 10})`);
-
-    // d3
-    //   .select(yAxisLabel)
-    //   .attr('transform', `translate(15, ${height / 2}) rotate(-90)`);
-
-    // y scale title
-    // svg
-    //     .append('text')
-    //     .attr('transform', `translate(15, ${height / 2}) rotate(-90)`)
-    //     .attr('x', 0)
-    //     .attr('y', 0)
-    //     .attr('text-anchor', 'middle')
-    //     .text('Fold change');
 
     this.plotOnCanvas();
   }

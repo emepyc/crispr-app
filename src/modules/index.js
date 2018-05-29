@@ -3,11 +3,21 @@ import { routerReducer } from 'react-router-redux';
 import { tissues, tissuesHasErrored, tissuesIsLoading } from './tissues';
 import { geneInfo, geneInfoHasErrored, geneInfoIsLoading } from './geneInfo';
 import {
+  modelInfo,
+  modelInfoHasErrored,
+  modelInfoIsLoading
+} from './modelInfo';
+import {
   geneEssentialities,
   geneEssentialitiesHasErrored,
   geneEssentialitiesIsLoading
 } from './geneEssentialities';
-import { rowSelected, geneSelected } from './customTable';
+import {
+  modelEssentialities,
+  modelEssentialitiesHasErrored,
+  modelEssentialitiesIsLoading
+} from './modelEssentialities';
+import { rowSelected, geneSelected, modelSelected } from './customTable';
 
 import { tableStart, tableTissue } from './table';
 
@@ -21,13 +31,22 @@ export default combineReducers({
   geneInfoHasErrored,
   geneInfoIsLoading,
 
+  modelInfo,
+  modelInfoHasErrored,
+  modelInfoIsLoading,
+
   geneEssentialities,
   geneEssentialitiesHasErrored,
   geneEssentialitiesIsLoading,
+
+  modelEssentialities,
+  modelEssentialitiesHasErrored,
+  modelEssentialitiesIsLoading,
 
   tableStart,
   tableTissue,
 
   rowSelected,
-  geneSelected
+  geneSelected,
+  modelSelected
 });

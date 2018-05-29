@@ -24,3 +24,5 @@ yarn-error.log*
 *~
 *.css
 .idea
+
+api/

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchModelEssentialities } from './actions/modelEssentialities';
 import ModelEssentialitiesSummary from '../modelEssentialitiesSummary';
-import ModelEssentiatlitiesDetails from '../modelEssentialitiesDetails';
+import ModelEssentialitiesDetails from '../modelEssentialitiesDetails';
 
 class ModelEssentialities extends React.Component {
   constructor(props) {
@@ -21,8 +21,16 @@ class ModelEssentialities extends React.Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.model && prevProps.model !== this.props.model) {
+      this.props.fetchModelEssentialities(this.props.model);
+    }
+  }
+
   componentDidMount() {
-    this.props.fetchModelEssentialities(this.props.model);
+    if (this.props.model) {
+      this.props.fetchModelEssentialities(this.props.model);
+    }
   }
 
   render() {

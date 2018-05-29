@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Table, Nav, NavLink } from 'reactstrap';
 import axios from 'axios';
 import classnames from 'classnames';
-import { selectRow, setGene } from './actions/customTable';
+import { selectRow, setGene, setModel } from './actions/customTable';
 import Promise from 'es6-promise';
 import { Link } from 'react-router-dom';
 
@@ -230,7 +230,14 @@ class CustomTable extends React.Component {
                       {row[0]}
                     </Link>
                   </th>
-                  <td>{row[1]}</td>
+                  <td>
+                    <Link
+                      onClick={() => this.props.setModel(row[1])}
+                      to={`/model/${row[1]}?gene=${row[0]}`}
+                    >
+                      {row[1]}
+                    </Link>
+                  </td>
                   <td>{row[2]}</td>
                 </tr>
               );
@@ -251,7 +258,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     selectRow: rowData => dispatch(selectRow(rowData)),
-    setGene: gene => dispatch(setGene(gene))
+    setGene: gene => dispatch(setGene(gene)),
+    setModel: model => dispatch(setModel(model))
   };
 };
 

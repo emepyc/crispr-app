@@ -1,15 +1,15 @@
-import identity from 'lodash.identity';
-import pickBy from 'lodash.pickby';
 import queryString from 'query-string';
 import React from 'react';
+import { Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Row, Col } from 'reactstrap';
 
-import GeneInfo from '../geneInfo';
-import GeneEssentialities from '../geneEssentialities';
+import ModelInfo from '../modelInfo';
+import ModelEssentialities from '../modelEssentialities';
+import pickBy from 'lodash.pickby';
+import identity from 'lodash.identity';
 
-class GenePage extends React.Component {
+class ModelPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -49,16 +49,17 @@ class GenePage extends React.Component {
   }
 
   render() {
+    console.log('here!!!');
     const { gene, model, tissue } = this.props; // This comes from the redux state
     const { gene: geneLoc, model: modelLoc } = this.state; // This comes from the internal state
     return (
       <div>
         <Row>
           <Col sm="12" md="2">
-            <GeneInfo gene={gene || geneLoc} />
+            <ModelInfo model={model || modelLoc} />
           </Col>
           <Col sm="12" md="10">
-            <GeneEssentialities
+            <ModelEssentialities
               gene={gene || geneLoc}
               model={model || modelLoc}
               tissue={tissue}
@@ -74,9 +75,8 @@ const mapStateToProps = state => {
   return {
     tissue: state.tableTissue,
     gene: state.gene,
-    model: state.model // TODO: THIS IS NOT BEING USED ATM
+    model: state.model
   };
 };
 
-export default withRouter(connect(mapStateToProps)(GenePage));
-// export default GenePage;
+export default withRouter(connect(mapStateToProps)(ModelPage));

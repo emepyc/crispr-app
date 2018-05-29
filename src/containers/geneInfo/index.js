@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchGeneInfo } from './actions/geneInfo';
+
 import DisplayGeneInfo from '../displayGeneInfo';
+import { fetchGeneInfo } from './actions/geneInfo';
 
 class GeneInfo extends React.Component {
   constructor(props) {
@@ -19,7 +20,6 @@ class GeneInfo extends React.Component {
       return;
     }
     this.props.fetchGeneInfo(this.props.gene);
-    // TODO: Set Params in URL
   }
 
   render() {
