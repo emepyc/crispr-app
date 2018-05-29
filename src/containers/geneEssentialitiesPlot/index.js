@@ -1,7 +1,7 @@
 import React from 'react';
 import * as d3 from 'd3';
-import sortBy from 'lodash.sortby';
 import find from 'lodash.find';
+import sortBy from 'lodash.sortby';
 import { connect } from 'react-redux';
 import { selectRow } from '../customTable/actions/customTable';
 
@@ -68,12 +68,7 @@ class geneEssentialitiesPlot extends React.Component {
       this.props.selectedEssentiality &&
       prevProps.selectedEssentiality !== this.props.selectedEssentiality
     ) {
-      const selectedNode = this.rowToNode(this.props.selectedEssentiality);
-      if (selectedNode) {
-        // console.log('selected node from component did update is...');
-        // console.log(selectedNode);
-        this.highlightNode(selectedNode);
-      }
+      this.highlightNode(this.props.selectedEssentiality);
     }
   }
 
@@ -89,9 +84,13 @@ class geneEssentialitiesPlot extends React.Component {
     el.style('display', 'none');
   };
 
-  // TODO: Needs a more performant way of finding X
   rowToNode = row => {
-    return find(this.data, d => d.attributes.model_name === row[1]);
+    return find(
+      this.data,
+      d =>
+        d.attributes.model_name === row[1] &&
+        d.attributes.gene_symbol === row[0]
+    );
   };
 
   plotOnCanvas = () => {
@@ -145,25 +144,23 @@ class geneEssentialitiesPlot extends React.Component {
 
     // selected node
     if (selectedEssentiality) {
-      const nodeToHighlight = this.rowToNode(selectedEssentiality);
-      if (nodeToHighlight) {
-        this.highlightNode(nodeToHighlight);
-      }
+      this.highlightNode(selectedEssentiality);
     }
   };
 
   highlightNode = node => {
+    const index = node[3] || this.rowToNode(node).index;
+    const nodeWithIndex = [node[0], node[1], node[2], index];
     const { marginLeft } = this;
-    const closestX = node.index;
-    const closestY = node.attributes[this.attribute];
+    const [gene, model, essentiality, genePos] = nodeWithIndex;
     const elementTooltip = this.refs['essentialities-plot-tooltip'];
     const guideX = this.refs['essentialities-plot-xline'];
     const guideY = this.refs['essentialities-plot-yline'];
     const tooltip = d3.select(elementTooltip);
 
     // Show the guide
-    const guideXpos = this.xScale(closestX) + marginLeft;
-    const guideYpos = this.yScale(closestY);
+    const guideXpos = this.xScale(genePos) + marginLeft;
+    const guideYpos = this.yScale(essentiality);
     guideX.setAttribute('x1', guideXpos);
     guideX.setAttribute('x2', guideXpos);
     guideX.style.display = 'block';
@@ -172,10 +169,10 @@ class geneEssentialitiesPlot extends React.Component {
     guideY.style.display = 'block';
 
     this.showTooltip(
-      this.xScale(closestX) + marginLeft,
-      this.yScale(closestY),
+      this.xScale(genePos) + marginLeft,
+      this.yScale(essentiality),
       tooltip,
-      `${node.attributes.model_name}` // TODO: parameterise
+      `${gene}-${model}: ${essentiality}`
     );
   };
 
@@ -198,12 +195,14 @@ class geneEssentialitiesPlot extends React.Component {
 
     // find the closest point in the dataset to the clicked point
     const closest = this.quadTree.find(xClicked, yClicked);
-    this.highlightNode(closest);
-    this.props.selectRow([
+    const nodeData = [
       closest.attributes.gene_symbol,
       closest.attributes.model_name,
-      closest.attributes[this.attribute]
-    ]);
+      closest.attributes[this.attribute],
+      closest.index
+    ];
+    this.highlightNode(nodeData);
+    this.props.selectRow(nodeData);
   };
 
   plotEssentialities(data) {
@@ -213,12 +212,7 @@ class geneEssentialitiesPlot extends React.Component {
     const { containerWidth } = this.state;
     const elementSvg = this.refs['essentialities-plot-svg'];
     const elementCanvas = this.refs['essentialities-plot-canvas'];
-    // const elementTooltip = this.refs['essentialities-plot-tooltip'];
-    const elementBrush = this.refs['essentialities-plot-brush'];
-    // const axisBottom = this.refs['essentialities-plot-axis-bottom'];
     const axisLeft = this.refs['essentialities-plot-axis-left'];
-    // const xAxisLabel = this.refs['x-axis-label'];
-    // const yAxisLabel = this.refs['y-axis-label'];
     const eventsContainer = this.refs['essentialities-plot-events-container'];
     const brushLineElement = this.refs['essentialities-plot-brush-line'];
     const brushContainer = this.refs['essentialities-plot-brush-container'];

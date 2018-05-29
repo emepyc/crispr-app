@@ -23,7 +23,6 @@ const modelEssentialitiesDetails = props => {
           <Card header={header} body={body} />
         </Col>
         <Col xs={12} lg={6} className="my-auto">
-          {/*<CustomTable model={props.model} tissue={props.tissue} />*/}
           <CustomTable model={props.model} />
         </Col>
       </Row>

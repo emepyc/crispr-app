@@ -49,7 +49,6 @@ class ModelPage extends React.Component {
   }
 
   render() {
-    console.log('here!!!');
     const { gene, model, tissue } = this.props; // This comes from the redux state
     const { gene: geneLoc, model: modelLoc } = this.state; // This comes from the internal state
     return (

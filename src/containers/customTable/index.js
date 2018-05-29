@@ -21,7 +21,8 @@ function parseData(raw) {
     return [
       d.attributes.gene_symbol,
       d.attributes.model_name,
-      d.attributes.fc_corrected
+      d.attributes.fc_corrected,
+      d.index
     ];
   });
 }
@@ -118,9 +119,10 @@ class CustomTable extends React.Component {
   };
 
   getParams = () => {
-    const { gene, tissue } = this.props;
+    const { gene, model, tissue } = this.props;
     const params = {
       tissue,
+      model,
       gene
     };
     this.paramsToFilter(pickBy(params, identity)).then(filters => {
@@ -140,7 +142,8 @@ class CustomTable extends React.Component {
   componentDidUpdate(prevProps) {
     if (
       prevProps.tissue === this.props.tissue &&
-      prevProps.gene === this.props.gene
+      prevProps.gene === this.props.gene &&
+      prevProps.model === this.props.model
     ) {
       return;
     }
