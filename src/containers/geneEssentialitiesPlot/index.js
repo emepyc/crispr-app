@@ -29,14 +29,11 @@ class geneEssentialitiesPlot extends React.Component {
     this.xScale = null;
     this.yScale = null;
     this.xAxis = null;
-    this.axisBottom = null;
+    // this.axisBottom = null;
 
     this.data = [];
     this.attribute = 'fc_corrected';
   }
-
-  // Remove previous elements (axis, etc)
-  cleanPlot = () => {};
 
   resize = () => {
     const container = this.refs['plot-container'];
@@ -47,7 +44,6 @@ class geneEssentialitiesPlot extends React.Component {
       },
       () => {
         if (this.props.data.length) {
-          this.cleanPlot();
           this.plotEssentialities(this.props.data);
         }
       }
@@ -72,12 +68,18 @@ class geneEssentialitiesPlot extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.mouseOutOnCanvas();
+    window.removeEventListener('resize', this.resize);
+  }
+
   showTooltip = (x, y, el, msg) => {
     el
-      .text(msg)
+      .html(msg)
       .style('left', `${x}px`)
       .style('top', `${y}px`)
-      .style('display', 'block');
+      .style('display', 'block')
+      .style('background', 'white');
   };
 
   hideTooltip = el => {
@@ -85,12 +87,13 @@ class geneEssentialitiesPlot extends React.Component {
   };
 
   rowToNode = row => {
-    return find(
+    const node = find(
       this.data,
       d =>
         d.attributes.model_name === row[1] &&
         d.attributes.gene_symbol === row[0]
     );
+    return node ? node.index : null;
   };
 
   plotOnCanvas = () => {
@@ -149,7 +152,10 @@ class geneEssentialitiesPlot extends React.Component {
   };
 
   highlightNode = node => {
-    const index = node[3] || this.rowToNode(node).index;
+    const index = node[3] || this.rowToNode(node);
+    if (!index) {
+      return;
+    }
     const nodeWithIndex = [node[0], node[1], node[2], index];
     const { marginLeft } = this;
     const [gene, model, essentiality, genePos] = nodeWithIndex;
@@ -172,7 +178,7 @@ class geneEssentialitiesPlot extends React.Component {
       this.xScale(genePos) + marginLeft,
       this.yScale(essentiality),
       tooltip,
-      `${gene}-${model}: ${essentiality}`
+      `Gene: <b>${gene}</b><br/>Model: <b>${model}</b><br/>Essentiality score:<b>${essentiality}</b>`
     );
   };
 
@@ -223,18 +229,14 @@ class geneEssentialitiesPlot extends React.Component {
       return { ...d, index: i };
     });
 
-    // this.tooltip = d3.select(elementTooltip);
     this.quadTree = d3.quadtree(
       this.data,
       d => d.index,
       d => d.attributes[this.attribute]
     );
-    const svg = d3.select(elementSvg);
 
-    d3
-      .select(eventsContainer)
-      .on('mousemove', this.mouseMoveOnCanvas)
-      .on('mouseout', this.mouseOutOnCanvas);
+    d3.select(eventsContainer).on('mousemove', this.mouseMoveOnCanvas);
+    // .on('mouseout', this.mouseOutOnCanvas);
 
     const brushLine = d3
       .area()
@@ -381,7 +383,7 @@ class geneEssentialitiesPlot extends React.Component {
             style={{
               position: 'absolute',
               whiteSpace: 'nowrap',
-              backgroundColor: 'white',
+              backgroundColor: '#FFFFFF',
               padding: '0.3rem 0.5rem',
               borderRadius: '3px',
               boxShadow: 'gray 0px 1px 2px',
@@ -409,5 +411,3 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(
   geneEssentialitiesPlot
 );
-
-// export default geneEssentialitiesPlot;
