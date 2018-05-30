@@ -15,7 +15,6 @@ class geneEssentialitiesPlot extends React.Component {
       containerWidth: 100
     };
 
-    // this.width = 500;
     this.height = 500;
     this.marginTop = 50;
     this.marginLeft = 50;
@@ -29,7 +28,6 @@ class geneEssentialitiesPlot extends React.Component {
     this.xScale = null;
     this.yScale = null;
     this.xAxis = null;
-    // this.axisBottom = null;
 
     this.data = [];
     this.attribute = 'fc_corrected';
