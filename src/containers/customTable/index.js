@@ -3,7 +3,6 @@ import classnames from 'classnames';
 import Promise from 'es6-promise';
 import debounce from 'lodash.debounce';
 import identity from 'lodash.identity';
-import isEmpty from 'lodash.isempty';
 import pickBy from 'lodash.pickby';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -41,6 +40,9 @@ function parseData(raw) {
 class CustomTable extends React.Component {
   constructor(props) {
     super(props);
+
+    this.fetch = debounce(this.fetch, 300);
+
     this.state = {
       data: [],
 
