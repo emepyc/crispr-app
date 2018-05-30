@@ -16,10 +16,10 @@ export function modelInfoIsLoading(bool) {
   };
 }
 
-export function modelInfoFetchDataSuccess(geneInfo) {
+export function modelInfoFetchDataSuccess(modelInfo) {
   return {
     type: 'MODEL_INFO_FETCH_DATA_SUCCESS',
-    geneInfo
+    modelInfo
   };
 }
 

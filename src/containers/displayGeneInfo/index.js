@@ -1,6 +1,7 @@
 import React from 'react';
+
 import Card from '../card';
-import displayGeneInfoCss from './displayGeneInfo.css';
+import './displayGeneInfo.css';
 
 const displayGeneInfo = props => {
   if (!props.gene.data) {
