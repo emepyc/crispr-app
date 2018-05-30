@@ -169,8 +169,9 @@ class Searchbox extends React.Component {
 
         <p className="intro-search-examples">
           Try:
-          <Link to={'/genePage/BRAF'}>BRAF</Link>
-          <Link to={'/genePage/PTEN'}>PTEN</Link>
+          <Link to={'/gene/BRAF'}>BRAF</Link>
+          <Link to={'/gene/PTEN'}>PTEN</Link>
+          <Link to={'/model/SNU-C1'}>SNU-C1</Link>
         </p>
       </div>
     );
