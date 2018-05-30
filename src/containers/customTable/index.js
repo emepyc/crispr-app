@@ -1,13 +1,24 @@
-import React from 'react';
-import pickBy from 'lodash.pickby';
-import identity from 'lodash.identity';
-import { connect } from 'react-redux';
-import { Table, Nav, NavLink } from 'reactstrap';
 import axios from 'axios';
 import classnames from 'classnames';
-import { selectRow, setGene, setModel } from './actions/customTable';
 import Promise from 'es6-promise';
+import debounce from 'lodash.debounce';
+import identity from 'lodash.identity';
+import isEmpty from 'lodash.isempty';
+import pickBy from 'lodash.pickby';
+import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import {
+  Table,
+  Nav,
+  NavLink,
+  Input,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText
+} from 'reactstrap';
+
+import { selectRow, setGene, setModel } from './actions/customTable';
 
 const API_BASEURL = process.env.REACT_APP_API_BASEURL;
 
@@ -38,7 +49,8 @@ class CustomTable extends React.Component {
       error: null,
 
       // fetch options
-      filter: '',
+      filter: null,
+      search: null,
       pageSize: 10,
       pageNumber: 1,
       sort: 'fc_corrected',
@@ -46,12 +58,25 @@ class CustomTable extends React.Component {
     };
   }
 
+  combineSearchAndFilter = () => {
+    const { filter, search } = this.state;
+
+    if (filter && search) {
+      return [{ and: [...filter, search] }];
+    }
+
+    return filter || search;
+  };
+
   fetch = () => {
-    const { sort, filter, pageSize, pageNumber } = this.state;
+    const { sort, filter, pageSize, pageNumber, search } = this.state;
     console.warn('fetch!!!');
+
+    const searchAndFilter = this.combineSearchAndFilter();
+
     const params = {
       sort,
-      filter,
+      filter: JSON.stringify(searchAndFilter),
       'page[size]': pageSize,
       'page[number]': pageNumber
     };
@@ -121,14 +146,14 @@ class CustomTable extends React.Component {
   getParams = () => {
     const { gene, model, tissue } = this.props;
     const params = {
-      tissue,
+      gene,
       model,
-      gene
+      tissue
     };
-    this.paramsToFilter(pickBy(params, identity)).then(filters => {
+    this.paramsToFilter(pickBy(params, identity)).then(filter => {
       this.setState(
         {
-          filter: JSON.stringify(filters)
+          filter: filter
         },
         this.fetch
       );
@@ -180,6 +205,46 @@ class CustomTable extends React.Component {
     this.props.selectRow(rowData);
   };
 
+  search = ev => {
+    const { value } = ev.target;
+    if (!value.length) {
+      this.setState(
+        {
+          search: null
+        },
+        this.fetch
+      );
+
+      return;
+    }
+
+    if (value.length < 3) {
+      return;
+    }
+
+    const searchFilter = {
+      or: [
+        {
+          name: 'model_name',
+          op: 'contains',
+          val: value
+        },
+        {
+          name: 'gene_symbol',
+          op: 'contains',
+          val: value
+        }
+      ]
+    };
+
+    this.setState(
+      {
+        search: searchFilter
+      },
+      this.fetch
+    );
+  };
+
   render() {
     const { data } = this.state;
     const { selectedEssentiality } = this.props;
@@ -193,7 +258,7 @@ class CustomTable extends React.Component {
 
     return (
       <div className="essentialities-table">
-        <Nav>
+        <Nav style={{ float: 'left' }}>
           <NavLink className={navPrevClass} href="#" onClick={this.goPrev}>
             Previous
           </NavLink>
@@ -201,6 +266,12 @@ class CustomTable extends React.Component {
             Next
           </NavLink>
         </Nav>
+        <InputGroup style={{ width: '300px', float: 'right' }}>
+          <InputGroupAddon addonType="prepend">
+            <InputGroupText>Search</InputGroupText>
+          </InputGroupAddon>
+          <Input onChange={e => this.search(e)} />
+        </InputGroup>
         <Table responsive>
           <thead>
             <tr>
