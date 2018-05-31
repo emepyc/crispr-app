@@ -15,7 +15,7 @@ class geneEssentialitiesPlot extends React.Component {
       containerWidth: 100
     };
 
-    this.height = 500;
+    this.height = 300;
     this.marginTop = 50;
     this.marginLeft = 50;
     this.brushHeight = 50;

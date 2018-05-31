@@ -4,7 +4,7 @@ import queryString from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Container } from 'reactstrap';
 
 import GeneInfo from '../geneInfo';
 import GeneEssentialities from '../geneEssentialities';
@@ -58,11 +58,13 @@ class GenePage extends React.Component {
             <GeneInfo gene={gene || geneLoc} />
           </Col>
           <Col sm="12" md="10">
-            <GeneEssentialities
-              gene={gene || geneLoc}
-              model={model || modelLoc}
-              tissue={tissue}
-            />
+            <div style={{ paddingLeft: '30px', paddingRight: '30px' }}>
+              <GeneEssentialities
+                gene={gene || geneLoc}
+                model={model || modelLoc}
+                tissue={tissue}
+              />
+            </div>
           </Col>
         </Row>
       </div>
