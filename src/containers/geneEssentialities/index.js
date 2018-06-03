@@ -47,14 +47,9 @@ class GeneEssentialities extends React.Component {
     // TODO: Not sure this is right
     if (
       (this.props.gene && prevProps.gene !== this.props.gene) ||
-      (this.props.tissue && prevProps.tissue !== this.props.tissue) ||
-      (this.props.scoreRange && prevProps.scoreRange !== this.props.scoreRange)
+      (this.props.tissue && prevProps.tissue !== this.props.tissue)
     ) {
-      this.props.fetchGeneEssentialities(
-        this.props.gene,
-        this.props.tissue,
-        this.props.scoreRange
-      );
+      this.props.fetchGeneEssentialities(this.props.gene, this.props.tissue);
     }
 
     // if (this.props.tissue && prevProps.tissue !== this.props.tissue) {
@@ -64,13 +59,21 @@ class GeneEssentialities extends React.Component {
 
   componentDidMount() {
     if (this.props.gene) {
-      this.props.fetchGeneEssentialities(
-        this.props.gene,
-        this.props.tissue,
-        this.props.scoreRange
-      );
+      this.props.fetchGeneEssentialities(this.props.gene, this.props.tissue);
     }
   }
+
+  filterByScoreRange = data => {
+    const { scoreRange } = this.props;
+    if (scoreRange) {
+      return data.filter(
+        essentiality =>
+          essentiality.attributes.fc_corrected > scoreRange[0] &&
+          essentiality.attributes.fc_corrected < scoreRange[1]
+      );
+    }
+    return data;
+  };
 
   render() {
     if (this.props.hasErrored) {
@@ -86,6 +89,8 @@ class GeneEssentialities extends React.Component {
       return <p>Loading...</p>;
     }
 
+    const data = this.filterByScoreRange(this.props.geneEssentialities);
+
     return (
       <React.Fragment>
         <div>
@@ -99,10 +104,9 @@ class GeneEssentialities extends React.Component {
         </div>
         <div>
           <GeneEssentialitiesDetails
-            data={this.props.geneEssentialities}
+            data={data}
             gene={this.props.gene}
             model={this.props.model}
-            scoreRange={this.props.scoreRange}
             tissue={this.props.tissue}
           />
         </div>
@@ -122,8 +126,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchGeneEssentialities: (gene, tissue, scoreRange) =>
-      dispatch(fetchGeneEssentialities(gene, tissue, scoreRange))
+    fetchGeneEssentialities: (gene, tissue) =>
+      dispatch(fetchGeneEssentialities(gene, tissue))
   };
 };
 
