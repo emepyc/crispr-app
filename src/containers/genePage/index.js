@@ -36,6 +36,7 @@ class GenePage extends React.Component {
     const gene = this.getTerm(loc, 'gene');
     const model = this.getTerm(loc, 'model');
     const tissue = this.getTerm(loc, 'tissue');
+    // TODO: Include reading the range from the url
 
     return pickBy({ gene, model, tissue }, identity);
   };
@@ -49,8 +50,11 @@ class GenePage extends React.Component {
   }
 
   render() {
-    const { gene, model, tissue } = this.props; // This comes from the redux state
-    const { gene: geneLoc, model: modelLoc } = this.state; // This comes from the internal state
+    const { gene, model, tissue, scoreRange } = this.props; // This comes from the redux state
+    // TODO: Encode the score range in the Location (and other parameters)
+    const { gene: geneLoc, model: modelLoc } = this.state; // This comes from the component state
+    console.log('in gene page scoreRange is...');
+    console.log(scoreRange);
     return (
       <div>
         <Row>
@@ -63,6 +67,7 @@ class GenePage extends React.Component {
                 gene={gene || geneLoc}
                 model={model || modelLoc}
                 tissue={tissue}
+                scoreRange={scoreRange}
               />
             </div>
           </Col>
@@ -74,9 +79,10 @@ class GenePage extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    tissue: state.tableTissue,
     gene: state.gene,
-    model: state.model // TODO: THIS IS NOT BEING USED ATM
+    model: state.model, // TODO: THIS IS NOT BEING USED ATM
+    tissue: state.tableTissue,
+    scoreRange: state.scoreRange
   };
 };
 

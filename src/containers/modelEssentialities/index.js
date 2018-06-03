@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchModelEssentialities } from './actions/modelEssentialities';
+import { fetchModelEssentialities } from '../../modules/actions/modelEssentialities';
 import ModelEssentialitiesSummary from '../modelEssentialitiesSummary';
 import ModelEssentialitiesDetails from '../modelEssentialitiesDetails';
 

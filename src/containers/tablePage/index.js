@@ -7,7 +7,7 @@ import { withRouter } from 'react-router';
 import queryString from 'query-string';
 import pickBy from 'lodash.pickby';
 import identity from 'lodash.identity';
-import { tableTissueFilter } from '../table/actions/table';
+import { tableTissueFilter } from '../../modules/actions/table';
 
 import { history } from '../../store/store';
 

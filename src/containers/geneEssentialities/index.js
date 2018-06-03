@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchGeneEssentialities } from './actions/geneEssentialities';
+import { fetchGeneEssentialities } from '../../modules/actions/geneEssentialities';
 import GeneEssentialitiesSummary from '../geneEssentialitiesSummary';
 import GeneEssentialitiesDetails from '../geneEssentialitiesDetails';
 import Filters from '../filters';
@@ -44,18 +44,31 @@ class GeneEssentialities extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.gene && prevProps.gene !== this.props.gene) {
-      this.props.fetchGeneEssentialities(this.props.gene, this.props.tissue);
+    // TODO: Not sure this is right
+    if (
+      (this.props.gene && prevProps.gene !== this.props.gene) ||
+      (this.props.tissue && prevProps.tissue !== this.props.tissue) ||
+      (this.props.scoreRange && prevProps.scoreRange !== this.props.scoreRange)
+    ) {
+      this.props.fetchGeneEssentialities(
+        this.props.gene,
+        this.props.tissue,
+        this.props.scoreRange
+      );
     }
 
-    if (this.props.tissue && prevProps.tissue !== this.props.tissue) {
-      this.props.fetchGeneEssentialities(this.props.gene, this.props.tissue);
-    }
+    // if (this.props.tissue && prevProps.tissue !== this.props.tissue) {
+    //   this.props.fetchGeneEssentialities(this.props.gene, this.props.tissue);
+    // }
   }
 
   componentDidMount() {
     if (this.props.gene) {
-      this.props.fetchGeneEssentialities(this.props.gene, this.props.tissue);
+      this.props.fetchGeneEssentialities(
+        this.props.gene,
+        this.props.tissue,
+        this.props.scoreRange
+      );
     }
   }
 
@@ -86,10 +99,11 @@ class GeneEssentialities extends React.Component {
         </div>
         <div>
           <GeneEssentialitiesDetails
+            data={this.props.geneEssentialities}
             gene={this.props.gene}
             model={this.props.model}
+            scoreRange={this.props.scoreRange}
             tissue={this.props.tissue}
-            data={this.props.geneEssentialities}
           />
         </div>
       </React.Fragment>
@@ -101,14 +115,15 @@ const mapStateToProps = state => {
   return {
     geneEssentialities: state.geneEssentialities,
     hasErrored: state.geneEssentialitiesHasErrored,
-    isLoading: state.geneEssentialitiesIsLoading
+    isLoading: state.geneEssentialitiesIsLoading,
+    scoreRange: state.scoreRange
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchGeneEssentialities: (gene, tissue) =>
-      dispatch(fetchGeneEssentialities(gene, tissue))
+    fetchGeneEssentialities: (gene, tissue, scoreRange) =>
+      dispatch(fetchGeneEssentialities(gene, tissue, scoreRange))
   };
 };
 

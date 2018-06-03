@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import find from 'lodash.find';
 import sortBy from 'lodash.sortby';
 import { connect } from 'react-redux';
-import { selectRow } from '../customTable/actions/customTable';
+import { selectRow } from '../../modules/actions/customTable';
 
 import './geneEssentialitiesPlot.css';
 

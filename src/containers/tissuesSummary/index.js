@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchTissues } from './actions/tissues';
+import { fetchTissues } from '../../modules/actions/tissues';
 import TissuesSummaryDisplay from '../tissuesSummaryDisplay';
 
 class TissuesPieChart extends React.Component {

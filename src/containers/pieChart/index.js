@@ -5,7 +5,7 @@ import { Row, Col } from 'reactstrap';
 import * as d3 from 'd3';
 
 import './pieChart.css';
-import { tableTissueFilter } from '../table/actions/table';
+import { tableTissueFilter } from '../../modules/actions/table';
 const schemePaired = [
   '#1395ba',
   '#0f5b78',

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { paramsToFilter } from '../../../fetch';
+import { paramsToFilter } from '../../fetch';
 
 const API_BASEURL = process.env.REACT_APP_API_BASEURL;
 

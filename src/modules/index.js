@@ -1,23 +1,24 @@
-import { combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
-import { tissues, tissuesHasErrored, tissuesIsLoading } from './tissues';
-import { geneInfo, geneInfoHasErrored, geneInfoIsLoading } from './geneInfo';
-import {
-  modelInfo,
-  modelInfoHasErrored,
-  modelInfoIsLoading
-} from './modelInfo';
+import { rowSelected, geneSelected, modelSelected } from './customTable';
 import {
   geneEssentialities,
   geneEssentialitiesHasErrored,
   geneEssentialitiesIsLoading
 } from './geneEssentialities';
+import { geneInfo, geneInfoHasErrored, geneInfoIsLoading } from './geneInfo';
 import {
   modelEssentialities,
   modelEssentialitiesHasErrored,
   modelEssentialitiesIsLoading
 } from './modelEssentialities';
-import { rowSelected, geneSelected, modelSelected } from './customTable';
+import {
+  modelInfo,
+  modelInfoHasErrored,
+  modelInfoIsLoading
+} from './modelInfo';
+import { combineReducers } from 'redux';
+import { routerReducer } from 'react-router-redux';
+import { scoreRange } from './scoreRange';
+import { tissues, tissuesHasErrored, tissuesIsLoading } from './tissues';
 
 import { tableStart, tableTissue } from './table';
 
@@ -48,5 +49,7 @@ export default combineReducers({
 
   rowSelected,
   geneSelected,
-  modelSelected
+  modelSelected,
+
+  scoreRange
 });

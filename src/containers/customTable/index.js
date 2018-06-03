@@ -1,6 +1,7 @@
 import axios from 'axios';
 import classnames from 'classnames';
-import Promise from 'es6-promise';
+import { Promise } from 'es6-promise';
+// import {mergeFilters} from '../../fetch';
 import debounce from 'lodash.debounce';
 import identity from 'lodash.identity';
 import pickBy from 'lodash.pickby';
@@ -17,13 +18,18 @@ import {
   InputGroupText
 } from 'reactstrap';
 
-import { selectRow, setGene, setModel } from './actions/customTable';
+import {
+  selectGene,
+  selectModel,
+  selectRow
+} from '../../modules/actions/customTable';
 
 const API_BASEURL = process.env.REACT_APP_API_BASEURL;
 
 const paramToApiParam = {
   gene: 'gene_symbol',
-  model: 'model_name'
+  model: 'model_name',
+  scoreRange: 'fc'
 };
 
 function parseData(raw) {
@@ -53,6 +59,7 @@ class CustomTable extends React.Component {
       // fetch options
       filter: null,
       search: null,
+      score: null,
       pageSize: 10,
       pageNumber: 1,
       sort: 'fc_corrected',
@@ -62,7 +69,6 @@ class CustomTable extends React.Component {
 
   combineSearchAndFilter = () => {
     const { filter, search } = this.state;
-
     if (filter && search) {
       return [{ and: [...filter, search] }];
     }
@@ -71,10 +77,11 @@ class CustomTable extends React.Component {
   };
 
   fetch = () => {
-    const { sort, filter, pageSize, pageNumber, search } = this.state;
+    const { sort, pageSize, pageNumber } = this.state;
     console.warn('fetch!!!');
 
     const searchAndFilter = this.combineSearchAndFilter();
+    // const searchAndFilter = mergeFilters([...this.state.filter, this.state.search]);
 
     const params = {
       sort,
@@ -130,26 +137,83 @@ class CustomTable extends React.Component {
     return Promise.resolve(params);
   };
 
+  paramToFilter = (name, value) => {
+    if (name === 'model') {
+      return {
+        name: 'model_name',
+        op: 'in_',
+        val: Array.isArray(value) ? value : [value]
+      };
+    }
+
+    if (name === 'gene') {
+      return {
+        name: 'gene_symbol',
+        op: 'in_',
+        val: [value]
+      };
+    }
+
+    if (name === 'search') {
+      return {
+        or: [
+          {
+            name: 'model_name',
+            op: 'contains',
+            val: value
+          },
+          {
+            name: 'gene_symbol',
+            op: 'contains',
+            val: value
+          }
+        ]
+      };
+    }
+
+    if (name === 'scoreRange') {
+      return {
+        and: [
+          {
+            name: 'fc_corrected',
+            op: 'lt',
+            val: value[1]
+          },
+          {
+            name: 'fc_corrected',
+            op: 'gt',
+            val: value[0]
+          }
+        ]
+      };
+    }
+
+    throw `Unknown filter ${name}`;
+  };
+
   paramsToFilter = params => {
     return this.expandParams(params).then(expandedParams => {
       const { tissue, ...validParams } = expandedParams; // Tissue can not go in the filters
       return Object.keys(validParams).map(param => {
-        return {
-          name: paramToApiParam[param],
-          op: 'in_',
-          val: Array.isArray(expandedParams[param])
-            ? [...expandedParams[param]]
-            : [expandedParams[param]]
-        };
+        const paramsNoEmpty = pickBy(validParams, param => param !== undefined);
+        return this.paramToFilter(param, paramsNoEmpty[param]);
+        // return {
+        //   name: paramToApiParam[param],
+        //   op: 'in_',
+        //   val: Array.isArray(expandedParams[param])
+        //     ? [...expandedParams[param]]
+        //     : [expandedParams[param]]
+        // };
       });
     });
   };
 
   getParams = () => {
-    const { gene, model, tissue } = this.props;
+    const { gene, model, tissue, scoreRange } = this.props;
     const params = {
       gene,
       model,
+      scoreRange,
       tissue
     };
     this.paramsToFilter(pickBy(params, identity)).then(filter => {
@@ -170,7 +234,8 @@ class CustomTable extends React.Component {
     if (
       prevProps.tissue === this.props.tissue &&
       prevProps.gene === this.props.gene &&
-      prevProps.model === this.props.model
+      prevProps.model === this.props.model &&
+      prevProps.scoreRange === this.props.scoreRange
     ) {
       return;
     }
@@ -300,7 +365,7 @@ class CustomTable extends React.Component {
                 >
                   <th scope="row">
                     <Link
-                      onClick={() => this.props.setGene(row[0])}
+                      onClick={() => this.props.selectGene(row[0])}
                       to={`/gene/${row[0]}?model=${row[1]}`}
                     >
                       {row[0]}
@@ -308,7 +373,7 @@ class CustomTable extends React.Component {
                   </th>
                   <td>
                     <Link
-                      onClick={() => this.props.setModel(row[1])}
+                      onClick={() => this.props.selectModel(row[1])}
                       to={`/model/${row[1]}?gene=${row[0]}`}
                     >
                       {row[1]}
@@ -327,15 +392,16 @@ class CustomTable extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    selectedEssentiality: state.rowSelected
+    selectedEssentiality: state.rowSelected,
+    scoreRange: state.scoreRange
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     selectRow: rowData => dispatch(selectRow(rowData)),
-    setGene: gene => dispatch(setGene(gene)),
-    setModel: model => dispatch(setModel(model))
+    selectGene: gene => dispatch(selectGene(gene)),
+    selectModel: model => dispatch(selectModel(model))
   };
 };
 

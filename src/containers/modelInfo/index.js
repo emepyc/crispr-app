@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import DisplayModelInfo from '../displayModelInfo';
-import { fetchModelInfo } from './actions/modelInfo';
+import { fetchModelInfo } from '../../modules/actions/modelInfo';
 
 class ModelInfo extends React.Component {
   constructor(props) {

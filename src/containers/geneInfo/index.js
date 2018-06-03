@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import DisplayGeneInfo from '../displayGeneInfo';
-import { fetchGeneInfo } from './actions/geneInfo';
+import { fetchGeneInfo } from '../../modules/actions/geneInfo';
 
 class GeneInfo extends React.Component {
   constructor(props) {

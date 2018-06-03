@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { paramsToFilter } from '../../../fetch';
+import { paramsToFilter } from '../../fetch';
 
 const API_BASEURL = process.env.REACT_APP_API_BASEURL;
 
@@ -24,11 +24,12 @@ export function geneEssentialitiesFetchDataSuccess(geneEssentialities) {
   };
 }
 
-export function fetchGeneEssentialities(gene, tissue) {
+export function fetchGeneEssentialities(gene, tissue, scoreRange) {
   return dispatch => {
     const params = {
       gene,
-      tissue
+      tissue,
+      scoreRange
     };
     return paramsToFilter(params).then(filters => {
       return axios

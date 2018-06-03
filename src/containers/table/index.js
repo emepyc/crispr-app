@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 // import {tableStartChanged, tableTissueFilter} from './actions/table';
 // import { Link } from 'react-router-dom';
-import { tableTissueFilter } from './actions/table';
+import { tableTissueFilter } from '../../modules/actions/table';
 import { Row, Col, Card } from 'reactstrap';
 import $ from 'jquery';
 import axios from 'axios';

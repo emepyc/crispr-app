@@ -3,7 +3,6 @@ import Card from '../card';
 import './geneEssentialitiesDetails.css';
 import GeneEssentialitiesPlot from '../geneEssentialitiesPlot';
 import CustomTable from '../customTable';
-import { Row, Col } from 'reactstrap';
 
 const geneEssentialitiesDetails = props => {
   if (!props.data) {
