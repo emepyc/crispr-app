@@ -2,7 +2,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Input } from 'reactstrap';
-import orderBy from 'lodash.orderby';
 import { Range } from 'rc-slider';
 
 import { scoreRange } from '../../modules/actions/scoreSlider';
