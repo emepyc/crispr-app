@@ -1,7 +1,6 @@
 import axios from 'axios';
 import classnames from 'classnames';
 import { Promise } from 'es6-promise';
-// import {mergeFilters} from '../../fetch';
 import debounce from 'lodash.debounce';
 import identity from 'lodash.identity';
 import pickBy from 'lodash.pickby';
@@ -25,12 +24,6 @@ import {
 } from '../../modules/actions/customTable';
 
 const API_BASEURL = process.env.REACT_APP_API_BASEURL;
-
-const paramToApiParam = {
-  gene: 'gene_symbol',
-  model: 'model_name',
-  scoreRange: 'fc'
-};
 
 function parseData(raw) {
   return raw.map(d => {
