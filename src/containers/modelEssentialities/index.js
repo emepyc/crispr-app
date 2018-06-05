@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
 import { fetchModelEssentialities } from '../../modules/actions/modelEssentialities';
 import ModelEssentialitiesSummary from '../modelEssentialitiesSummary';
 import ModelEssentialitiesDetails from '../modelEssentialitiesDetails';
+import Filters from '../filters';
 
 class ModelEssentialities extends React.Component {
   constructor(props) {
@@ -33,7 +35,21 @@ class ModelEssentialities extends React.Component {
     }
   }
 
+  filterByScoreRange = data => {
+    const { scoreRange } = this.props;
+    if (scoreRange) {
+      return data.filter(
+        essentiality =>
+          essentiality.attributes.fc_corrected > scoreRange[0] &&
+          essentiality.attributes.fc_corrected < scoreRange[1]
+      );
+    }
+    return data;
+  };
+
   render() {
+    const data = this.filterByScoreRange(this.props.modelEssentialities);
+
     if (this.props.hasErrored) {
       return (
         <p>
@@ -56,10 +72,10 @@ class ModelEssentialities extends React.Component {
           />
         </div>
         <div>
-          <ModelEssentialitiesDetails
-            model={this.props.model}
-            data={this.props.modelEssentialities}
-          />
+          <Filters tissue={this.props.tissue} />
+        </div>
+        <div>
+          <ModelEssentialitiesDetails model={this.props.model} data={data} />
         </div>
       </React.Fragment>
     );
@@ -70,7 +86,8 @@ const mapStateToProps = state => {
   return {
     modelEssentialities: state.modelEssentialities,
     hasErrored: state.modelEssentialitiesHasErrored,
-    isLoading: state.modelEssentialitiesIsLoading
+    isLoading: state.modelEssentialitiesIsLoading,
+    scoreRange: state.scoreRange
   };
 };
 

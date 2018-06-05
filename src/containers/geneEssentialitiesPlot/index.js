@@ -210,11 +210,9 @@ class geneEssentialitiesPlot extends React.Component {
   };
 
   plotEssentialities(data) {
-    console.log('in plot essentialities data is...');
-    console.log(data);
     const { marginTop, marginLeft, height, brushHeight } = this;
     const { containerWidth } = this.state;
-    const elementSvg = this.refs['essentialities-plot-svg'];
+    // const elementSvg = this.refs['essentialities-plot-svg'];
     const elementCanvas = this.refs['essentialities-plot-canvas'];
     const axisLeft = this.refs['essentialities-plot-axis-left'];
     const eventsContainer = this.refs['essentialities-plot-events-container'];

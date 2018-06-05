@@ -32,7 +32,6 @@ class ModelInfo extends React.Component {
       return <p>Loading...</p>;
     }
 
-    console.log(this.props);
     return (
       <div>
         <DisplayModelInfo model={this.props.modelInfo} />
