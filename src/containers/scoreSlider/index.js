@@ -1,7 +1,8 @@
-// import debounce from 'lodash.debounce';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Input } from 'reactstrap';
+import orderBy from 'lodash.orderby';
+import identity from 'lodash.identity';
 import { Range } from 'rc-slider';
 
 import { scoreRange } from '../../modules/actions/scoreSlider';
@@ -26,7 +27,7 @@ class ScoreSlider extends React.Component {
 
   inputMinScore = ev => {
     const newVal = +ev.target.value;
-    const newRange = [newVal, this.props.scoreRange[1]];
+    const newRange = orderBy([newVal, this.props.scoreRange[1]], identity);
     if (newRange[0] < newRange[1]) {
       this.props.setScoreRange(newRange);
     }
@@ -37,7 +38,7 @@ class ScoreSlider extends React.Component {
 
   inputMaxScore = ev => {
     const newVal = +ev.target.value;
-    const newRange = [this.props.scoreRange[0], newVal];
+    const newRange = orderBy([this.props.scoreRange[0], newVal], identity);
     if (newRange[0] < newRange[1]) {
       this.props.setScoreRange(newRange);
     }
