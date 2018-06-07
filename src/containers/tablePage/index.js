@@ -33,18 +33,6 @@ class TablePage extends React.Component {
     return search[type];
   };
 
-  // tissueChanged = ev => {
-  //   const newTissue = ev.target.value;
-  //   console.log(`new tissue is ${newTissue}`);
-  //   this.setParamsInUrl(
-  //     {
-  //       tissue: newTissue
-  //     },
-  //     history
-  //   );
-  //   this.props.setTissue(newTissue);
-  // };
-  //
   setParamsInUrl = (newParams, history) => {
     const oldQueryParams = queryString.parse(history.location.search);
     const newQueryParams = queryString.stringify({
@@ -95,7 +83,10 @@ class TablePage extends React.Component {
     return (
       <Container>
         <Filters tissue={tissue || tissueLoc} />
-        <CustomTable tissue={tissue || tissueLoc} />
+        <CustomTable
+          tissue={tissue || tissueLoc}
+          columns={['gene', 'model', 'score']}
+        />
       </Container>
     );
   }

@@ -190,13 +190,6 @@ class CustomTable extends React.Component {
       return Object.keys(validParams).map(param => {
         const paramsNoEmpty = pickBy(validParams, param => param !== undefined);
         return this.paramToFilter(param, paramsNoEmpty[param]);
-        // return {
-        //   name: paramToApiParam[param],
-        //   op: 'in_',
-        //   val: Array.isArray(expandedParams[param])
-        //     ? [...expandedParams[param]]
-        //     : [expandedParams[param]]
-        // };
       });
     });
   };
@@ -305,9 +298,19 @@ class CustomTable extends React.Component {
     );
   };
 
+  getColumnKeys = columns =>
+    columns.reduce((acc, curr) => {
+      return {
+        ...acc,
+        [curr]: true
+      };
+    }, {});
+
   render() {
     const { data } = this.state;
-    const { selectedEssentiality } = this.props;
+    const { selectedEssentiality, columns } = this.props;
+
+    const columnKeys = columns ? this.getColumnKeys(columns) : {};
 
     const navPrevClass = classnames({
       disabled: this.isFirstPage()
@@ -335,9 +338,9 @@ class CustomTable extends React.Component {
         <Table responsive>
           <thead>
             <tr>
-              <th>Gene</th>
-              <th>Model</th>
-              <th>Value</th>
+              {columnKeys['gene'] && <th>Gene</th>}
+              {columnKeys['model'] && <th>Model</th>}
+              {columnKeys['score'] && <th>Value</th>}
             </tr>
           </thead>
           <tbody>
@@ -356,23 +359,27 @@ class CustomTable extends React.Component {
                   style={style}
                   onMouseOver={() => this.mouseOver(row)}
                 >
-                  <th scope="row">
-                    <Link
-                      onClick={() => this.props.selectGene(row[0])}
-                      to={`/gene/${row[0]}?model=${row[1]}`}
-                    >
-                      {row[0]}
-                    </Link>
-                  </th>
-                  <td>
-                    <Link
-                      onClick={() => this.props.selectModel(row[1])}
-                      to={`/model/${row[1]}?gene=${row[0]}`}
-                    >
-                      {row[1]}
-                    </Link>
-                  </td>
-                  <td>{row[2]}</td>
+                  {columnKeys['gene'] && (
+                    <th scope="row">
+                      <Link
+                        onClick={() => this.props.selectGene(row[0])}
+                        to={`/gene/${row[0]}?model=${row[1]}`}
+                      >
+                        {row[0]}
+                      </Link>
+                    </th>
+                  )}
+                  {columnKeys['model'] && (
+                    <td>
+                      <Link
+                        onClick={() => this.props.selectModel(row[1])}
+                        to={`/model/${row[1]}?gene=${row[0]}`}
+                      >
+                        {row[1]}
+                      </Link>
+                    </td>
+                  )}
+                  {columnKeys['score'] && <td>{row[2]}</td>}
                 </tr>
               );
             })}

@@ -18,7 +18,11 @@ const geneEssentialitiesDetails = props => {
   return (
     <div className="gene-essentialities-details-container">
       <Card header={header} body={body} />
-      <CustomTable gene={props.gene} tissue={props.tissue} />
+      <CustomTable
+        gene={props.gene}
+        tissue={props.tissue}
+        columns={['model', 'score']}
+      />
     </div>
   );
 };
