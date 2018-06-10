@@ -192,7 +192,7 @@ class Searchbox extends React.Component {
 
     // Autosuggest will pass through all these props to the input.
     const inputProps = {
-      placeholder: 'Type a genePage or a cell line',
+      placeholder: 'Type a gene, cell line or tissue name',
       autoFocus: true,
       value,
       onChange: this.onChange

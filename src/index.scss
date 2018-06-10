@@ -13,27 +13,27 @@ body {
   margin-bottom: 30px;
 }
 
-.home-backdrop {
-  background-image: url("./home-backdrop.svg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-    background-image: -webkit-radial-gradient(
-                    rgba(70, 157, 50, 1) 0%,
-                    rgba(70, 157, 50, 1) 30%,
-                    rgba(70, 157, 50, 0) 100%
-    ),
-    url('./home-backdrop.svg');
-    background-image: -o-radial-gradient(
-                    rgba(70, 157, 50, 1) 0%,
-                    rgba(70, 157, 50, 1) 30%,
-                    rgba(70, 157, 50, 0) 100%
-    ),
-    url('./home-backdrop.svg');
-    background-image: radial-gradient(
-                    rgba(70, 157, 50, 1) 0%,
-                    rgba(70, 157, 50, 1) 30%,
-                    rgba(70, 157, 50, 0) 100%
-    ),
-    url('./home-backdrop.svg');
-}
+//.home-backdrop {
+//  background-image: url("./home-backdrop.svg");
+//  background-position: center;
+//  background-repeat: no-repeat;
+//  background-size: cover;
+//    background-image: -webkit-radial-gradient(
+//                    rgba(70, 157, 50, 1) 0%,
+//                    rgba(70, 157, 50, 1) 30%,
+//                    rgba(70, 157, 50, 0) 100%
+//    ),
+//    url('./home-backdrop.svg');
+//    background-image: -o-radial-gradient(
+//                    rgba(70, 157, 50, 1) 0%,
+//                    rgba(70, 157, 50, 1) 30%,
+//                    rgba(70, 157, 50, 0) 100%
+//    ),
+//    url('./home-backdrop.svg');
+//    background-image: radial-gradient(
+//                    rgba(70, 157, 50, 1) 0%,
+//                    rgba(70, 157, 50, 1) 30%,
+//                    rgba(70, 157, 50, 0) 100%
+//    ),
+//    url('./home-backdrop.svg');
+//}

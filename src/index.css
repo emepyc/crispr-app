@@ -27,28 +27,3 @@ body {
   margin-top: 20px;
   margin-bottom: 30px;
 }
-
-.home-backdrop {
-  background-image: url('./home-backdrop.svg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: -webkit-radial-gradient(
-      #469d32 0%,
-      #469d32 30%,
-      rgba(70, 157, 50, 0) 100%
-    ),
-    url('./home-backdrop.svg');
-  background-image: -o-radial-gradient(
-      #469d32 0%,
-      #469d32 30%,
-      rgba(70, 157, 50, 0) 100%
-    ),
-    url('./home-backdrop.svg');
-  background-image: radial-gradient(
-      #469d32 0%,
-      #469d32 30%,
-      rgba(70, 157, 50, 0) 100%
-    ),
-    url('./home-backdrop.svg');
-}
