@@ -6,21 +6,16 @@ import HomeSection from '../homeSection';
 import TissuesSummary from '../tissuesSummary';
 
 const Home = () => (
-  <Row>
-    <Col xs="12" md={{ size: 12, offset: 0 }}>
-      <HomeSection
-        customClass={'home-backdrop'}
-        customStyle={{ padding: '100px 25px 100px 25px' }}
-      >
-        <DepmapGenesHeader className="text-center" />
-        <Searchbox />
-      </HomeSection>
+  <React.Fragment>
+    <HomeSection customStyle={{ padding: '100px 25px 100px 25px' }}>
+      <DepmapGenesHeader className="text-center" />
+      <Searchbox />
+    </HomeSection>
 
-      <HomeSection>
-        <TissuesSummary />
-      </HomeSection>
-    </Col>
-  </Row>
+    <HomeSection>
+      <TissuesSummary />
+    </HomeSection>
+  </React.Fragment>
 );
 
 export default Home;

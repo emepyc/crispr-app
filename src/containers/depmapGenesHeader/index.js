@@ -1,16 +1,16 @@
+import { Col, Container, Jumbotron, Row } from 'reactstrap';
 import React from 'react';
-import './depmapGenesHeader.css';
+
 import Logo from '../../assets/projectScore.png';
+import './depmapGenesHeader.css';
 
 const header = () => (
-  <div className="text-center header-container">
-    <img className="my-auto" src={Logo} width={'500px'} />
-    <h2>
-      {/*<span className={'depMap-name'}>DepMap</span>{' '}*/}
-      {/*<span className='genes-subname'> | Genes</span>*/}
-    </h2>
-    <p className="lead">Genetic screens to identify cancer dependencies</p>
-  </div>
+  <Jumbotron className="text-center mb-3">
+    <Container>
+      <img src={Logo} width={'500px'} />
+      <p className="lead">Genetic screens to identify cancer dependencies</p>
+    </Container>
+  </Jumbotron>
 );
 
 export default header;

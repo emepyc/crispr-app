@@ -27,3 +27,13 @@
 .header-container .col-genes {
   color: #00a113;
 }
+
+.jumbotron {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  background-color: #fff;
+}
+
+.jumbotron-heading {
+  font-weight: 300;
+}
