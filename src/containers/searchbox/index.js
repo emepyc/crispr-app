@@ -9,6 +9,7 @@ import React from 'react';
 import Autosuggest from 'react-autosuggest';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Col, Container, Row } from 'reactstrap';
 
 import { fetchTissues } from '../../modules/actions/tissues';
 import './searchbox.css';
@@ -199,42 +200,46 @@ class Searchbox extends React.Component {
     };
 
     return (
-      <div className="text-center searchbox-container">
-        <div className="autosuggest-container">
-          <Autosuggest
-            suggestions={suggestions}
-            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-            getSuggestionValue={getSuggestionValue}
-            renderSuggestion={renderSuggestion}
-            inputProps={inputProps}
-            shouldRenderSuggestions={q => q && q.length > 1}
-            highlightFirstSuggestion={true}
-            multiSection={true}
-            getSectionSuggestions={getSectionSuggestions}
-            renderSectionTitle={renderSectionTitle}
-          />
-        </div>
-        <span className="search-icon">
-          <FontAwesomeIcon icon={faSearch} />
-        </span>
-        {this.state.isLoading && (
-          <span className="progress-spinner">
-            <FontAwesomeIcon icon={faSpinner} spin />
-          </span>
-        )}
+      <Row>
+        <Col xs={{ size: 8, offset: 2 }} md={{ size: 6, offset: 3 }}>
+          <div className="text-center searchbox-container">
+            <div className="autosuggest-container">
+              <Autosuggest
+                suggestions={suggestions}
+                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                getSuggestionValue={getSuggestionValue}
+                renderSuggestion={renderSuggestion}
+                inputProps={inputProps}
+                shouldRenderSuggestions={q => q && q.length > 1}
+                highlightFirstSuggestion={true}
+                multiSection={true}
+                getSectionSuggestions={getSectionSuggestions}
+                renderSectionTitle={renderSectionTitle}
+              />
+            </div>
+            <span className="search-icon">
+              <FontAwesomeIcon icon={faSearch} />
+            </span>
+            {this.state.isLoading && (
+              <span className="progress-spinner">
+                <FontAwesomeIcon icon={faSpinner} spin />
+              </span>
+            )}
 
-        <p className="intro-search-examples">
-          Try:
-          <Link to={'/gene/BRAF'}>BRAF</Link>
-          <Link to={'/gene/PTEN'}>PTEN</Link>
-          <Link to={'/model/SNU-C1'}>SNU-C1</Link>
-          <Link to={'/table?tissue=Breast'}>Breast</Link>
-          <span style={{ marginLeft: '20px' }}>
-            Or:<Link to={'/table'}>explore all the data</Link>
-          </span>
-        </p>
-      </div>
+            <p className="intro-search-examples">
+              Try:
+              <Link to={'/gene/BRAF'}>BRAF</Link>
+              <Link to={'/gene/PTEN'}>PTEN</Link>
+              <Link to={'/model/SNU-C1'}>SNU-C1</Link>
+              <Link to={'/table?tissue=Breast'}>Breast</Link>
+              <span style={{ marginLeft: '20px' }}>
+                Or:<Link to={'/table'}>explore all the data</Link>
+              </span>
+            </p>
+          </div>
+        </Col>
+      </Row>
     );
   }
 }

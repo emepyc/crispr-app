@@ -21,6 +21,7 @@
 
   .autosuggest-container {
     position: relative;
+    width: 100%;
     display: table;
     border-collapse: separate;
 
@@ -68,7 +69,7 @@
 
     input {
       outline: none;
-      width: 30em;
+      width: 100%;
       color: $font-color;
       padding: 5px 5px 5px 15px;
       background-color: $background-lightest;
@@ -80,7 +81,7 @@
   }
 
   .search-icon {
-     @include input-icon(-30px);
+     @include input-icon(0);
   }
 
   .progress-spinner {
