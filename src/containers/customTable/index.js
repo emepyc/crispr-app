@@ -7,6 +7,8 @@ import pickBy from 'lodash.pickby';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faSpinner from '@fortawesome/fontawesome-free-solid/faSpinner';
 import {
   Table,
   Nav,
@@ -86,7 +88,7 @@ class CustomTable extends React.Component {
     const paramsNoEmpty = pickBy(params, identity);
 
     this.setState({
-      isLoading: true
+      loading: true
     });
 
     axios
@@ -96,7 +98,7 @@ class CustomTable extends React.Component {
       .then(
         resp => {
           this.setState({
-            isLoading: false,
+            loading: false,
             data: parseData(resp.data.data),
             totalHits: resp.data.meta.count
           });
@@ -309,6 +311,20 @@ class CustomTable extends React.Component {
   render() {
     const { data } = this.state;
     const { selectedEssentiality, columns } = this.props;
+    const { loading } = this.state;
+    if (loading) {
+      return (
+        <div id="loading">
+          Loading....
+          <FontAwesomeIcon
+            icon={faSpinner}
+            spin
+            fixedWidth
+            style={{ fontSize: '2em' }}
+          />
+        </div>
+      );
+    }
 
     const columnKeys = columns ? this.getColumnKeys(columns) : {};
 

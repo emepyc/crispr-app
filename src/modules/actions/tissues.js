@@ -1,4 +1,5 @@
 import axios from 'axios';
+// import snakeCase from 'lodash.snakecase';
 
 const API_BASEURL = process.env.REACT_APP_API_BASEURL;
 
@@ -32,6 +33,7 @@ export function fetchTissues() {
         models.data.data.forEach(m => {
           if (m.attributes.tissue) {
             const id = m.attributes.tissue.split(' ').join('_');
+            // const id = snakeCase(m.attributes.tissue);
             if (!tissuesObj[id]) {
               tissuesObj[id] = {
                 counts: 0,

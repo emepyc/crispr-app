@@ -1,14 +1,16 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-// import {push} from 'react-router-redux';
-// import {bindActionCreators} from 'redux';
-// import {connect} from 'react-redux';
+import axios from 'axios';
+import debounce from 'lodash.debounce';
+import isEmpty from 'lodash.isempty';
+import partition from 'lodash.partition';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faSearch from '@fortawesome/fontawesome-free-solid/faSearch';
 import faSpinner from '@fortawesome/fontawesome-free-solid/faSpinner';
+import React from 'react';
 import Autosuggest from 'react-autosuggest';
-import axios from 'axios';
-import debounce from 'lodash/debounce';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+import { fetchTissues } from '../../modules/actions/tissues';
 import './searchbox.css';
 
 const API_BASEURL = process.env.REACT_APP_API_BASEURL;
@@ -19,23 +21,43 @@ const API_BASEURL = process.env.REACT_APP_API_BASEURL;
 const getSuggestionValue = suggestion => suggestion.name;
 
 // render the suggestions
-const renderSuggestion = suggestion => (
-  <Link to={`/gene/${suggestion.attributes.symbol}`}>
-    <div className="search-suggestion-box text-left">
-      <span>
-        {suggestion.attributes.symbol || suggestion.attributes.model_name}
-      </span>
-      <span className={'suggestions-description pull-right'}>
-        {suggestion.attributes.symbol && (
-          <span>{suggestion.attributes.name}</span>
-        )}
-        {suggestion.attributes.model_name && (
-          <span>Tissue: {suggestion.attributes.tissue}</span>
-        )}
-      </span>
-    </div>
-  </Link>
-);
+const renderSuggestion = suggestion => {
+  if (suggestion.type === 'gene') {
+    return (
+      <Link to={`/gene/${suggestion.attributes.symbol}`}>
+        <div className="search-suggestion-box text-left">
+          <span>{suggestion.attributes.symbol}</span>
+        </div>
+      </Link>
+    );
+  }
+
+  if (suggestion.type === 'model') {
+    return (
+      <Link to={`/model/${suggestion.attributes.model_name}`}>
+        <div className="search-suggestion-box" style={{ position: 'relative' }}>
+          <div className="text-left" style={{ position: 'absolute' }}>
+            {suggestion.attributes.model_name}
+          </div>
+          <div className={'suggestions-description text-right'}>
+            {suggestion.attributes.name}
+            Tissue: {suggestion.attributes.tissue}
+          </div>
+        </div>
+      </Link>
+    );
+  }
+
+  if (suggestion.type === 'tissue') {
+    return (
+      <Link to={`/table?tissue=${suggestion.id}`}>
+        <div className="search-suggestion-box text-left">
+          <span>{suggestion.tissue}</span>
+        </div>
+      </Link>
+    );
+  }
+};
 
 const getSectionSuggestions = section => section.items;
 
@@ -65,6 +87,18 @@ class Searchbox extends React.Component {
     // this.lastRequestId = null;
   }
 
+  componentDidMount() {
+    this.props.fetchTissues();
+  }
+
+  getMatchingTissues(query) {
+    const [matching, other] = partition(
+      this.props.tissues,
+      tissue => tissue.tissue.toLowerCase().indexOf(query) > -1
+    );
+    return matching;
+  }
+
   loadSuggestions(value) {
     // Cancel the previous request
     // if (this.lastRequestId !== null) {
@@ -85,31 +119,54 @@ class Searchbox extends React.Component {
 
     const modelsPromise = axios
       .get(
+        `${API_BASEURL}/models?filter=[{"name": "model_name","op":"startswith","val":"${value}"}]`
+      )
+      .then(resp => {
+        return resp.data.data.slice(0, 5);
+      });
+
+    const modelsFromTissuePromise = axios
+      .get(
         `${API_BASEURL}/models?filter=[{"name":"cancer_type","op":"ilike","val":"%25${value}%25"}]`
       )
       .then(resp => {
         return resp.data.data.slice(0, 5);
       });
 
-    axios.all([genesPromise, modelsPromise]).then(resps => {
-      const suggestions = [];
-      if (resps[0].length) {
-        suggestions.push({
-          title: 'Genes',
-          items: resps[0]
+    axios
+      .all([genesPromise, modelsPromise, modelsFromTissuePromise])
+      .then(resps => {
+        const geneSuggestions = resps[0].length ? resps[0] : [];
+        const modelSuggestions = [
+          ...(resps[1].length ? resps[1] : []),
+          ...(resps[2].length ? resps[2] : [])
+        ];
+
+        const tissuesSuggestions = this.getMatchingTissues(value.toLowerCase());
+        const tissuesSuggestionsWithType = tissuesSuggestions.map(tissue => {
+          return { ...tissue, type: 'tissue' };
         });
-      }
-      if (resps[1].length) {
-        suggestions.push({
-          title: 'Cell lines',
-          items: resps[1]
+        const suggestions = [
+          geneSuggestions.length
+            ? { title: 'Genes', items: geneSuggestions }
+            : {},
+          modelSuggestions.length
+            ? { title: 'Models', items: modelSuggestions }
+            : {},
+          tissuesSuggestionsWithType.length
+            ? { title: 'Tissues', items: tissuesSuggestionsWithType }
+            : {}
+        ];
+
+        const suggestionsNotEmpty = suggestions.filter(
+          suggestion => !isEmpty(suggestion)
+        );
+
+        this.setState({
+          isLoading: false,
+          suggestions: suggestionsNotEmpty
         });
-      }
-      this.setState({
-        isLoading: false,
-        suggestions: suggestions
       });
-    });
   }
 
   onChange = (event, { newValue }) => {
@@ -172,19 +229,27 @@ class Searchbox extends React.Component {
           <Link to={'/gene/BRAF'}>BRAF</Link>
           <Link to={'/gene/PTEN'}>PTEN</Link>
           <Link to={'/model/SNU-C1'}>SNU-C1</Link>
+          <Link to={'/table?tissue=Breast'}>Breast</Link>
+        </p>
+        <p className="intro-search-examples">
+          Or <Link to={'/table'}>explore all the data</Link>
         </p>
       </div>
     );
   }
 }
 
-// const mapDispatchToProps = dispatch =>
-//   bindActionCreators(
-//     {
-//       gotoGenePage: genePage => push(`/genePage/${genePage}`)
-//     },
-//     dispatch
-//   );
-//
-// export default connect(null, mapDispatchToProps)(Searchbox);
-export default Searchbox;
+const mapStateToProps = state => {
+  return {
+    tissues: state.tissues
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchTissues: () => dispatch(fetchTissues())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Searchbox);
+// export default Searchbox;
