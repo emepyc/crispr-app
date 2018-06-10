@@ -4,7 +4,7 @@ import Logo from '../../assets/projectScore.png';
 
 const header = () => (
   <div className="text-center header-container">
-    <img src={Logo} width={'500px'} />
+    <img className="my-auto" src={Logo} width={'500px'} />
     <h2>
       {/*<span className={'depMap-name'}>DepMap</span>{' '}*/}
       {/*<span className='genes-subname'> | Genes</span>*/}

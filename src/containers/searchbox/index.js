@@ -230,9 +230,9 @@ class Searchbox extends React.Component {
           <Link to={'/gene/PTEN'}>PTEN</Link>
           <Link to={'/model/SNU-C1'}>SNU-C1</Link>
           <Link to={'/table?tissue=Breast'}>Breast</Link>
-        </p>
-        <p className="intro-search-examples">
-          Or <Link to={'/table'}>explore all the data</Link>
+          <span style={{ marginLeft: '20px' }}>
+            Or:<Link to={'/table'}>explore all the data</Link>
+          </span>
         </p>
       </div>
     );
