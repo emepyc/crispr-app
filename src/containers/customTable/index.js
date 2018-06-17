@@ -54,6 +54,7 @@ class CustomTable extends React.Component {
       // fetch options
       filter: null,
       search: null,
+      searchQuery: '',
       score: null,
       pageSize: 10,
       pageNumber: 1,
@@ -262,6 +263,9 @@ class CustomTable extends React.Component {
 
   search = ev => {
     const { value } = ev.target;
+    this.setState({
+      searchQuery: value
+    });
     if (!value.length) {
       this.setState(
         {
@@ -311,20 +315,19 @@ class CustomTable extends React.Component {
   render() {
     const { data } = this.state;
     const { selectedEssentiality, columns } = this.props;
-    const { loading } = this.state;
-    if (loading) {
-      return (
-        <div id="loading">
-          Loading....
-          <FontAwesomeIcon
-            icon={faSpinner}
-            spin
-            fixedWidth
-            style={{ fontSize: '2em' }}
-          />
-        </div>
-      );
-    }
+    // const { loading } = this.state;
+    // if (loading) {
+    //   return (
+    //     <div id="loading">
+    //       <FontAwesomeIcon
+    //         icon={faSpinner}
+    //         spin
+    //         fixedWidth
+    //         style={{ fontSize: '2em' }}
+    //       />
+    //     </div>
+    //   );
+    // }
 
     const columnKeys = columns ? this.getColumnKeys(columns) : {};
 
@@ -339,17 +342,27 @@ class CustomTable extends React.Component {
       <div className="essentialities-table">
         <Nav style={{ float: 'left' }}>
           <NavLink className={navPrevClass} href="#" onClick={this.goPrev}>
-            Previous
+            &lt;
           </NavLink>
+          <small style={{ padding: '0.75rem 0.25rem' }}>
+            Page {this.state.pageNumber} of{' '}
+            {1 + ~~(this.state.totalHits / this.state.pageSize)}
+          </small>
           <NavLink className={navNextClass} href="#" onClick={this.goNext}>
-            Next
+            &gt;
           </NavLink>
         </Nav>
-        <InputGroup style={{ width: '300px', float: 'right' }}>
+
+        <InputGroup
+          style={{ width: '300px', float: 'right', marginBottom: '10px' }}
+        >
           <InputGroupAddon addonType="prepend">
             <InputGroupText>Search</InputGroupText>
           </InputGroupAddon>
-          <Input onChange={e => this.search(e)} />
+          <Input
+            value={this.state.searchQuery}
+            onChange={e => this.search(e)}
+          />
         </InputGroup>
         <Table responsive>
           <thead>

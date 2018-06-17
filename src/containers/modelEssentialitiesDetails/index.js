@@ -1,9 +1,9 @@
 import React from 'react';
+import { Row, Col } from 'reactstrap';
 import Card from '../card';
 import './modelEssentialitiesDetails.css';
 import GeneEssentialitiesPlot from '../geneEssentialitiesPlot';
 import CustomTable from '../customTable';
-import { Row, Col } from 'reactstrap';
 
 const modelEssentialitiesDetails = props => {
   if (!props.data) {

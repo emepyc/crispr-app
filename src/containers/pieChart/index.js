@@ -6,20 +6,6 @@ import * as d3 from 'd3';
 
 import './pieChart.css';
 import { tableTissueFilter } from '../../modules/actions/table';
-const schemePaired = [
-  '#1395ba',
-  '#0f5b78',
-  '#0d3c55',
-  '#c02e1d',
-  '#d94e1f',
-  '#f16c20',
-  '#ef8b2c',
-  '#ecaa38',
-  '#ebc844',
-  '#a2b86c',
-  '#5ca793',
-  '#1395ba'
-];
 
 class PieChart extends React.Component {
   constructor(props) {
@@ -84,7 +70,7 @@ class PieChart extends React.Component {
       .on('mouseout', this.removeFocus);
     const radius = pieChartWidth / 2;
 
-    const color = d3.scaleOrdinal(schemePaired);
+    // const color = d3.scaleOrdinal(schemePaired);
     const pie = d3
       .pie()
       .sortValues((a, b) => b - a)
@@ -109,7 +95,7 @@ class PieChart extends React.Component {
     arc
       .append('path')
       .attr('d', path)
-      .attr('fill', (d, i) => color(i))
+      .attr('fill', d => d.data.color)
       .on('mouseover', d => {
         this.setFocus(d);
       })
@@ -135,7 +121,7 @@ class PieChart extends React.Component {
               .map((tissue, index) => (
                 <li key={tissue.tissue}>
                   <span
-                    style={{ color: schemePaired[index % 12] }}
+                    style={{ color: tissue.color }}
                     className={`tissue-label text-left ${tissue.id}`}
                     onClick={() => this.gotoTable({ data: { id: tissue.id } })}
                     onMouseOver={() =>

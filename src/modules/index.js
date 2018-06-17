@@ -18,12 +18,23 @@ import {
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import { scoreRange } from './scoreRange';
-import { tissues, tissuesHasErrored, tissuesIsLoading } from './tissues';
+import {
+  analyses,
+  analysesHasErrored,
+  analysesIsLoading,
+  tissues,
+  tissuesHasErrored,
+  tissuesIsLoading
+} from './tissues';
 
 import { tableStart, tableTissue } from './table';
 
 export default combineReducers({
   routing: routerReducer,
+
+  analyses,
+  analysesHasErrored,
+  analysesIsLoading,
   tissues,
   tissuesHasErrored,
   tissuesIsLoading,

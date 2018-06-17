@@ -18,12 +18,3 @@ export function selectModel(model) {
     model
   };
 }
-
-// export function selectRow(rowData) {
-//   return dispatch => {
-//     return new Promise(function(resolve) {
-//       dispatch(rowSelected(rowData));
-//       resolve();
-//     });
-//   };
-// }

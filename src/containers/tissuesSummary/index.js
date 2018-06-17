@@ -21,9 +21,10 @@ class TissuesPieChart extends React.Component {
     }
 
     return (
-      <div>
+      <React.Fragment>
+        <h3>Explore</h3>
         <TissuesSummaryDisplay />
-      </div>
+      </React.Fragment>
     );
   }
 }

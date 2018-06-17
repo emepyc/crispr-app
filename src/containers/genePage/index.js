@@ -4,10 +4,52 @@ import queryString from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Row, Col, Container } from 'reactstrap';
+// import { Container } from 'reactstrap';
 
+import UniprotLogo from '../../assets/UniprotLogo.gif';
+import EnsemblLogo from '../../assets/EnsemblLogo.jpg';
+import OpenTargetsLogo from '../../assets/OpenTargetsLogo.png';
 import GeneInfo from '../geneInfo';
 import GeneEssentialities from '../geneEssentialities';
+
+function LogoExternalLink(props) {
+  const { src, link, width } = props;
+  return (
+    <span style={{ marginRight: '15px' }}>
+      <a target="_blank" href={link}>
+        <img src={src} width={width} />
+      </a>
+    </span>
+  );
+}
+
+function ExternalLinks(props) {
+  const { geneInfo } = props;
+  if (geneInfo.data) {
+    const { symbol: geneSymbol, ensembl_gene_id: ensemblId } = geneInfo.data;
+
+    return (
+      <div style={{ marginTop: '20px', float: 'right' }}>
+        <LogoExternalLink
+          src={UniprotLogo}
+          link={`http://www.uniprot.org/uniprot/?query=${geneSymbol}&sort=score`}
+          width="80"
+        />
+        <LogoExternalLink
+          src={EnsemblLogo}
+          link={`https://www.ensembl.org/gene=${ensemblId}`}
+          width="40"
+        />
+        <LogoExternalLink
+          src={OpenTargetsLogo}
+          link={`https://www.targetvalidation.org/target/${ensemblId}/associations`}
+          width="40"
+        />
+      </div>
+    );
+  }
+  return <div />;
+}
 
 class GenePage extends React.Component {
   constructor(props) {
@@ -53,24 +95,27 @@ class GenePage extends React.Component {
     const { gene, model, tissue, scoreRange } = this.props; // This comes from the redux state
     // TODO: Encode the score range in the Location (and other parameters)
     const { gene: geneLoc, model: modelLoc } = this.state; // This comes from the component state
+
     return (
-      <div>
-        <Row>
-          <Col sm="12" md="2">
-            <GeneInfo gene={gene || geneLoc} />
-          </Col>
-          <Col sm="12" md="10">
-            <div style={{ paddingLeft: '30px', paddingRight: '30px' }}>
-              <GeneEssentialities
-                gene={gene || geneLoc}
-                model={model || modelLoc}
-                tissue={tissue}
-                scoreRange={scoreRange}
-              />
-            </div>
-          </Col>
-        </Row>
-      </div>
+      <React.Fragment>
+        <div
+          style={{ marginTop: '20px', marginLeft: '40px', marginRight: '40px' }}
+        >
+          <ExternalLinks geneInfo={this.props.geneInfo} />
+
+          <h2>Gene: {gene || geneLoc}</h2>
+
+          <GeneInfo gene={gene || geneLoc} />
+          <div style={{ paddingLeft: '30px', paddingRight: '30px' }}>
+            <GeneEssentialities
+              gene={gene || geneLoc}
+              model={model || modelLoc}
+              tissue={tissue}
+              scoreRange={scoreRange}
+            />
+          </div>
+        </div>
+      </React.Fragment>
     );
   }
 }
@@ -78,6 +123,7 @@ class GenePage extends React.Component {
 const mapStateToProps = state => {
   return {
     gene: state.gene,
+    geneInfo: state.geneInfo,
     model: state.model, // TODO: THIS IS NOT BEING USED ATM
     tissue: state.tableTissue,
     scoreRange: state.scoreRange
@@ -85,4 +131,3 @@ const mapStateToProps = state => {
 };
 
 export default withRouter(connect(mapStateToProps)(GenePage));
-// export default GenePage;

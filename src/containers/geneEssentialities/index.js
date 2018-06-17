@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchGeneEssentialities } from '../../modules/actions/geneEssentialities';
-import GeneEssentialitiesSummary from '../geneEssentialitiesSummary';
+// import GeneEssentialitiesSummary from '../geneEssentialitiesSummary';
 import GeneEssentialitiesDetails from '../geneEssentialitiesDetails';
 import Filters from '../filters';
 
@@ -51,10 +51,6 @@ class GeneEssentialities extends React.Component {
     ) {
       this.props.fetchGeneEssentialities(this.props.gene, this.props.tissue);
     }
-
-    // if (this.props.tissue && prevProps.tissue !== this.props.tissue) {
-    //   this.props.fetchGeneEssentialities(this.props.gene, this.props.tissue);
-    // }
   }
 
   componentDidMount() {
@@ -93,23 +89,13 @@ class GeneEssentialities extends React.Component {
 
     return (
       <React.Fragment>
-        <div>
-          <GeneEssentialitiesSummary
-            gene={this.props.gene}
-            data={this.summary(this.props.geneEssentialities)}
-          />
-        </div>
-        <div>
-          <Filters tissue={this.props.tissue} />
-        </div>
-        <div>
-          <GeneEssentialitiesDetails
-            data={data}
-            gene={this.props.gene}
-            model={this.props.model}
-            tissue={this.props.tissue}
-          />
-        </div>
+        <Filters tissue={this.props.tissue} />
+        <GeneEssentialitiesDetails
+          data={data}
+          gene={this.props.gene}
+          model={this.props.model}
+          tissue={this.props.tissue}
+        />
       </React.Fragment>
     );
   }
