@@ -15,6 +15,10 @@
   color: #a3a3a3;
 }
 
+.section {
+  margin-bottom: 50px;
+}
+
 .gene-info-container .gene-info-section {
   padding-bottom: 10px;
   margin-bottom: 10px;

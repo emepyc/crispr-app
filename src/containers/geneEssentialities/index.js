@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
 import { fetchGeneEssentialities } from '../../modules/actions/geneEssentialities';
-// import GeneEssentialitiesSummary from '../geneEssentialitiesSummary';
-import GeneEssentialitiesDetails from '../geneEssentialitiesDetails';
 import Filters from '../filters';
+import GeneEssentialitiesDetails from '../geneEssentialitiesDetails';
 
 class GeneEssentialities extends React.Component {
   constructor(props) {
@@ -89,7 +89,9 @@ class GeneEssentialities extends React.Component {
 
     return (
       <React.Fragment>
-        <Filters tissue={this.props.tissue} />
+        <div className="section">
+          <Filters gene={this.props.gene} tissue={this.props.tissue} />
+        </div>
         <GeneEssentialitiesDetails
           data={data}
           gene={this.props.gene}

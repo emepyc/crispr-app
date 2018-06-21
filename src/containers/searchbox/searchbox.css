@@ -15,6 +15,10 @@
   color: #a3a3a3;
 }
 
+.section {
+  margin-bottom: 50px;
+}
+
 .searchbox-container {
   position: relative;
   max-width: 530px;

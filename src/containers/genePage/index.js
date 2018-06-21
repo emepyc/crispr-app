@@ -9,8 +9,18 @@ import { withRouter } from 'react-router';
 import UniprotLogo from '../../assets/UniprotLogo.gif';
 import EnsemblLogo from '../../assets/EnsemblLogo.jpg';
 import OpenTargetsLogo from '../../assets/OpenTargetsLogo.png';
-import GeneInfo from '../geneInfo';
+// import GeneInfo from '../geneInfo';
 import GeneEssentialities from '../geneEssentialities';
+
+function GeneName(props) {
+  const { gene } = props;
+  console.log('we need to take the name out of this gene...');
+  console.log(gene);
+  if (!gene.data) {
+    return <div />;
+  }
+  return <div>{gene.data.attributes.name}</div>;
+}
 
 function LogoExternalLink(props) {
   const { src, link, width } = props;
@@ -26,6 +36,8 @@ function LogoExternalLink(props) {
 function ExternalLinks(props) {
   const { geneInfo } = props;
   if (geneInfo.data) {
+    console.log('geneInfo data...');
+    console.log(geneInfo.data);
     const { symbol: geneSymbol, ensembl_gene_id: ensemblId } = geneInfo.data;
 
     return (
@@ -92,7 +104,7 @@ class GenePage extends React.Component {
   }
 
   render() {
-    const { gene, model, tissue, scoreRange } = this.props; // This comes from the redux state
+    const { gene, model, tissue, scoreRange, geneInfo } = this.props; // This comes from the redux state
     // TODO: Encode the score range in the Location (and other parameters)
     const { gene: geneLoc, model: modelLoc } = this.state; // This comes from the component state
 
@@ -101,11 +113,12 @@ class GenePage extends React.Component {
         <div
           style={{ marginTop: '20px', marginLeft: '40px', marginRight: '40px' }}
         >
-          <ExternalLinks geneInfo={this.props.geneInfo} />
+          <div className="section">
+            <ExternalLinks geneInfo={geneInfo} />
 
-          <h2>Gene: {gene || geneLoc}</h2>
-
-          <GeneInfo gene={gene || geneLoc} />
+            <h2>Gene: {gene || geneLoc}</h2>
+            <GeneName gene={geneInfo} />
+          </div>
           <div style={{ paddingLeft: '30px', paddingRight: '30px' }}>
             <GeneEssentialities
               gene={gene || geneLoc}

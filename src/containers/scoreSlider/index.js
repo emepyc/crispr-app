@@ -8,6 +8,7 @@ import { Range } from 'rc-slider';
 import { scoreRange } from '../../modules/actions/scoreSlider';
 
 import 'rc-slider/assets/index.css';
+import './scoreSlider.css';
 
 const scoreExtent = [-9, 9];
 
@@ -91,7 +92,7 @@ class ScoreSlider extends React.Component {
           onChange={this.rangeChanged}
         />
         {scoreRange && (
-          <div>
+          <div style={{ marginTop: '1em' }}>
             Score ranging from
             {!editingMinScore && (
               <span

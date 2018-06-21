@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Card } from 'reactstrap';
 import './filter-box.css';
 
 const filterBox = props => (

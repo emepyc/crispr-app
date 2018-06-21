@@ -3,9 +3,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import './displayGeneInfo.css';
-import UniprotLogo from '../../assets/UniprotLogo.gif';
-import EnsemblLogo from '../../assets/EnsemblLogo.jpg';
-import OpenTargetsLogo from '../../assets/OpenTargetsLogo.png';
 
 function getEssentialities(attributes, analyses) {
   return Object.keys(attributes).reduce((acc, curr) => {
@@ -16,17 +13,6 @@ function getEssentialities(attributes, analyses) {
     }
     return acc;
   }, []);
-}
-
-function LogoExternalLink(props) {
-  const { src, link, width } = props;
-  return (
-    <span style={{ marginRight: '15px' }}>
-      <a target="_blank" href={link}>
-        <img src={src} width={width} />
-      </a>
-    </span>
-  );
 }
 
 function TissueLink(props) {
@@ -45,7 +31,6 @@ function ScreeningResults(props) {
     significantEssentialities,
     totalEssentialities
   } = props;
-  console.log(props);
   return (
     <div>
       <ul>
@@ -69,10 +54,7 @@ const displayGeneInfo = props => {
     return <div />;
   }
 
-  const {
-    symbol: geneSymbol,
-    ensembl_gene_id: ensemblId
-  } = props.gene.data.attributes;
+  const { symbol: geneSymbol } = props.gene.data.attributes;
 
   const essentialIn = getEssentialities(
     props.gene.data.attributes,
@@ -86,13 +68,6 @@ const displayGeneInfo = props => {
           <div>
             <div>{props.gene.data.attributes.name}</div>
           </div>
-          {/*<div style={{marginTop: "20px", float: "right"}}>*/}
-          {/*<LogoExternalLink src={UniprotLogo} link={`http://www.uniprot.org/uniprot/?query=${geneSymbol}&sort=score`}*/}
-          {/*width="80"/>*/}
-          {/*<LogoExternalLink src={EnsemblLogo} link={`https://www.ensembl.org/gene=${ensemblId}`} width="40"/>*/}
-          {/*<LogoExternalLink src={OpenTargetsLogo}*/}
-          {/*link={`https://www.targetvalidation.org/target/${ensemblId}/associations`} width="40"/>*/}
-          {/*</div>*/}
         </div>
         <div className="gene-info-body" style={{ marginTop: '30px' }}>
           <h4>Screening results</h4>
