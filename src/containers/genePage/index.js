@@ -14,8 +14,6 @@ import GeneEssentialities from '../geneEssentialities';
 
 function GeneName(props) {
   const { gene } = props;
-  console.log('we need to take the name out of this gene...');
-  console.log(gene);
   if (!gene.data) {
     return <div />;
   }
@@ -36,9 +34,10 @@ function LogoExternalLink(props) {
 function ExternalLinks(props) {
   const { geneInfo } = props;
   if (geneInfo.data) {
-    console.log('geneInfo data...');
-    console.log(geneInfo.data);
-    const { symbol: geneSymbol, ensembl_gene_id: ensemblId } = geneInfo.data;
+    const {
+      symbol: geneSymbol,
+      ensembl_gene_id: ensemblId
+    } = geneInfo.data.attributes;
 
     return (
       <div style={{ marginTop: '20px', float: 'right' }}>
@@ -113,7 +112,10 @@ class GenePage extends React.Component {
         <div
           style={{ marginTop: '20px', marginLeft: '40px', marginRight: '40px' }}
         >
-          <div className="section">
+          <div
+            className="section"
+            style={{ borderBottom: '1px solid green', paddingBottom: '20px' }}
+          >
             <ExternalLinks geneInfo={geneInfo} />
 
             <h2>Gene: {gene || geneLoc}</h2>

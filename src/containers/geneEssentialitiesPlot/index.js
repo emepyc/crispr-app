@@ -108,7 +108,6 @@ class geneEssentialitiesPlot extends React.Component {
       insignifNodeColor,
       nodeRadius,
       attribute
-      // axisBottom
     } = this;
     const { containerWidth } = this.state;
     const { selectedEssentiality } = this.props;
@@ -128,11 +127,11 @@ class geneEssentialitiesPlot extends React.Component {
         false
       );
       ctx.fillStyle =
-        d.attributes[attribute] < 0.05 ? signifNodeColor : insignifNodeColor;
+        d.attributes[attribute] < 0 ? signifNodeColor : insignifNodeColor;
       ctx.fill();
       ctx.lineWidth = 1;
       ctx.strokeStyle =
-        d.attributes[attribute] < 0.05 ? signifNodeColor : insignifNodeColor;
+        d.attributes[attribute] <= 0 ? signifNodeColor : insignifNodeColor;
       ctx.stroke();
     }
 
@@ -150,10 +149,10 @@ class geneEssentialitiesPlot extends React.Component {
   };
 
   highlightNode = node => {
-    const index = node[3] || this.rowToNode(node);
-    if (!index) {
+    if (!node) {
       return;
     }
+    const index = node[3] || this.rowToNode(node);
     const nodeWithIndex = [node[0], node[1], node[2], index];
     const { marginLeft } = this;
     const [gene, model, essentiality, genePos] = nodeWithIndex;
@@ -375,15 +374,16 @@ class geneEssentialitiesPlot extends React.Component {
           </svg>
           <div
             ref="essentialities-plot-tooltip"
-            className="essentialities-tooltip"
             style={{
-              position: 'absolute',
-              whiteSpace: 'nowrap',
               backgroundColor: '#FFFFFF',
-              padding: '0.3rem 0.5rem',
               borderRadius: '3px',
               boxShadow: 'gray 0px 1px 2px',
-              display: 'none'
+              display: 'none',
+              padding: '0.3rem 0.5rem',
+              pointerEvents: 'none',
+              position: 'absolute',
+              whiteSpace: 'nowrap',
+              zIndex: 100
             }}
           />
         </div>

@@ -54,6 +54,7 @@ class GeneEssentialitiesSummary extends React.Component {
         <Col xs={4}>
           <SignificantEssentialitiesSummary
             essentialities={this.props.geneEssentialities}
+            scoreRange={this.props.scoreRange}
             width={100}
             height={100}
           />
@@ -77,7 +78,8 @@ const mapStateToProps = state => {
     geneEssentialities: state.geneEssentialities,
     geneInfo: state.geneInfo,
     hasErrored: state.geneInfoHasErrored,
-    isLoading: state.geneInfoIsLoading
+    isLoading: state.geneInfoIsLoading,
+    scoreRange: state.scoreRange
   };
 };
 
