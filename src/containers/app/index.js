@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 
 import About from '../about';
 import Downloads from '../downloads';
+import Footer from '../Footer';
 import Gene from '../genePage';
 import Home from '../home';
 import Masthead from '../masthead/';
@@ -21,6 +22,8 @@ const App = () => (
       <Route path="/model" component={Model} />
       <Route path="/table" component={Table} />
     </main>
+
+    <Footer />
   </div>
 );
 

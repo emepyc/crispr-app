@@ -8,15 +8,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import faSpinner from '@fortawesome/fontawesome-free-solid/faSpinner';
+import faDownload from '@fortawesome/fontawesome-free-solid/faDownload';
+// import faSpinner from '@fortawesome/fontawesome-free-solid/faSpinner';
 import {
-  Table,
-  Nav,
-  NavLink,
+  Button,
   Input,
   InputGroup,
   InputGroupAddon,
-  InputGroupText
+  InputGroupText,
+  Nav,
+  NavLink,
+  Table,
+  Tooltip
 } from 'reactstrap';
 
 import {
@@ -32,10 +35,16 @@ function parseData(raw) {
     return [
       d.attributes.gene_symbol,
       d.attributes.model_name,
-      d.attributes.fc_corrected,
-      d.index
+      d.attributes.fc_corrected
+      // d.index
     ];
   });
+}
+
+function json2csv(json) {
+  return [['Gene', 'Model', 'Score'], ...json]
+    .map(row => row.join(','))
+    .join('\n');
 }
 
 class CustomTable extends React.Component {
@@ -43,6 +52,8 @@ class CustomTable extends React.Component {
     super(props);
 
     this.fetch = debounce(this.fetch, 300);
+
+    this.maxSizeDownload = 2000;
 
     this.state = {
       data: [],
@@ -59,7 +70,14 @@ class CustomTable extends React.Component {
       pageSize: 10,
       pageNumber: 1,
       sort: 'fc_corrected',
-      totalHits: null
+      totalHits: null,
+
+      // tooltip
+      tooltipOpen: false,
+
+      // Download data
+      download: false,
+      downloadData: []
     };
   }
 
@@ -72,9 +90,8 @@ class CustomTable extends React.Component {
     return filter || search;
   };
 
-  fetch = () => {
+  fetchParams = () => {
     const { sort, pageSize, pageNumber } = this.state;
-    console.warn('fetch!!!');
 
     const searchAndFilter = this.combineSearchAndFilter();
     // const searchAndFilter = mergeFilters([...this.state.filter, this.state.search]);
@@ -86,7 +103,11 @@ class CustomTable extends React.Component {
       'page[number]': pageNumber
     };
 
-    const paramsNoEmpty = pickBy(params, identity);
+    return pickBy(params, identity);
+  };
+
+  fetch = () => {
+    const params = this.fetchParams();
 
     this.setState({
       loading: true
@@ -94,7 +115,7 @@ class CustomTable extends React.Component {
 
     axios
       .get(`${API_BASEURL}/datasets/crispr`, {
-        params: { ...paramsNoEmpty }
+        params: { ...params }
       })
       .then(
         resp => {
@@ -312,6 +333,45 @@ class CustomTable extends React.Component {
       };
     }, {});
 
+  tooltipToggle = () => {
+    this.setState({
+      tooltipOpen: !this.state.tooltipOpen
+    });
+  };
+
+  downloadData = () => {
+    console.log('Downloading data now');
+    const params = {
+      ...this.fetchParams(),
+      'page[size]': this.maxSizeDownload,
+      'page[number]': 0
+    };
+
+    axios
+      .get(`${API_BASEURL}/datasets/crispr`, {
+        params: { ...params }
+      })
+      .then(resp => {
+        const downloadData = parseData(resp.data.data);
+        const csv = json2csv(downloadData);
+        console.log(csv);
+        const downloadLink = document.createElement('a');
+        const blob = new Blob(['\ufeff', csv]);
+        const url = URL.createObjectURL(blob);
+        downloadLink.href = url;
+        downloadLink.download = 'data.csv';
+
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+
+        this.setState({
+          download: true,
+          downloadData
+        });
+      });
+  };
+
   render() {
     const { data } = this.state;
     const { selectedEssentiality, columns } = this.props;
@@ -353,17 +413,46 @@ class CustomTable extends React.Component {
           </NavLink>
         </Nav>
 
-        <InputGroup
-          style={{ width: '300px', float: 'right', marginBottom: '10px' }}
-        >
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>Search</InputGroupText>
-          </InputGroupAddon>
-          <Input
-            value={this.state.searchQuery}
-            onChange={e => this.search(e)}
-          />
-        </InputGroup>
+        <div style={{ float: 'right', marginBottom: '10px' }}>
+          <Button
+            outline
+            color="secondary"
+            id="download-element"
+            style={{
+              display: 'inline-block',
+              float: 'right',
+              marginLeft: '10px'
+            }}
+            onClick={this.downloadData}
+          >
+            <FontAwesomeIcon icon={faDownload} style={{ fontSize: '1em' }} />
+          </Button>
+          <Tooltip
+            placement="auto"
+            target="download-element"
+            toggle={this.tooltipToggle}
+            isOpen={this.state.tooltipOpen}
+          >
+            Download data in CSV
+            {this.state.totalHits > this.maxSizeDownload && (
+              <div>
+                Only the first {this.maxSizeDownload} rows (out of{' '}
+                {this.state.totalHits}) will be downloaded
+              </div>
+            )}
+          </Tooltip>
+
+          <InputGroup style={{ width: '300px' }}>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText>Search</InputGroupText>
+            </InputGroupAddon>
+            <Input
+              value={this.state.searchQuery}
+              onChange={e => this.search(e)}
+            />
+          </InputGroup>
+        </div>
+
         <Table responsive>
           <thead>
             <tr>
