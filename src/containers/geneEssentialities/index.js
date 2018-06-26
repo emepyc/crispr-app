@@ -10,37 +10,37 @@ class GeneEssentialities extends React.Component {
     super(props);
 
     // TODO: Convert to functional
-    this.summary = data => {
-      if (!data.length) {
-        return {
-          models: {}
-        };
-      }
-      const summary = {};
-
-      // Number of models
-      const modelsTotal = {};
-      const modelsSignif = {};
-      data.forEach(m => {
-        const mId = m.attributes.model_name;
-        if (!modelsTotal[mId]) {
-          modelsTotal[mId] = 0;
-        }
-        modelsTotal[mId] += 1;
-
-        if (m.attributes.fc_corrected < 0.05) {
-          if (!modelsSignif[mId]) {
-            modelsSignif[mId] = 0;
-          }
-          modelsSignif[mId] += 1;
-        }
-      });
-      summary.models = {
-        total: Object.keys(modelsTotal).length,
-        significant: Object.keys(modelsSignif).length
-      };
-      return summary;
-    };
+    // this.summary = data => {
+    //   if (!data.length) {
+    //     return {
+    //       models: {}
+    //     };
+    //   }
+    //   const summary = {};
+    //
+    //   // Number of models
+    //   const modelsTotal = {};
+    //   const modelsSignif = {};
+    //   data.forEach(m => {
+    //     const mId = m.attributes.model_name;
+    //     if (!modelsTotal[mId]) {
+    //       modelsTotal[mId] = 0;
+    //     }
+    //     modelsTotal[mId] += 1;
+    //
+    //     if (m.attributes.fc_corrected < 0.05) {
+    //       if (!modelsSignif[mId]) {
+    //         modelsSignif[mId] = 0;
+    //       }
+    //       modelsSignif[mId] += 1;
+    //     }
+    //   });
+    //   summary.models = {
+    //     total: Object.keys(modelsTotal).length,
+    //     significant: Object.keys(modelsSignif).length
+    //   };
+    //   return summary;
+    // };
   }
 
   componentDidUpdate(prevProps) {

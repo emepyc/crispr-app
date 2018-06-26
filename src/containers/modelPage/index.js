@@ -1,13 +1,51 @@
+import identity from 'lodash.identity';
+import pickBy from 'lodash.pickby';
 import queryString from 'query-string';
 import React from 'react';
-import { Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import ModelInfo from '../modelInfo';
+import CansarLogo from '../../assets/canSARLogo.png';
+import CosmicLogo from '../../assets/cosmicLogo.png';
 import ModelEssentialities from '../modelEssentialities';
-import pickBy from 'lodash.pickby';
-import identity from 'lodash.identity';
+
+function LogoExternalLink(props) {
+  const { src, link, width } = props;
+  return (
+    <span style={{ marginRight: '15px' }}>
+      <a target={'_blank'} href={link}>
+        <img src={src} width={width} />
+      </a>
+    </span>
+  );
+}
+
+function ExternalLinks(props) {
+  const { modelInfo } = props;
+  if (modelInfo.data) {
+    const {
+      cosmic_id: cosmicId,
+      model_name: modelName
+    } = modelInfo.data.attributes;
+
+    return (
+      <div style={{ marginTop: '10px', float: 'right' }}>
+        <LogoExternalLink
+          src={CosmicLogo}
+          link={`https://cancer.sanger.ac.uk/cell_lines/sample/overview?id=${cosmicId}`}
+          width="50"
+        />
+        <LogoExternalLink
+          src={CansarLogo}
+          link={`https://cansar.icr.ac.uk/cansar/cell-lines/${modelName}/`}
+          width="70"
+        />
+      </div>
+    );
+  }
+
+  return <div />;
+}
 
 class ModelPage extends React.Component {
   constructor(props) {
@@ -49,22 +87,29 @@ class ModelPage extends React.Component {
   }
 
   render() {
-    const { gene, model, tissue } = this.props; // This comes from the redux state
+    const { gene, model, tissue, scoreRange, modelInfo } = this.props; // This comes from the redux state
     const { gene: geneLoc, model: modelLoc } = this.state; // This comes from the internal state
+
     return (
-      <div>
-        <Row>
-          <Col sm="12" md="2">
-            <ModelInfo model={model || modelLoc} />
-          </Col>
-          <Col sm="12" md="10">
-            <ModelEssentialities
-              gene={gene || geneLoc}
-              model={model || modelLoc}
-              tissue={tissue}
-            />
-          </Col>
-        </Row>
+      <div
+        style={{ marginTop: '20px', marginLeft: '40px', marginRight: '40px' }}
+      >
+        <div
+          className="section"
+          style={{ borderBottom: '1px solid green', paddingBottom: '40px' }}
+        >
+          <ExternalLinks modelInfo={modelInfo} />
+
+          <h2>Model: {model || modelLoc}</h2>
+        </div>
+        <div style={{ paddingLeft: '30px', paddingRight: '30px' }}>
+          <ModelEssentialities
+            gene={gene || geneLoc}
+            model={model || modelLoc}
+            tissue={tissue} // Is this needed in the model page??
+            scoreRange={scoreRange}
+          />
+        </div>
       </div>
     );
   }
@@ -73,8 +118,10 @@ class ModelPage extends React.Component {
 const mapStateToProps = state => {
   return {
     tissue: state.tableTissue,
-    gene: state.gene,
-    model: state.model
+    gene: state.gene, // TODO: THIS IS NOT BEING USED ATM
+    model: state.model,
+    modelInfo: state.modelInfo,
+    scoreRange: state.scoreRange
   };
 };
 

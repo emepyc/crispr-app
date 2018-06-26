@@ -10,17 +10,17 @@ class ModelEssentialities extends React.Component {
   constructor(props) {
     super(props);
 
-    this.summary = data => {
-      if (!data.data) {
-        return {
-          genes: {}
-        };
-      }
-
-      const summary = {};
-
-      return summary;
-    };
+    // this.summary = data => {
+    //   if (!data.data) {
+    //     return {
+    //       genes: {}
+    //     };
+    //   }
+    //
+    //   const summary = {};
+    //
+    //   return summary;
+    // };
   }
 
   componentDidUpdate(prevProps) {
@@ -48,13 +48,11 @@ class ModelEssentialities extends React.Component {
   };
 
   render() {
-    const data = this.filterByScoreRange(this.props.modelEssentialities);
-
     if (this.props.hasErrored) {
       return (
         <p>
           Sorry! there was a problem loading the essentialities for{' '}
-          {this.props.gene}
+          {this.props.model}
         </p>
       );
     }
@@ -63,20 +61,18 @@ class ModelEssentialities extends React.Component {
       return <p>Loading...</p>;
     }
 
+    const data = this.filterByScoreRange(this.props.modelEssentialities);
+
     return (
       <React.Fragment>
-        <div>
-          <ModelEssentialitiesSummary
-            model={this.props.model}
-            data={this.summary(this.props.modelEssentialities)}
-          />
+        <div className="section">
+          <Filters model={this.props.model} />
         </div>
-        <div>
-          <Filters tissue={this.props.tissue} />
-        </div>
-        <div>
-          <ModelEssentialitiesDetails model={this.props.model} data={data} />
-        </div>
+        <ModelEssentialitiesDetails
+          data={data}
+          gene={this.props.gene}
+          model={this.props.model}
+        />
       </React.Fragment>
     );
   }

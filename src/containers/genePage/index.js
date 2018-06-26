@@ -4,12 +4,10 @@ import queryString from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-// import { Container } from 'reactstrap';
 
 import UniprotLogo from '../../assets/UniprotLogo.gif';
 import EnsemblLogo from '../../assets/EnsemblLogo.jpg';
 import OpenTargetsLogo from '../../assets/OpenTargetsLogo.png';
-// import GeneInfo from '../geneInfo';
 import GeneEssentialities from '../geneEssentialities';
 
 function GeneName(props) {
@@ -108,29 +106,27 @@ class GenePage extends React.Component {
     const { gene: geneLoc, model: modelLoc } = this.state; // This comes from the component state
 
     return (
-      <React.Fragment>
+      <div
+        style={{ marginTop: '20px', marginLeft: '40px', marginRight: '40px' }}
+      >
         <div
-          style={{ marginTop: '20px', marginLeft: '40px', marginRight: '40px' }}
+          className="section"
+          style={{ borderBottom: '1px solid green', paddingBottom: '20px' }}
         >
-          <div
-            className="section"
-            style={{ borderBottom: '1px solid green', paddingBottom: '20px' }}
-          >
-            <ExternalLinks geneInfo={geneInfo} />
+          <ExternalLinks geneInfo={geneInfo} />
 
-            <h2>Gene: {gene || geneLoc}</h2>
-            <GeneName gene={geneInfo} />
-          </div>
-          <div style={{ paddingLeft: '30px', paddingRight: '30px' }}>
-            <GeneEssentialities
-              gene={gene || geneLoc}
-              model={model || modelLoc}
-              tissue={tissue}
-              scoreRange={scoreRange}
-            />
-          </div>
+          <h2>Gene: {gene || geneLoc}</h2>
+          <GeneName gene={geneInfo} />
         </div>
-      </React.Fragment>
+        <div style={{ paddingLeft: '30px', paddingRight: '30px' }}>
+          <GeneEssentialities
+            gene={gene || geneLoc}
+            model={model || modelLoc}
+            tissue={tissue}
+            scoreRange={scoreRange}
+          />
+        </div>
+      </div>
     );
   }
 }

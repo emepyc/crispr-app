@@ -24,12 +24,11 @@ export function geneEssentialitiesFetchDataSuccess(geneEssentialities) {
   };
 }
 
-export function fetchGeneEssentialities(gene, tissue, scoreRange) {
+export function fetchGeneEssentialities(gene, tissue) {
   return dispatch => {
     const params = {
       gene,
-      tissue,
-      scoreRange
+      tissue
     };
     return paramsToFilter(params).then(filters => {
       return axios
@@ -51,19 +50,3 @@ export function fetchGeneEssentialities(gene, tissue, scoreRange) {
     });
   };
 }
-
-// export function fetchGeneEssentialities(gene, tissue) {
-//   return dispatch => {
-//     dispatch(geneEssentialitiesIsLoading(true));
-//     axios
-//       .get(`
-//          }${API_BASEURL}/genes/${gene}/datasets/crispr?page[size]=0`)
-//       .then(geneEssentialities => {
-//         dispatch(geneEssentialitiesIsLoading(false));
-//         dispatch(geneEssentialitiesFetchDataSuccess(geneEssentialities.data));
-//       })
-//       .catch(() => {
-//         dispatch(geneEssentialitiesHasErrored(true));
-//       });
-//   };
-// }

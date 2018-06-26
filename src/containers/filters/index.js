@@ -3,6 +3,7 @@ import { Col, Row } from 'reactstrap';
 
 import FilterBox from '../filterBox';
 import GeneEssentialitiesSummary from '../geneEssentialitiesSummary';
+import ModelEssentialitiesSummary from '../modelEssentialitiesSummary';
 import ScoreSlider from '../scoreSlider';
 import TissuesChips from '../tissueChip';
 
@@ -19,10 +20,13 @@ class Filters extends React.Component {
       <div style={{ marginLeft: '10px' }}>
         <Row>
           <Col xs={12} lg={6}>
-            <GeneEssentialitiesSummary {...this.props} />
+            {this.props.gene && <GeneEssentialitiesSummary {...this.props} />}
+            {this.props.model && <ModelEssentialitiesSummary {...this.props} />}
           </Col>
           <Col xs={6} lg={3}>
-            <FilterBox header={'Tissues'} body={tissuesFilter} />
+            {this.props.gene && (
+              <FilterBox header={'Tissues'} body={tissuesFilter} />
+            )}
           </Col>
           <Col xs={6} lg={3}>
             <FilterBox header={'Score'} body={scoreFilter} />
