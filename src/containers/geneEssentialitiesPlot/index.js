@@ -1,10 +1,14 @@
-import React from 'react';
+// import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+// import faDownload from '@fortawesome/fontawesome-free-solid/faDownload';
 import * as d3 from 'd3';
 import find from 'lodash.find';
 import sortBy from 'lodash.sortby';
+import React from 'react';
 import { connect } from 'react-redux';
-import { selectRow } from '../../modules/actions/customTable';
+// import {Button} from 'reactstrap';
+import tntUtils from 'tnt.utils';
 
+import { selectRow } from '../../modules/actions/customTable';
 import './geneEssentialitiesPlot.css';
 
 class geneEssentialitiesPlot extends React.Component {
@@ -211,7 +215,6 @@ class geneEssentialitiesPlot extends React.Component {
   plotEssentialities(data) {
     const { marginTop, marginLeft, height, brushHeight } = this;
     const { containerWidth } = this.state;
-    // const elementSvg = this.refs['essentialities-plot-svg'];
     const elementCanvas = this.refs['essentialities-plot-canvas'];
     const axisLeft = this.refs['essentialities-plot-axis-left'];
     const eventsContainer = this.refs['essentialities-plot-events-container'];
@@ -294,100 +297,181 @@ class geneEssentialitiesPlot extends React.Component {
     this.plotOnCanvas();
   }
 
+  pngDownload = () => {
+    const self = this;
+    const filename = 'Image.png'; // TODO: Dynamically set image name
+    const width = this.state.containerWidth;
+    const height = this.state.containerWidth; // TODO: This may not be right
+    let pngExporter = tntUtils
+      .png()
+      .filename(filename)
+      .scale_factor(1)
+      .callback(function(originalPng) {
+        // Need to add the points (from canvas element)
+        // since pngExporter only handles the svg element
+        // get the volcano plot canvas and convert to png
+        let canvas = self.refs['essentialities-plot-canvas'];
+        let pointsPng = canvas.toDataURL('image/png');
+        // create points image
+        let pointsImg = new Image();
+        pointsImg.width = width;
+        pointsImg.height = height;
+        pointsImg.src = pointsPng;
+        // create original image (svg of axes)
+        let originalImg = new Image();
+        originalImg.width = width;
+        originalImg.height = height;
+        originalImg.src = originalPng;
+        // combine the images
+        let combinedCanvas = document.createElement('canvas');
+        combinedCanvas.width = width;
+        combinedCanvas.height = height;
+        let context = combinedCanvas.getContext('2d');
+        context.drawImage(originalImg, 0, 0);
+        context.drawImage(pointsImg, 0, 0);
+        let combinedPng = combinedCanvas.toDataURL('image/png');
+        // add download behaviour
+        var a = document.createElement('a');
+        a.download = filename;
+        a.href = combinedPng;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      })
+      // TODO: Fix the stylesheet to be just the needed (not all)
+      //  .stylesheets(['components-OpenTargetsWebapp.min.css'])
+      .limit({
+        limit: 2100000,
+        onError: function() {
+          console.log('Could not create image: too large.');
+        }
+      });
+
+    console.log(this.refs['essentialities-plot-svg']);
+    pngExporter(d3.select(this.refs['essentialities-plot-svg']));
+  };
+
   render() {
     const { marginTop, marginLeft, height, brushHeight } = this;
     const { containerWidth } = this.state;
 
     return (
-      <div ref="plot-container">
-        <svg
-          ref="essentialities-plot-brush"
-          className="leave-space"
-          height={brushHeight}
-          width={containerWidth - marginLeft}
-        >
-          <path ref="essentialities-plot-brush-line" className="line" />
-          <g ref="essentialities-plot-brush-container" className="brush" />
-        </svg>
-        <div className="essentialities-plot-container">
-          <canvas
-            ref="essentialities-plot-canvas"
-            className="star-plot-toplevel-container leave-space"
-            height={height - marginTop}
-            width={containerWidth - marginLeft}
-          />
+      <React.Fragment>
+        {/*<Button*/}
+        {/*outline*/}
+        {/*color="secondary"*/}
+        {/*id="download-element"*/}
+        {/*style={{*/}
+        {/*display: 'inline-block',*/}
+        {/*float: 'right',*/}
+        {/*marginLeft: '10px',*/}
+        {/*marginBottom: '10px',*/}
+        {/*}}*/}
+        {/*onClick={this.pngDownload}*/}
+        {/*>*/}
+        {/*<FontAwesomeIcon icon={faDownload} style={{ fontSize: '1em' }} />*/}
+        {/*</Button>*/}
+        <div ref="plot-container">
           <svg
-            ref="essentialities-plot-svg"
-            className="star-plot-toplevel-container top"
-            height={height}
-            width={containerWidth}
+            ref="essentialities-plot-brush"
+            className="leave-space"
+            height={brushHeight}
+            width={containerWidth - marginLeft}
           >
-            <rect
-              ref="essentialities-plot-events-container"
-              x={marginLeft}
-              y="0"
-              width={containerWidth - marginLeft}
-              height={height - marginTop}
-            />
-            <line
-              ref="essentialities-plot-xline"
-              x1="0"
-              x2="0"
-              y1="0"
-              y2={height - marginTop}
-              style={{ display: 'none', stroke: '#eeeeee', strokeWidth: '2px' }}
-            />
-            <line
-              ref="essentialities-plot-yline"
-              x1={marginLeft}
-              x2={containerWidth}
-              y1="0"
-              y2="0"
-              style={{ display: 'none', stroke: '#eeeeee', strokeWidth: '2px' }}
-            />
-            <g ref="essentialities-plot-axis-bottom" />
-
-            <g
-              ref="essentialities-plot-axis-left"
-              transform={`translate(${marginLeft},0)`}
-            />
-
-            <text
-              ref="x-axis-label"
-              x="0"
-              y="0"
-              textAnchor="middle"
-              transform={`translate(${containerWidth / 2}, ${height - 10})`}
-            >
-              Cell lines
-            </text>
-
-            <text
-              ref="y-axis-label"
-              x="0"
-              y="0"
-              textAnchor="middle"
-              transform={`translate(15, ${height / 2}) rotate(-90)`}
-            >
-              Fold change
-            </text>
+            <path ref="essentialities-plot-brush-line" className="line" />
+            <g ref="essentialities-plot-brush-container" className="brush" />
           </svg>
           <div
-            ref="essentialities-plot-tooltip"
-            style={{
-              backgroundColor: '#FFFFFF',
-              borderRadius: '3px',
-              boxShadow: 'gray 0px 1px 2px',
-              display: 'none',
-              padding: '0.3rem 0.5rem',
-              pointerEvents: 'none',
-              position: 'absolute',
-              whiteSpace: 'nowrap',
-              zIndex: 100
-            }}
-          />
+            className="essentialities-plot-container"
+            ref="essentialities-plot-container"
+          >
+            <canvas
+              ref="essentialities-plot-canvas"
+              className="star-plot-toplevel-container leave-space"
+              height={height - marginTop}
+              width={containerWidth - marginLeft}
+            />
+            <svg
+              ref="essentialities-plot-svg"
+              className="star-plot-toplevel-container top"
+              height={height}
+              width={containerWidth}
+            >
+              <rect
+                ref="essentialities-plot-events-container"
+                x={marginLeft}
+                y="0"
+                width={containerWidth - marginLeft}
+                height={height - marginTop}
+              />
+              <line
+                ref="essentialities-plot-xline"
+                x1="0"
+                x2="0"
+                y1="0"
+                y2={height - marginTop}
+                style={{
+                  display: 'none',
+                  stroke: '#eeeeee',
+                  strokeWidth: '2px'
+                }}
+              />
+              <line
+                ref="essentialities-plot-yline"
+                x1={marginLeft}
+                x2={containerWidth}
+                y1="0"
+                y2="0"
+                style={{
+                  display: 'none',
+                  stroke: '#eeeeee',
+                  strokeWidth: '2px'
+                }}
+              />
+              <g ref="essentialities-plot-axis-bottom" />
+
+              <g
+                ref="essentialities-plot-axis-left"
+                transform={`translate(${marginLeft},0)`}
+              />
+
+              <text
+                ref="x-axis-label"
+                x="0"
+                y="0"
+                textAnchor="middle"
+                transform={`translate(${containerWidth / 2}, ${height - 10})`}
+              >
+                Cell lines
+              </text>
+
+              <text
+                ref="y-axis-label"
+                x="0"
+                y="0"
+                textAnchor="middle"
+                transform={`translate(15, ${height / 2}) rotate(-90)`}
+              >
+                Fold change
+              </text>
+            </svg>
+            <div
+              ref="essentialities-plot-tooltip"
+              style={{
+                backgroundColor: '#FFFFFF',
+                borderRadius: '3px',
+                boxShadow: 'gray 0px 1px 2px',
+                display: 'none',
+                padding: '0.3rem 0.5rem',
+                pointerEvents: 'none',
+                position: 'absolute',
+                whiteSpace: 'nowrap',
+                zIndex: 100
+              }}
+            />
+          </div>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

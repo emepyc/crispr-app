@@ -20,7 +20,7 @@ const geneEssentialitiesDetails = props => {
           <CustomTable
             gene={props.gene}
             tissue={props.tissue}
-            columns={['model', 'score']}
+            columns={['model', 'logFC', 'lossOfFitnessScore']}
           />
         </Col>
       </Row>

@@ -7941,6 +7941,10 @@ tmpl@1.0.x:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/tmpl/-/tmpl-1.0.4.tgz#23640dd7b42d00433911140820e5cf440e521dd1"
 
+tnt.utils@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/tnt.utils/-/tnt.utils-0.1.3.tgz#bb67394321c89840cdba272fc4762c04fbc8140f"
+
 to-arraybuffer@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/to-arraybuffer/-/to-arraybuffer-1.0.1.tgz#7d229b1fcc637e466ca081180836a7aabff83f43"

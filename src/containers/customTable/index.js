@@ -1,3 +1,5 @@
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faDownload from '@fortawesome/fontawesome-free-solid/faDownload';
 import axios from 'axios';
 import classnames from 'classnames';
 import { Promise } from 'es6-promise';
@@ -7,9 +9,7 @@ import pickBy from 'lodash.pickby';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import faDownload from '@fortawesome/fontawesome-free-solid/faDownload';
-// import faSpinner from '@fortawesome/fontawesome-free-solid/faSpinner';
+
 import {
   Button,
   Input,
@@ -35,8 +35,8 @@ function parseData(raw) {
     return [
       d.attributes.gene_symbol,
       d.attributes.model_name,
-      d.attributes.fc_corrected
-      // d.index
+      d.attributes.fc_corrected,
+      d.attributes.bagel_bf_scaled
     ];
   });
 }
@@ -119,6 +119,7 @@ class CustomTable extends React.Component {
       })
       .then(
         resp => {
+          console.log(parseData(resp.data.data));
           this.setState({
             loading: false,
             data: parseData(resp.data.data),
@@ -340,7 +341,6 @@ class CustomTable extends React.Component {
   };
 
   downloadData = () => {
-    console.log('Downloading data now');
     const params = {
       ...this.fetchParams(),
       'page[size]': this.maxSizeDownload,
@@ -390,6 +390,8 @@ class CustomTable extends React.Component {
     // }
 
     const columnKeys = columns ? this.getColumnKeys(columns) : {};
+    console.log('column keys...');
+    console.log(columnKeys);
 
     const navPrevClass = classnames({
       disabled: this.isFirstPage()
@@ -458,7 +460,10 @@ class CustomTable extends React.Component {
             <tr>
               {columnKeys['gene'] && <th>Gene</th>}
               {columnKeys['model'] && <th>Model</th>}
-              {columnKeys['score'] && <th>Value</th>}
+              {columnKeys['logFC'] && <th>LogFC</th>}
+              {columnKeys['lossOfFitnessScore'] && (
+                <th>Loss of fitness score</th>
+              )}
             </tr>
           </thead>
           <tbody>
@@ -497,7 +502,8 @@ class CustomTable extends React.Component {
                       </Link>
                     </td>
                   )}
-                  {columnKeys['score'] && <td>{row[2]}</td>}
+                  {columnKeys['logFC'] && <td>{row[2]}</td>}
+                  {columnKeys['lossOfFitnessScore'] && <td>{row[3]}</td>}
                 </tr>
               );
             })}
