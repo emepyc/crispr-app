@@ -85,7 +85,7 @@ class TablePage extends React.Component {
         <Filters tissue={tissue || tissueLoc} />
         <CustomTable
           tissue={tissue || tissueLoc}
-          columns={['gene', 'model', 'score']}
+          columns={['gene', 'model', 'logFC', 'lossOfFitnessScore']}
         />
       </Container>
     );

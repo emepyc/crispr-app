@@ -5,7 +5,7 @@ import find from 'lodash.find';
 import sortBy from 'lodash.sortby';
 import React from 'react';
 import { connect } from 'react-redux';
-// import {Button} from 'reactstrap';
+import { Button } from 'reactstrap';
 import tntUtils from 'tnt.utils';
 
 import { selectRow } from '../../modules/actions/customTable';
@@ -16,7 +16,8 @@ class geneEssentialitiesPlot extends React.Component {
     super(props);
 
     this.state = {
-      containerWidth: 100
+      containerWidth: 100,
+      attributeToPlot: 'fc_corrected'
     };
 
     this.height = 300;
@@ -34,7 +35,7 @@ class geneEssentialitiesPlot extends React.Component {
     this.xAxis = null;
 
     this.data = [];
-    this.attribute = 'fc_corrected';
+    // this.attribute = 'fc_corrected';
   }
 
   resize = () => {
@@ -75,6 +76,15 @@ class geneEssentialitiesPlot extends React.Component {
     window.removeEventListener('resize', this.resize);
   }
 
+  onSelectAttributeToPlot = selected => {
+    this.setState(
+      {
+        attributeToPlot: selected
+      },
+      () => this.plotEssentialities(this.props.data)
+    );
+  };
+
   showTooltip = (x, y, el, msg) => {
     el
       .html(msg)
@@ -110,9 +120,9 @@ class geneEssentialitiesPlot extends React.Component {
       data,
       signifNodeColor,
       insignifNodeColor,
-      nodeRadius,
-      attribute
+      nodeRadius
     } = this;
+    const attribute = this.state.attributeToPlot;
     const { containerWidth } = this.state;
     const { selectedEssentiality } = this.props;
 
@@ -205,7 +215,7 @@ class geneEssentialitiesPlot extends React.Component {
     const nodeData = [
       closest.attributes.gene_symbol,
       closest.attributes.model_name,
-      closest.attributes[this.attribute],
+      closest.attributes[this.state.attributeToPlot],
       closest.index
     ];
     this.highlightNode(nodeData);
@@ -214,14 +224,14 @@ class geneEssentialitiesPlot extends React.Component {
 
   plotEssentialities(data) {
     const { marginTop, marginLeft, height, brushHeight } = this;
-    const { containerWidth } = this.state;
+    const { containerWidth, attributeToPlot } = this.state;
     const elementCanvas = this.refs['essentialities-plot-canvas'];
     const axisLeft = this.refs['essentialities-plot-axis-left'];
     const eventsContainer = this.refs['essentialities-plot-events-container'];
     const brushLineElement = this.refs['essentialities-plot-brush-line'];
     const brushContainer = this.refs['essentialities-plot-brush-container'];
 
-    const dataSorted = sortBy(data, rec => rec.attributes[this.attribute]);
+    const dataSorted = sortBy(data, rec => rec.attributes[attributeToPlot]);
 
     this.data = dataSorted.map((d, i) => {
       return { ...d, index: i };
@@ -230,7 +240,7 @@ class geneEssentialitiesPlot extends React.Component {
     this.quadTree = d3.quadtree(
       this.data,
       d => d.index,
-      d => d.attributes[this.attribute]
+      d => d.attributes[this.state.attributeToPlot]
     );
 
     d3.select(eventsContainer).on('mousemove', this.mouseMoveOnCanvas);
@@ -241,7 +251,7 @@ class geneEssentialitiesPlot extends React.Component {
       .curve(d3.curveMonotoneX)
       .x(d => xScaleBrush(d.index))
       .y0(brushHeight)
-      .y1(d => yScaleBrush(d.attributes[this.attribute]));
+      .y1(d => yScaleBrush(d.attributes[this.state.attributeToPlot]));
 
     //create brush function redraw scatterplot with selection
     const brushed = () => {
@@ -253,7 +263,10 @@ class geneEssentialitiesPlot extends React.Component {
     const canvas = d3.select(elementCanvas);
     this.ctx = canvas.node().getContext('2d');
 
-    const yExtent = d3.extent(this.data, d => d.attributes[this.attribute]);
+    const yExtent = d3.extent(
+      this.data,
+      d => d.attributes[this.state.attributeToPlot]
+    );
     this.xScale = d3
       .scaleLinear()
       .range([0, containerWidth - marginLeft])
@@ -347,30 +360,40 @@ class geneEssentialitiesPlot extends React.Component {
         }
       });
 
-    console.log(this.refs['essentialities-plot-svg']);
     pngExporter(d3.select(this.refs['essentialities-plot-svg']));
   };
 
   render() {
     const { marginTop, marginLeft, height, brushHeight } = this;
-    const { containerWidth } = this.state;
+    const { containerWidth, attributeToPlot } = this.state;
 
     return (
       <React.Fragment>
-        {/*<Button*/}
-        {/*outline*/}
-        {/*color="secondary"*/}
-        {/*id="download-element"*/}
-        {/*style={{*/}
-        {/*display: 'inline-block',*/}
-        {/*float: 'right',*/}
-        {/*marginLeft: '10px',*/}
-        {/*marginBottom: '10px',*/}
-        {/*}}*/}
-        {/*onClick={this.pngDownload}*/}
-        {/*>*/}
-        {/*<FontAwesomeIcon icon={faDownload} style={{ fontSize: '1em' }} />*/}
-        {/*</Button>*/}
+        <div
+          style={{
+            display: 'inline-block',
+            float: 'right',
+            marginLeft: '10px',
+            marginBottom: '10px'
+          }}
+        >
+          <Button
+            outline
+            color="secondary"
+            onClick={() => this.onSelectAttributeToPlot('fc_corrected')}
+            active={attributeToPlot === 'fc_corrected'}
+          >
+            LogFC
+          </Button>
+          <Button
+            outline
+            color="secondary"
+            onClick={() => this.onSelectAttributeToPlot('bagel_bf_scaled')}
+            active={attributeToPlot === 'bagel_bf_scaled'}
+          >
+            Loss of fitness score
+          </Button>
+        </div>
         <div ref="plot-container">
           <svg
             ref="essentialities-plot-brush"

@@ -10,8 +10,6 @@ const modelEssentialitiesDetails = props => {
     return <div />;
   }
 
-  const body = <div />;
-
   return (
     <div className="gene-essentialities-details-container">
       <Row>
@@ -19,7 +17,10 @@ const modelEssentialitiesDetails = props => {
           <GeneEssentialitiesPlot data={props.data} />
         </Col>
         <Col xs={12} lg={6} className="my-auto">
-          <CustomTable model={props.model} columns={['gene', 'score']} />
+          <CustomTable
+            model={props.model}
+            columns={['gene', 'logFC', 'lossOfFitnessScore']}
+          />
         </Col>
       </Row>
     </div>

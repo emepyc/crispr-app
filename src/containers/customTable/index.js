@@ -119,7 +119,6 @@ class CustomTable extends React.Component {
       })
       .then(
         resp => {
-          console.log(parseData(resp.data.data));
           this.setState({
             loading: false,
             data: parseData(resp.data.data),
@@ -354,7 +353,6 @@ class CustomTable extends React.Component {
       .then(resp => {
         const downloadData = parseData(resp.data.data);
         const csv = json2csv(downloadData);
-        console.log(csv);
         const downloadLink = document.createElement('a');
         const blob = new Blob(['\ufeff', csv]);
         const url = URL.createObjectURL(blob);
@@ -390,8 +388,6 @@ class CustomTable extends React.Component {
     // }
 
     const columnKeys = columns ? this.getColumnKeys(columns) : {};
-    console.log('column keys...');
-    console.log(columnKeys);
 
     const navPrevClass = classnames({
       disabled: this.isFirstPage()
