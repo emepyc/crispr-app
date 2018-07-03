@@ -72,6 +72,50 @@ export function SignificantCancerTypesSummary(props) {
   );
 }
 
+export function IsPanCancerEssential(props) {
+  const { gene } = props;
+
+  if (!gene.data) {
+    return <div />;
+  }
+  const isPanCancer = gene.data.attributes.core_fitness_pancar;
+  const fontSize = isPanCancer ? '1.2rem' : '1rem';
+  const color = isPanCancer ? 'white' : 'grey';
+  const backgroundColor = isPanCancer ? '#5ba633' : 'white';
+  const panCancerLabel = isPanCancer ? 'Yes' : 'No';
+  const panCancerElement = isPanCancer ? (
+    <b>{panCancerLabel}</b>
+  ) : (
+    panCancerLabel
+  );
+  return (
+    <React.Fragment>
+      <div>Is pan cancer essential?</div>
+      <div
+        className="container d-flex"
+        style={{
+          width: '70px',
+          height: '70px',
+          border: '2px solid #5ba633',
+          marginTop: '10px',
+          borderRadius: '10px',
+          color,
+          backgroundColor
+        }}
+      >
+        <div
+          className="row align-self-center mx-auto"
+          style={{
+            fontSize
+          }}
+        >
+          {panCancerElement}
+        </div>
+      </div>
+    </React.Fragment>
+  );
+}
+
 export function SignificantEssentialitiesSummary(props) {
   const { width, height, essentialities, scoreRange } = props;
 

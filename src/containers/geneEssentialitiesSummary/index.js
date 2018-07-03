@@ -8,6 +8,7 @@ import { Row, Col } from 'reactstrap';
 import { fetchGeneInfo } from '../../modules/actions/geneInfo';
 import { fetchAnalyses } from '../../modules/actions/tissues';
 import {
+  IsPanCancerEssential,
   SignificantCancerTypesSummary,
   SignificantEssentialitiesSummary
 } from '../geneEssentialitiesSummaryPlots';
@@ -66,6 +67,9 @@ class GeneEssentialitiesSummary extends React.Component {
             width={100}
             height={100}
           />
+        </Col>
+        <Col xs={4}>
+          <IsPanCancerEssential gene={this.props.geneInfo} />
         </Col>
       </Row>
     );
