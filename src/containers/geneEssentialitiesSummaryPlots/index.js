@@ -35,12 +35,13 @@ export function SignificantCancerTypesSummary(props) {
 
   const total = Object.keys(props.analyses).length;
   const significant = cancerTypesEssentialities.length;
+  const typeSuffix = significant === 1 ? '' : 's';
 
   const radius = Math.min(width, height) / 2;
   return (
     <React.Fragment>
       <div>
-        Essential in <b>{significant}</b> cancer types
+        Essential in <b>{significant}</b> cancer type{typeSuffix}
       </div>
       <svg width={width} height={height}>
         <Group top={height / 2 - margin.top} left={width / 2}>
@@ -100,10 +101,11 @@ export function SignificantEssentialitiesSummary(props) {
     return <div />;
   }
   const radius = Math.min(width, height) / 2;
+  const cellLinesSuffix = inScore === 1 ? '' : 's';
   return (
     <React.Fragment>
       <div>
-        Essential in <b>{inScore}</b> cell lines
+        Essential in <b>{inScore}</b> cell line{cellLinesSuffix}
       </div>
       <svg width={width} height={height}>
         <Group top={height / 2 - margin.top} left={width / 2}>
