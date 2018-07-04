@@ -8,7 +8,6 @@ import identity from 'lodash.identity';
 import pickBy from 'lodash.pickby';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 import {
   Button,
@@ -18,7 +17,6 @@ import {
   InputGroupText,
   Nav,
   NavLink,
-  Table,
   Tooltip
 } from 'reactstrap';
 
@@ -27,6 +25,8 @@ import {
   selectModel,
   selectRow
 } from '../../modules/actions/customTable';
+
+import TableDisplay from '../TableDisplay';
 
 const API_BASEURL = process.env.REACT_APP_API_BASEURL;
 
@@ -278,10 +278,6 @@ class CustomTable extends React.Component {
   isLastPage = () =>
     this.state.pageNumber >= this.state.totalHits / this.state.pageSize;
 
-  mouseOver = rowData => {
-    this.props.selectRow(rowData);
-  };
-
   search = ev => {
     const { value } = ev.target;
     this.setState({
@@ -325,14 +321,6 @@ class CustomTable extends React.Component {
     );
   };
 
-  getColumnKeys = columns =>
-    columns.reduce((acc, curr) => {
-      return {
-        ...acc,
-        [curr]: true
-      };
-    }, {});
-
   tooltipToggle = () => {
     this.setState({
       tooltipOpen: !this.state.tooltipOpen
@@ -372,22 +360,6 @@ class CustomTable extends React.Component {
 
   render() {
     const { data } = this.state;
-    const { selectedEssentiality, columns } = this.props;
-    // const { loading } = this.state;
-    // if (loading) {
-    //   return (
-    //     <div id="loading">
-    //       <FontAwesomeIcon
-    //         icon={faSpinner}
-    //         spin
-    //         fixedWidth
-    //         style={{ fontSize: '2em' }}
-    //       />
-    //     </div>
-    //   );
-    // }
-
-    const columnKeys = columns ? this.getColumnKeys(columns) : {};
 
     const navPrevClass = classnames({
       disabled: this.isFirstPage()
@@ -451,60 +423,11 @@ class CustomTable extends React.Component {
           </InputGroup>
         </div>
 
-        <Table responsive>
-          <thead>
-            <tr>
-              {columnKeys['gene'] && <th>Gene</th>}
-              {columnKeys['model'] && <th>Model</th>}
-              {columnKeys['logFC'] && <th>LogFC</th>}
-              {columnKeys['lossOfFitnessScore'] && (
-                <th>Loss of fitness score</th>
-              )}
-            </tr>
-          </thead>
-          <tbody>
-            {data.map(row => {
-              const style = {
-                backgroundColor:
-                  selectedEssentiality &&
-                  (selectedEssentiality[0] === row[0] &&
-                    selectedEssentiality[1] === row[1])
-                    ? '#eeeeee'
-                    : '#ffffff'
-              };
-              return (
-                <tr
-                  key={`${row[0]}-${row[1]}`}
-                  style={style}
-                  onMouseOver={() => this.mouseOver(row)}
-                >
-                  {columnKeys['gene'] && (
-                    <th scope="row">
-                      <Link
-                        onClick={() => this.props.selectGene(row[0])}
-                        to={`/gene/${row[0]}?model=${row[1]}`}
-                      >
-                        {row[0]}
-                      </Link>
-                    </th>
-                  )}
-                  {columnKeys['model'] && (
-                    <td>
-                      <Link
-                        onClick={() => this.props.selectModel(row[1])}
-                        to={`/model/${row[1]}?gene=${row[0]}`}
-                      >
-                        {row[1]}
-                      </Link>
-                    </td>
-                  )}
-                  {columnKeys['logFC'] && <td>{row[2]}</td>}
-                  {columnKeys['lossOfFitnessScore'] && <td>{row[3]}</td>}
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
+        <TableDisplay
+          {...this.props}
+          data={data}
+          loading={this.state.loading}
+        />
       </div>
     );
   }

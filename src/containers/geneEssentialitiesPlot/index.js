@@ -1,4 +1,5 @@
-// import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faSpinner from '@fortawesome/fontawesome-free-solid/faSpinner';
 // import faDownload from '@fortawesome/fontawesome-free-solid/faDownload';
 import * as d3 from 'd3';
 import find from 'lodash.find';
@@ -40,6 +41,9 @@ class geneEssentialitiesPlot extends React.Component {
 
   resize = () => {
     const container = this.refs['plot-container'];
+    if (!container) {
+      return;
+    }
 
     this.setState(
       {
@@ -54,7 +58,7 @@ class geneEssentialitiesPlot extends React.Component {
   };
 
   componentDidMount() {
-    this.resize();
+    // this.resize();
     window.addEventListener('resize', this.resize);
   }
 
@@ -199,6 +203,11 @@ class geneEssentialitiesPlot extends React.Component {
     const elementTooltip = this.refs['essentialities-plot-tooltip'];
 
     this.hideTooltip(d3.select(elementTooltip));
+
+    if (!guideX || !guideY) {
+      return;
+    }
+
     guideX.style.display = 'none';
     guideY.style.display = 'none';
   };
@@ -344,7 +353,7 @@ class geneEssentialitiesPlot extends React.Component {
         context.drawImage(pointsImg, 0, 0);
         let combinedPng = combinedCanvas.toDataURL('image/png');
         // add download behaviour
-        var a = document.createElement('a');
+        const a = document.createElement('a');
         a.download = filename;
         a.href = combinedPng;
         document.body.appendChild(a);
@@ -366,6 +375,23 @@ class geneEssentialitiesPlot extends React.Component {
   render() {
     const { marginTop, marginLeft, height, brushHeight } = this;
     const { containerWidth, attributeToPlot } = this.state;
+
+    console.log(this.props.data);
+    if (!this.props.data.length) {
+      return (
+        <div
+          id="loading"
+          style={{ width: '100%', marginTop: '60px', float: 'left' }}
+        >
+          <FontAwesomeIcon
+            icon={faSpinner}
+            spin
+            fixedWidth
+            style={{ fontSize: '2em' }}
+          />
+        </div>
+      );
+    }
 
     return (
       <React.Fragment>
