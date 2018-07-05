@@ -2,6 +2,7 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faSpinner from '@fortawesome/fontawesome-free-solid/faSpinner';
 // import faDownload from '@fortawesome/fontawesome-free-solid/faDownload';
 import * as d3 from 'd3';
+import debounce from 'lodash.debounce';
 import find from 'lodash.find';
 import sortBy from 'lodash.sortby';
 import React from 'react';
@@ -20,6 +21,8 @@ class geneEssentialitiesPlot extends React.Component {
       containerWidth: 100,
       attributeToPlot: 'fc_corrected'
     };
+
+    this.plotEssentialitiesDebounced = debounce(this.plotEssentialities, 300);
 
     this.height = 300;
     this.marginTop = 50;
@@ -51,7 +54,11 @@ class geneEssentialitiesPlot extends React.Component {
       },
       () => {
         if (this.props.data.length) {
-          this.plotEssentialities(this.props.data);
+          if (this.props.data.length > 2000) {
+            this.plotEssentialitiesDebounced(this.props.data);
+          } else {
+            this.plotEssentialities(this.props.data);
+          }
         }
       }
     );
