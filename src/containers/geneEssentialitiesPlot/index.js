@@ -376,12 +376,16 @@ class geneEssentialitiesPlot extends React.Component {
     const { marginTop, marginLeft, height, brushHeight } = this;
     const { containerWidth, attributeToPlot } = this.state;
 
-    console.log(this.props.data);
     if (!this.props.data.length) {
       return (
         <div
           id="loading"
-          style={{ width: '100%', marginTop: '60px', float: 'left' }}
+          style={{
+            width: '100%',
+            marginTop: '60px',
+            marginLeft: '10px',
+            float: 'left'
+          }}
         >
           <FontAwesomeIcon
             icon={faSpinner}

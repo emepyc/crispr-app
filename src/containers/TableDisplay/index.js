@@ -33,7 +33,12 @@ class TableDisplay extends React.Component {
       return (
         <div
           id="loading"
-          style={{ width: '100%', marginTop: '10px', float: 'left' }}
+          style={{
+            width: '100%',
+            marginTop: '10px',
+            marginLeft: '10px',
+            float: 'left'
+          }}
         >
           <FontAwesomeIcon
             icon={faSpinner}
