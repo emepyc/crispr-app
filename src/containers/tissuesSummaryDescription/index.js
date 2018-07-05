@@ -1,3 +1,5 @@
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faClock from '@fortawesome/fontawesome-free-solid/faClock';
 import React from 'react';
 import { connect } from 'react-redux';
 import * as d3 from 'd3';
@@ -68,7 +70,7 @@ class TissuesSummaryDesc extends React.Component {
 
     return (
       <div>
-        <div>
+        <div style={{ marginLeft: '5px' }}>
           <span style={{ marginRight: '15px' }}>
             <img
               height={'50px'}
@@ -79,9 +81,9 @@ class TissuesSummaryDesc extends React.Component {
           </span>
           {this.props.nmodels} cell lines.
         </div>
-        <div style={{ marginTop: '15px' }}>
+        <div style={{ marginTop: '15px', marginLeft: '5px' }}>
           {/*<span style={{'margin-right': '15px'}}><img height={'50px'} width={'50px'} src={Organ2} alt="Cell line"/></span>{this.props.ntissues} tissues.*/}
-          <IconLoop>
+          <IconLoop duration="1000">
             {icon1}
             {icon2}
             {icon3}
@@ -93,6 +95,16 @@ class TissuesSummaryDesc extends React.Component {
             {icon9}
           </IconLoop>
           <span>{this.props.ntissues} tissues.</span>
+        </div>
+        <div style={{ marginTop: '15px' }}>
+          <FontAwesomeIcon
+            icon={faClock}
+            fixedWidth
+            style={{ fontSize: '2.1em', color: '#0061a5', marginRight: '15px' }}
+          />
+          <span style={{ verticalAlign: 'super' }}>
+            Last update: 15 July 2018
+          </span>
         </div>
       </div>
     );

@@ -5,7 +5,7 @@ class iconLoop extends React.Component {
   constructor(props) {
     super(props);
 
-    const duration = 500;
+    const { duration } = props;
     this.state = {
       duration,
       pos: 0,
