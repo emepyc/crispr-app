@@ -31,11 +31,13 @@ export function SignificantEssentialitiesSummary(props) {
     return <div />;
   }
 
+  const labelSuffix = inScore.length === 1 ? '' : 's';
+
   const radius = Math.min(width, height) / 2;
   return (
     <React.Fragment>
       <div>
-        Essential in <b>{inScore}</b> cell lines
+        <b>{inScore}</b> essential gene{labelSuffix}
       </div>
       <svg width={width} height={height}>
         <Group top={height / 2 - margin.top} left={width / 2}>
