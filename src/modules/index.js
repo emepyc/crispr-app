@@ -17,7 +17,7 @@ import {
 } from './modelInfo';
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
-import { scoreRange } from './scoreRange';
+import { scoreRange, scoreExtent } from './scoreRange';
 import {
   analyses,
   analysesHasErrored,
@@ -62,5 +62,6 @@ export default combineReducers({
   geneSelected,
   modelSelected,
 
-  scoreRange
+  scoreRange,
+  scoreExtent
 });

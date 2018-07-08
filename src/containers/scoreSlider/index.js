@@ -10,7 +10,7 @@ import { scoreRange } from '../../modules/actions/scoreSlider';
 import 'rc-slider/assets/index.css';
 import './scoreSlider.css';
 
-const scoreExtent = [-9, 9];
+// const scoreExtent = [-9, 9];
 
 class ScoreSlider extends React.Component {
   constructor(props) {
@@ -24,6 +24,18 @@ class ScoreSlider extends React.Component {
 
   rangeChanged = value => {
     this.props.setScoreRange(value);
+  };
+
+  minKeyPressed = ev => {
+    if (ev.charCode === 13) {
+      this.inputMinScore(ev);
+    }
+  };
+
+  maxKeyPressed = ev => {
+    if (ev.charCode === 13) {
+      this.inputMinScore(ev);
+    }
   };
 
   inputMinScore = ev => {
@@ -61,8 +73,10 @@ class ScoreSlider extends React.Component {
   };
 
   render() {
-    const { scoreRange } = this.props;
+    const { scoreRange, scoreExtent } = this.props;
     const { editingMinScore, editingMaxScore } = this.state;
+
+    // console.log(`score extent in slider... ${scoreExtent[0]} -- ${scoreExtent[1]}`);
 
     const inputStyle = {
       display: 'inline',
@@ -107,6 +121,7 @@ class ScoreSlider extends React.Component {
                 autoFocus
                 style={inputStyle}
                 onChange={() => {}}
+                onKeyPress={this.minKeyPressed}
                 onBlur={this.inputMinScore}
                 placeholder={scoreRange[0]}
               />
@@ -125,6 +140,7 @@ class ScoreSlider extends React.Component {
                 autoFocus
                 style={inputStyle}
                 onChange={() => {}}
+                onKeyPress={this.maxKeyPressed}
                 onBlur={this.inputMaxScore}
                 placeholder={scoreRange[1]}
               />
@@ -138,7 +154,8 @@ class ScoreSlider extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    scoreRange: state.scoreRange
+    scoreRange: state.scoreRange,
+    scoreExtent: state.scoreExtent
   };
 };
 

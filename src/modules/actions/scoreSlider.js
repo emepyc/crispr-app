@@ -4,3 +4,10 @@ export function scoreRange(range) {
     range
   };
 }
+
+export function scoreExtent(extent) {
+  return {
+    type: 'SCORE_EXTENT',
+    extent
+  };
+}

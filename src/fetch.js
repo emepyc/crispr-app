@@ -76,12 +76,12 @@ function paramToFilter(name, value) {
       and: [
         {
           name: 'fc_corrected',
-          op: 'lt',
+          op: 'le',
           val: value[1]
         },
         {
           name: 'fc_corrected',
-          op: 'gt',
+          op: 'ge',
           val: value[0]
         }
       ]

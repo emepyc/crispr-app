@@ -27,6 +27,7 @@ import {
 } from '../../modules/actions/customTable';
 
 import TableDisplay from '../TableDisplay';
+import { scoreExtent } from '../../modules/actions/scoreSlider';
 
 const API_BASEURL = process.env.REACT_APP_API_BASEURL;
 
@@ -106,12 +107,63 @@ class CustomTable extends React.Component {
     return pickBy(params, identity);
   };
 
+  getParamsNoScoreRange = () => {
+    const { gene, model, tissue } = this.props;
+    const params = {
+      gene,
+      model,
+      tissue
+    };
+    return this.paramsToFilter(pickBy(params, identity));
+  };
+
+  setExtent = () => {
+    this.getParamsNoScoreRange().then(filter => {
+      console.log('FILTER...');
+      console.log(filter);
+      return axios
+        .get(`${API_BASEURL}/datasets/crispr`, {
+          params: {
+            sort: 'fc_corrected',
+            filter: JSON.stringify(filter),
+            'page[size]': 1,
+            'page[number]': 1
+          }
+        })
+        .then(resp => {
+          console.log('resp -- 1');
+          console.log(resp);
+          const min = resp.data.data[0].attributes.fc_corrected;
+          axios
+            .get(`${API_BASEURL}/datasets/crispr`, {
+              params: {
+                sort: 'fc_corrected',
+                filter: JSON.stringify(filter),
+                'page[size]': 1,
+                'page[number]': resp.data.meta.count
+              }
+            })
+            .then(resp => {
+              const max = resp.data.data[0].attributes.fc_corrected;
+              console.log(`score range is ${min} - ${max}`);
+              this.props.setScoreExtent([min, max]);
+            });
+        });
+    });
+    // axios
+    //   .get(`${API_BASEURL}/datasets/crispr`, {
+    //
+    //   })
+  };
+
   fetch = () => {
     const params = this.fetchParams();
 
     this.setState({
       loading: true
     });
+
+    this.setExtent(params);
 
     axios
       .get(`${API_BASEURL}/datasets/crispr`, {
@@ -193,18 +245,19 @@ class CustomTable extends React.Component {
         and: [
           {
             name: 'fc_corrected',
-            op: 'lt',
+            op: 'le',
             val: value[1]
           },
           {
             name: 'fc_corrected',
-            op: 'gt',
+            op: 'ge',
             val: value[0]
           }
         ]
       };
     }
 
+    console.log(name);
     throw `Unknown filter ${name}`;
   };
 
@@ -444,7 +497,8 @@ const mapDispatchToProps = dispatch => {
   return {
     selectRow: rowData => dispatch(selectRow(rowData)),
     selectGene: gene => dispatch(selectGene(gene)),
-    selectModel: model => dispatch(selectModel(model))
+    selectModel: model => dispatch(selectModel(model)),
+    setScoreExtent: extent => dispatch(scoreExtent(extent))
   };
 };
 
