@@ -177,7 +177,7 @@ class geneEssentialitiesPlot extends React.Component {
     if (!node) {
       return;
     }
-    const index = node[3] || this.rowToNode(node);
+    const index = node[4] || this.rowToNode(node);
     const nodeWithIndex = [node[0], node[1], node[2], index];
     const { marginLeft } = this;
     const [gene, model, essentiality, genePos] = nodeWithIndex;
@@ -187,14 +187,16 @@ class geneEssentialitiesPlot extends React.Component {
     const tooltip = d3.select(elementTooltip);
 
     // Show the guide
-    const guideXpos = this.xScale(genePos) + marginLeft;
-    const guideYpos = this.yScale(essentiality);
-    guideX.setAttribute('x1', guideXpos);
-    guideX.setAttribute('x2', guideXpos);
-    guideX.style.display = 'block';
-    guideY.setAttribute('y1', guideYpos);
-    guideY.setAttribute('y2', guideYpos);
-    guideY.style.display = 'block';
+    if (this.xScale && this.yScale) {
+      const guideXpos = this.xScale(genePos) + marginLeft;
+      const guideYpos = this.yScale(essentiality);
+      guideX.setAttribute('x1', guideXpos);
+      guideX.setAttribute('x2', guideXpos);
+      guideX.style.display = 'block';
+      guideY.setAttribute('y1', guideYpos);
+      guideY.setAttribute('y2', guideYpos);
+      guideY.style.display = 'block';
+    }
 
     this.showTooltip(
       this.xScale(genePos) + marginLeft,

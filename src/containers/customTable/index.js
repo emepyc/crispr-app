@@ -119,8 +119,6 @@ class CustomTable extends React.Component {
 
   setExtent = () => {
     this.getParamsNoScoreRange().then(filter => {
-      console.log('FILTER...');
-      console.log(filter);
       return axios
         .get(`${API_BASEURL}/datasets/crispr`, {
           params: {
@@ -131,8 +129,6 @@ class CustomTable extends React.Component {
           }
         })
         .then(resp => {
-          console.log('resp -- 1');
-          console.log(resp);
           const min = resp.data.data[0].attributes.fc_corrected;
           axios
             .get(`${API_BASEURL}/datasets/crispr`, {
@@ -145,15 +141,10 @@ class CustomTable extends React.Component {
             })
             .then(resp => {
               const max = resp.data.data[0].attributes.fc_corrected;
-              console.log(`score range is ${min} - ${max}`);
               this.props.setScoreExtent([min, max]);
             });
         });
     });
-    // axios
-    //   .get(`${API_BASEURL}/datasets/crispr`, {
-    //
-    //   })
   };
 
   fetch = () => {
@@ -257,7 +248,6 @@ class CustomTable extends React.Component {
       };
     }
 
-    console.log(name);
     throw `Unknown filter ${name}`;
   };
 
