@@ -498,7 +498,8 @@ const mapDispatchToProps = dispatch => {
     selectRow: rowData => dispatch(selectRow(rowData)),
     selectGene: gene => dispatch(selectGene(gene)),
     selectModel: model => dispatch(selectModel(model)),
-    setScoreExtent: extent => dispatch(scoreExtent(extent))
+    setScoreExtent: extent =>
+      dispatch(scoreExtent([extent[0] - 0.1, extent[1] + 0.1]))
   };
 };
 

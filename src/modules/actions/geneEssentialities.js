@@ -34,6 +34,7 @@ export function fetchGeneEssentialities(gene, tissue) {
       return axios
         .get(`${API_BASEURL}/genes/${gene}/datasets/crispr`, {
           params: {
+            sort: 'fc_corrected',
             filter: JSON.stringify(filters),
             'page[size]': 0
           }
