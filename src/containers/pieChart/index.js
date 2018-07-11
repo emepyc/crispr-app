@@ -4,8 +4,9 @@ import { history } from '../../store/store';
 import { Row, Col } from 'reactstrap';
 import * as d3 from 'd3';
 
-import './pieChart.css';
+import colors from '../../colors';
 import { tableTissueFilter } from '../../modules/actions/table';
+import './pieChart.css';
 
 class PieChart extends React.Component {
   constructor(props) {
@@ -95,7 +96,10 @@ class PieChart extends React.Component {
     arc
       .append('path')
       .attr('d', path)
-      .attr('fill', d => d.data.color)
+      .attr('fill', d => {
+        console.log(d);
+        return colors[d.data.tissue];
+      })
       .on('mouseover', d => {
         this.setFocus(d);
       })

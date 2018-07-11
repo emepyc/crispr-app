@@ -1,3 +1,5 @@
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faSpinner from '@fortawesome/fontawesome-free-solid/faSpinner';
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchTissues } from '../../modules/actions/tissues';
@@ -17,7 +19,14 @@ class TissuesPieChart extends React.Component {
       return <p>Sorry! There was an error loading the items</p>;
     }
     if (this.props.isLoading) {
-      return <p>Loading...</p>;
+      return (
+        <FontAwesomeIcon
+          icon={faSpinner}
+          spin
+          fixedWidth
+          style={{ fontSize: '2em' }}
+        />
+      );
     }
 
     return (
