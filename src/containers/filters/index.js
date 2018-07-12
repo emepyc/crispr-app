@@ -24,7 +24,7 @@ class Filters extends React.Component {
             {this.props.model && <ModelEssentialitiesSummary {...this.props} />}
           </Col>
           <Col xs={6} lg={3}>
-            {this.props.gene && (
+            {(this.props.gene || this.props.tablePage) && (
               <FilterBox header={'Tissues'} body={tissuesFilter} />
             )}
           </Col>

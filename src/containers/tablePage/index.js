@@ -79,10 +79,11 @@ class TablePage extends React.Component {
   render() {
     const { tissue } = this.props;
     const tissueLoc = this.state.tissue;
-    console.log(`passing tissues, or ${tissue} or ${tissueLoc}`);
     return (
       <Container>
-        <Filters tissue={tissue || tissueLoc} />
+        <div className="section" style={{ marginTop: '20px' }}>
+          <Filters tablePage tissue={tissue || tissueLoc} />
+        </div>
         <CustomTable
           tissue={tissue || tissueLoc}
           columns={['gene', 'model', 'logFC', 'lossOfFitnessScore']}

@@ -9,6 +9,10 @@ const header = () => (
     <Container>
       <img src={Logo} width={'500px'} />
       <p className="lead">Genetic screens to identify cancer dependencies</p>
+      <p className="my-2" style={{ textAlign: 'center' }}>
+        Project Score uses CRISPR-Cas9 whole genome drop out screening
+        technology to identify novel oncology drug targets.
+      </p>
     </Container>
   </Jumbotron>
 );

@@ -106,14 +106,14 @@ class ScoreSlider extends React.Component {
           onChange={this.rangeChanged}
         />
         {scoreRange && (
-          <div style={{ marginTop: '1em' }}>
+          <div style={{ marginTop: '1em', fontSize: '0.9em' }}>
             Score ranging from
             {!editingMinScore && (
               <span
                 style={rangeStyle}
                 onClick={() => this.startEditingScore(0)}
               >
-                {scoreRange[0]}
+                <nobr>{scoreRange[0]}</nobr>
               </span>
             )}
             {editingMinScore && (
@@ -132,7 +132,7 @@ class ScoreSlider extends React.Component {
                 style={rangeStyle}
                 onClick={() => this.startEditingScore(1)}
               >
-                {scoreRange[1]}
+                <nobr>{scoreRange[1]}</nobr>
               </span>
             )}
             {editingMaxScore && (

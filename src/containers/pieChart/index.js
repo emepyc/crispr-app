@@ -41,7 +41,6 @@ class PieChart extends React.Component {
   };
 
   setFocus = d => {
-    console.log(d);
     const bbox = d3
       .select(`.${d.data.id}`)
       .node()
@@ -62,7 +61,7 @@ class PieChart extends React.Component {
         .style('left', `${d3.event.offsetX}px`)
         .style('top', `${d3.event.offsetY}px`);
     } else {
-      tooltip.style('left', `${bbox.left}px`).style('top', `${bbox.top}px`);
+      // tooltip.style('left', `${bbox.left}px`).style('top', `${bbox.top}px`);
     }
     d3.selectAll('.arc, .tissue-label').style('opacity', '0.1');
     d3.selectAll(`.${d.data.id}`).style('opacity', '1');
