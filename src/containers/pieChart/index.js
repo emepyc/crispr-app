@@ -41,12 +41,37 @@ class PieChart extends React.Component {
   };
 
   setFocus = d => {
+    console.log(d);
+    const bbox = d3
+      .select(`.${d.data.id}`)
+      .node()
+      .getBoundingClientRect();
+    console.log(
+      d3
+        .select(`.${d.data.id}`)
+        .node()
+        .getBoundingClientRect()
+    );
+    const tooltip = d3
+      .select(this.refs['piechart-tooltip'])
+      .style('display', 'block')
+      .html(`${d.data.tissue}<br /><b>${d.data.counts}</b>`);
+    if (d3.event) {
+      console.log(`${d3.event.offsetX}, ${d3.event.offsetY}`);
+      tooltip
+        .style('left', `${d3.event.offsetX}px`)
+        .style('top', `${d3.event.offsetY}px`);
+    } else {
+      tooltip.style('left', `${bbox.left}px`).style('top', `${bbox.top}px`);
+    }
     d3.selectAll('.arc, .tissue-label').style('opacity', '0.1');
     d3.selectAll(`.${d.data.id}`).style('opacity', '1');
   };
 
   removeFocus = () => {
     d3.selectAll('.arc, .tissue-label').style('opacity', '1');
+    const tooltip = d3.select(this.refs['piechart-tooltip']);
+    tooltip.style('display', 'none');
   };
 
   plotPieChart(tissues) {
@@ -96,10 +121,7 @@ class PieChart extends React.Component {
     arc
       .append('path')
       .attr('d', path)
-      .attr('fill', d => {
-        console.log(d);
-        return colors[d.data.tissue];
-      })
+      .attr('fill', d => colors[d.data.tissue])
       .on('mouseover', d => {
         this.setFocus(d);
       })
@@ -109,10 +131,26 @@ class PieChart extends React.Component {
   }
 
   render() {
+    const tooltipStyle = {
+      position: 'absolute',
+      maxWidth: '150px',
+      minWidth: '100px',
+      backgroundColor: 'white',
+      border: '1px solid grey',
+      borderRadius: '5px',
+      display: 'none',
+      pointerEvents: 'none'
+    };
+
     const tissuesContainerBody = (
       <Row>
         <Col className="my-auto" xs="6">
-          <div ref="piechart-container" />
+          <div ref="piechart-container" style={{ position: 'relative' }} />
+          <div
+            ref="piechart-tooltip"
+            className={'text-center'}
+            style={tooltipStyle}
+          />
         </Col>
         <Col
           style={{ borderRight: '1px solid green', padding: '20px' }}
@@ -128,9 +166,16 @@ class PieChart extends React.Component {
                     style={{ color: tissue.color }}
                     className={`tissue-label text-left ${tissue.id}`}
                     onClick={() => this.gotoTable({ data: { id: tissue.id } })}
-                    onMouseOver={() =>
-                      this.setFocus({ data: { id: tissue.id } })
-                    }
+                    onMouseOver={ev => {
+                      console.log(this);
+                      this.setFocus({
+                        data: {
+                          tissue: tissue.tissue,
+                          counts: tissue.counts,
+                          id: tissue.id
+                        }
+                      });
+                    }}
                     onMouseOut={this.removeFocus}
                   >
                     {tissue.tissue}:{tissue.counts}
