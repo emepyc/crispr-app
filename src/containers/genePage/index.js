@@ -102,7 +102,7 @@ class GenePage extends React.Component {
 
   render() {
     const { gene, model, tissue, scoreRange, geneInfo } = this.props; // This comes from the redux state
-    // TODO: Encode the score range in the Location (and other parameters)
+    // TODO: Encode the score range in the Location? (and other parameters)
     const { gene: geneLoc, model: modelLoc } = this.state; // This comes from the component state
 
     return (

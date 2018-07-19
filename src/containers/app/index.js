@@ -2,7 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import About from '../about';
-import Downloads from '../downloads';
+import Downloads from '../downloadPage';
 import Footer from '../Footer';
 import Gene from '../genePage';
 import Home from '../home';
