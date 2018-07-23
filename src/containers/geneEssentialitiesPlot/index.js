@@ -1,6 +1,5 @@
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faSpinner from '@fortawesome/fontawesome-free-solid/faSpinner';
-// import faDownload from '@fortawesome/fontawesome-free-solid/faDownload';
 import * as d3 from 'd3';
 import debounce from 'lodash.debounce';
 import find from 'lodash.find';
@@ -12,6 +11,9 @@ import tntUtils from 'tnt.utils';
 
 import { selectRow } from '../../modules/actions/customTable';
 import './geneEssentialitiesPlot.css';
+
+const LOSS_OF_FITNESS_SCORE = 'Loss of fitness score';
+const FC_CORRECTED = 'Log fold change';
 
 class geneEssentialitiesPlot extends React.Component {
   constructor(props) {
@@ -39,7 +41,6 @@ class geneEssentialitiesPlot extends React.Component {
     this.xAxis = null;
 
     this.data = [];
-    // this.attribute = 'fc_corrected';
   }
 
   resize = () => {
@@ -385,6 +386,11 @@ class geneEssentialitiesPlot extends React.Component {
     const { marginTop, marginLeft, height, brushHeight } = this;
     const { containerWidth, attributeToPlot } = this.state;
 
+    const yAxisLabel =
+      this.state.attributeToPlot === 'fc_corrected'
+        ? FC_CORRECTED
+        : LOSS_OF_FITNESS_SCORE;
+
     if (!this.props.data.length) {
       return (
         <div
@@ -514,7 +520,7 @@ class geneEssentialitiesPlot extends React.Component {
                 textAnchor="middle"
                 transform={`translate(15, ${height / 2}) rotate(-90)`}
               >
-                Fold change
+                {yAxisLabel}
               </text>
             </svg>
             <div
