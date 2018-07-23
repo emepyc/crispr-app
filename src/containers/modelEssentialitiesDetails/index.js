@@ -16,7 +16,7 @@ const modelEssentialitiesDetails = props => {
         <Col xs={12} lg={6} className="my-auto">
           <GeneEssentialitiesPlot data={props.data} />
         </Col>
-        <Col xs={12} lg={6} className="my-auto">
+        <Col xs={12} lg={6}>
           <CustomTable
             model={props.model}
             columns={['gene', 'logFC', 'lossOfFitnessScore']}

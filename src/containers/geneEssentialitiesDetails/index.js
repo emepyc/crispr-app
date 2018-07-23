@@ -13,10 +13,15 @@ const geneEssentialitiesDetails = props => {
   return (
     <div className="gene-essentialities-details-container">
       <Row>
-        <Col xs={12} lg={6} className="my-auto">
+        <Col
+          xs={12}
+          lg={6}
+          className="my-auto"
+          style={{ paddingRight: '30px' }}
+        >
           <GeneEssentialitiesPlot data={props.data} />
         </Col>
-        <Col xs={12} lg={6}>
+        <Col xs={12} lg={6} style={{ paddingLeft: '30px' }}>
           <CustomTable
             gene={props.gene}
             tissue={props.tissue}
