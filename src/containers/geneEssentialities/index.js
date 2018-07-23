@@ -47,8 +47,9 @@ class GeneEssentialities extends React.Component {
     // TODO: Not sure this is right
     if (
       (this.props.gene && prevProps.gene !== this.props.gene) ||
-      (this.props.tissue && prevProps.tissue !== this.props.tissue)
+      prevProps.tissue !== this.props.tissue
     ) {
+      console.log('fetch again!');
       this.props.fetchGeneEssentialities(this.props.gene, this.props.tissue);
     }
   }

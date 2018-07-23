@@ -12,8 +12,8 @@ import tntUtils from 'tnt.utils';
 import { selectRow } from '../../modules/actions/customTable';
 import './geneEssentialitiesPlot.css';
 
-const LOSS_OF_FITNESS_SCORE = 'Loss of fitness score';
-const FC_CORRECTED = 'Log fold change';
+const LOSS_OF_FITNESS_SCORE_LABEL = 'Loss of fitness score';
+const FC_CORRECTED_LABEL = 'Log fold change';
 
 class geneEssentialitiesPlot extends React.Component {
   constructor(props) {
@@ -388,8 +388,8 @@ class geneEssentialitiesPlot extends React.Component {
 
     const yAxisLabel =
       this.state.attributeToPlot === 'fc_corrected'
-        ? FC_CORRECTED
-        : LOSS_OF_FITNESS_SCORE;
+        ? FC_CORRECTED_LABEL
+        : LOSS_OF_FITNESS_SCORE_LABEL;
 
     if (!this.props.data.length) {
       return (
