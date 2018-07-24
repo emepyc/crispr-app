@@ -3,6 +3,7 @@ import faSpinner from '@fortawesome/fontawesome-free-solid/faSpinner';
 import * as d3 from 'd3';
 import debounce from 'lodash.debounce';
 import find from 'lodash.find';
+import findIndex from 'lodash.findindex';
 import sortBy from 'lodash.sortby';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -20,6 +21,7 @@ class geneEssentialitiesPlot extends React.Component {
     super(props);
 
     this.state = {
+      nodeHighlighted: null,
       containerWidth: 100,
       attributeToPlot: 'fc_corrected'
     };
@@ -68,6 +70,24 @@ class geneEssentialitiesPlot extends React.Component {
   componentDidMount() {
     // this.resize();
     window.addEventListener('resize', this.resize);
+  }
+
+  getScoresForNode(gene, model, nodes) {
+    if (!gene || !model || !nodes.length) {
+      return null;
+    }
+    const foundIndex = findIndex(
+      nodes,
+      node =>
+        node.attributes.gene_symbol === gene &&
+        node.attributes.model_name === model
+    );
+    const found = nodes[foundIndex];
+    return [
+      found.attributes.fc_corrected,
+      found.attributes.bagel_bf_scaled,
+      foundIndex
+    ];
   }
 
   componentDidUpdate(prevProps) {
@@ -172,13 +192,17 @@ class geneEssentialitiesPlot extends React.Component {
     if (selectedEssentiality) {
       this.highlightNode(selectedEssentiality);
     }
+
+    if (!this.state.nodeHighlighted) {
+      this.highlightDefaultNode();
+    }
   };
 
   highlightNode = node => {
     if (!node) {
       return;
     }
-    const index = node[4] || this.rowToNode(node);
+    const index = node[4] !== undefined ? node[4] : this.rowToNode(node);
     const nodeWithIndex = [node[0], node[1], node[2], index];
     const { marginLeft } = this;
     const [gene, model, essentiality, genePos] = nodeWithIndex;
@@ -197,14 +221,17 @@ class geneEssentialitiesPlot extends React.Component {
       guideY.setAttribute('y1', guideYpos);
       guideY.setAttribute('y2', guideYpos);
       guideY.style.display = 'block';
-    }
 
-    this.showTooltip(
-      this.xScale(genePos) + marginLeft,
-      this.yScale(essentiality),
-      tooltip,
-      `Gene: <b>${gene}</b><br/>Model: <b>${model}</b><br/>Essentiality score:<b>${essentiality}</b>`
-    );
+      this.showTooltip(
+        this.xScale(genePos) + marginLeft,
+        this.yScale(essentiality),
+        tooltip,
+        `Gene: <b>${gene}</b><br/>Model: <b>${model}</b><br/>Essentiality score:<b>${essentiality}</b>`
+      );
+      this.setState({
+        nodeHighlighted: [gene, model]
+      });
+    }
   };
 
   mouseOutOnCanvas = () => {
@@ -382,6 +409,31 @@ class geneEssentialitiesPlot extends React.Component {
     pngExporter(d3.select(this.refs['essentialities-plot-svg']));
   };
 
+  highlightDefaultNode = () => {
+    const scores = this.getScoresForNode(
+      this.props.gene,
+      this.props.model,
+      this.props.data
+    );
+    if (scores) {
+      this.highlightNode([this.props.gene, this.props.model, ...scores]);
+      this.setState({
+        nodeHighlighted: [this.props.gene, this.props.model]
+      });
+    }
+  };
+
+  defaultNodeHighlighted = () => {
+    const { nodeHighlighted } = this.state;
+    if (!nodeHighlighted) {
+      return false;
+    }
+    return (
+      nodeHighlighted[0] === this.props.gene &&
+      nodeHighlighted[1] === this.props.model
+    );
+  };
+
   render() {
     const { marginTop, marginLeft, height, brushHeight } = this;
     const { containerWidth, attributeToPlot } = this.state;
@@ -439,6 +491,18 @@ class geneEssentialitiesPlot extends React.Component {
             Loss of fitness score
           </Button>
         </div>
+
+        <div style={{ marginLeft: `${marginLeft}px` }}>
+          <Button
+            outline
+            color="secondary"
+            onClick={() => this.highlightDefaultNode()}
+            active={this.defaultNodeHighlighted()}
+          >
+            Highlight {this.props.gene} - {this.props.model}
+          </Button>
+        </div>
+
         <div ref="plot-container">
           <svg
             ref="essentialities-plot-brush"

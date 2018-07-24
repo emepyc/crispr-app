@@ -19,7 +19,11 @@ const geneEssentialitiesDetails = props => {
           className="my-auto"
           style={{ paddingRight: '30px' }}
         >
-          <GeneEssentialitiesPlot data={props.data} />
+          <GeneEssentialitiesPlot
+            data={props.data}
+            model={props.model}
+            gene={props.gene}
+          />
         </Col>
         <Col xs={12} lg={6} style={{ paddingLeft: '30px' }}>
           <CustomTable
