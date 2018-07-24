@@ -80,7 +80,7 @@ class TablePage extends React.Component {
     const { tissue } = this.props;
     const tissueLoc = this.state.tissue;
     return (
-      <Container>
+      <Container style={{ minHeight: '500px' }}>
         <div className="section" style={{ marginTop: '20px' }}>
           <Filters tablePage tissue={tissue || tissueLoc} />
         </div>
