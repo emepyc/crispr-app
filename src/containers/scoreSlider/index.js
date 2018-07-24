@@ -76,8 +76,6 @@ class ScoreSlider extends React.Component {
     const { scoreRange, scoreExtent } = this.props;
     const { editingMinScore, editingMaxScore } = this.state;
 
-    // console.log(`score extent in slider... ${scoreExtent[0]} -- ${scoreExtent[1]}`);
-
     const inputStyle = {
       display: 'inline',
       fontSize: '0.8em',

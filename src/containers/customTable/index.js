@@ -27,7 +27,7 @@ import {
 } from '../../modules/actions/customTable';
 
 import TableDisplay from '../TableDisplay';
-import { scoreExtent } from '../../modules/actions/scoreSlider';
+import { scoreExtent, scoreRange } from '../../modules/actions/scoreSlider';
 
 const API_BASEURL = process.env.REACT_APP_API_BASEURL;
 
@@ -142,6 +142,7 @@ class CustomTable extends React.Component {
             .then(resp => {
               const max = resp.data.data[0].attributes.fc_corrected;
               this.props.setScoreExtent([min, max]);
+              this.props.setScoreRange([min, max]);
             });
         });
     });
@@ -154,7 +155,7 @@ class CustomTable extends React.Component {
       loading: true
     });
 
-    this.setExtent(params);
+    // this.setExtent(params);
 
     axios
       .get(`${API_BASEURL}/datasets/crispr`, {
@@ -261,7 +262,7 @@ class CustomTable extends React.Component {
     });
   };
 
-  getParams = () => {
+  getParams = cbak => {
     const { gene, model, tissue, scoreRange } = this.props;
     const params = {
       gene,
@@ -274,13 +275,14 @@ class CustomTable extends React.Component {
         {
           filter: filter
         },
-        this.fetch
+        cbak
       );
     });
   };
 
   componentDidMount() {
-    this.getParams();
+    this.getParams(this.setExtent);
+    // this.setExtent();
   }
 
   componentDidUpdate(prevProps) {
@@ -292,7 +294,7 @@ class CustomTable extends React.Component {
     ) {
       return;
     }
-    this.getParams();
+    this.getParams(this.fetch);
   }
 
   goPrev = () => {
@@ -489,7 +491,11 @@ const mapDispatchToProps = dispatch => {
     selectGene: gene => dispatch(selectGene(gene)),
     selectModel: model => dispatch(selectModel(model)),
     setScoreExtent: extent =>
-      dispatch(scoreExtent([extent[0] - 0.1, extent[1] + 0.1]))
+      dispatch(scoreExtent([extent[0] - 0.1, extent[1] + 0.1])),
+    setScoreRange: range =>
+      dispatch(
+        scoreRange([+range[0].toFixed(1) - 0.1, +range[1].toFixed(1) + 0.1])
+      )
   };
 };
 
