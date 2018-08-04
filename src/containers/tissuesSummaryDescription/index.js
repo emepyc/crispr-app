@@ -1,4 +1,5 @@
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faBullsEye from '@fortawesome/fontawesome-free-solid/faBullseye';
 import faClock from '@fortawesome/fontawesome-free-solid/faClock';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -14,6 +15,7 @@ import Organ6 from './organ-6.png';
 import Organ7 from './organ-7.png';
 import Organ8 from './organ-8.png';
 import Organ9 from './organ-9.png';
+import Gene from './dna.png';
 import './tissuesSummaryDescription.css';
 
 class TissuesSummaryDesc extends React.Component {
@@ -95,6 +97,22 @@ class TissuesSummaryDesc extends React.Component {
             {icon9}
           </IconLoop>
           <span>{this.props.ntissues} tissues.</span>
+        </div>
+        <div style={{ marginLeft: '7px' }}>
+          <div style={{ marginTop: '15px' }}>
+            <img height={'47px'} width={'47px'} src={Gene} />
+            <span style={{ marginLeft: '20px' }}>6,830 fitness genes</span>
+          </div>
+        </div>
+        <div style={{ marginTop: '15px' }}>
+          <FontAwesomeIcon
+            icon={faBullsEye}
+            fixedWidth
+            style={{ fontSize: '2.1em', color: '#0061a5', marginRight: '15px' }}
+          />
+          <span style={{ verticalAlign: 'super' }}>
+            497 unique priority targets
+          </span>
         </div>
         <div style={{ marginTop: '15px' }}>
           <FontAwesomeIcon
