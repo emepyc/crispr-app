@@ -41,7 +41,7 @@ export default class Downloads extends React.Component {
               <tr>
                 <th>Data release</th>
                 <th>
-                  Raw data files{' '}
+                  sgRNA Read Count
                   <sup>
                     <a href="#" id="RawDataFilesTooltip">
                       ?
@@ -49,7 +49,7 @@ export default class Downloads extends React.Component {
                   </sup>
                 </th>
                 <th>
-                  Corrected data files{' '}
+                  CRISPRcleanR Corrected Log Fold Change Values
                   <sup>
                     <a href="#" id="CorrectedDataFilesTooltip">
                       ?
@@ -57,7 +57,7 @@ export default class Downloads extends React.Component {
                   </sup>
                 </th>
                 <th>
-                  Scaled Bayes Factor/binary matrix of essentiality{' '}
+                  Fitness/Non-fitness Binary Matrix
                   <sup>
                     <a href="#" id="ScaledDataFilesTooltip">
                       ?
@@ -81,7 +81,8 @@ export default class Downloads extends React.Component {
             target="RawDataFilesTooltip"
             toggle={() => this.toggle('RawTooltipOpen')}
           >
-            Description of raw data files
+            Unprocessed sgRNA read count files; each file includes plasmid read
+            counts.
           </Tooltip>
           <Tooltip
             placement="right"
@@ -89,7 +90,8 @@ export default class Downloads extends React.Component {
             target="CorrectedDataFilesTooltip"
             toggle={() => this.toggle('CorrectedTooltipOpen')}
           >
-            Description of corrected data files
+            Gene level log fold changes; gene independent bias corrected using
+            CRISPRcleanR default settings.
           </Tooltip>
           <Tooltip
             placement="right"
@@ -97,7 +99,9 @@ export default class Downloads extends React.Component {
             target="ScaledDataFilesTooltip"
             toggle={() => this.toggle('ScaledTooltipOpen')}
           >
-            Description of scaled data files
+            Binary matrix defining each gene in each cell line as a fitness gene
+            or not based on bayes factors values calculated using BAGEL and
+            scaled with respect to a 5% false discovery rate threshold.
           </Tooltip>
         </div>
       </div>
