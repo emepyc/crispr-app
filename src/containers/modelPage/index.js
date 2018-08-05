@@ -5,8 +5,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import CansarLogo from '../../assets/canSARLogo.png';
-import CosmicLogo from '../../assets/cosmicLogo.png';
 import ModelEssentialities from '../modelEssentialities';
 
 function LogoExternalLink(props) {
@@ -30,16 +28,7 @@ function ExternalLinks(props) {
 
     return (
       <div style={{ marginTop: '10px', float: 'right' }}>
-        <LogoExternalLink
-          src={CosmicLogo}
-          link={`https://cancer.sanger.ac.uk/cell_lines/sample/overview?id=${cosmicId}`}
-          width="50"
-        />
-        <LogoExternalLink
-          src={CansarLogo}
-          link={`https://cansar.icr.ac.uk/cansar/cell-lines/${modelName}/`}
-          width="70"
-        />
+        {/*Links to model passport goes here*/}
       </div>
     );
   }
