@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Jumbotron } from 'reactstrap';
 import Searchbox from '../searchbox';
 import DepmapGenesHeader from '../depmapGenesHeader';
+import HomeProjectDescription from '../HomeProjectDescription';
 import HomeSection from '../homeSection';
 import TissuesSummary from '../tissuesSummary';
 
@@ -14,6 +15,10 @@ const Home = () => (
 
     <HomeSection customStyle={{ borderTop: '1px solid green' }}>
       <TissuesSummary />
+    </HomeSection>
+
+    <HomeSection>
+      <HomeProjectDescription />
     </HomeSection>
   </Container>
 );

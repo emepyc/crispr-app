@@ -21,7 +21,7 @@ class iconLoop extends React.Component {
   }
 
   rotateElem = t => {
-    if (t > this.state.duration * (this.state.stay ? 4 : 1)) {
+    if (t > this.state.duration * (this.state.stay ? 6 : 1)) {
       this.state.timer.stop();
       if (this.state.scale.range()[0] === 1) {
         this.setState({
