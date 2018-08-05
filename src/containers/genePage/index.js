@@ -39,6 +39,9 @@ function ExternalLinks(props) {
 
     return (
       <div style={{ marginTop: '20px', float: 'right' }}>
+        <span style={{ marginRight: '10px', verticalAlign: 'middle' }}>
+          Link to:{' '}
+        </span>
         <LogoExternalLink
           src={UniprotLogo}
           link={`http://www.uniprot.org/uniprot/?query=${geneSymbol}&sort=score`}
