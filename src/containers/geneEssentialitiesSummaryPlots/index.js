@@ -143,7 +143,7 @@ export function IsPanCancerEssential(props) {
   if (!gene.data) {
     return <div />;
   }
-  const isPanCancer = gene.data.attributes.core_fitness_pancar;
+  const isPanCancer = gene.data.attributes.core_fitness_pancan;
   const fontSize = isPanCancer ? '1.2rem' : '1rem';
   const color = isPanCancer ? 'white' : 'grey';
   const backgroundColor = isPanCancer ? '#5ba633' : 'white';
