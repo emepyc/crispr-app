@@ -35,8 +35,8 @@ class geneEssentialitiesPlot extends React.Component {
     this.marginLeft = 50;
     this.brushHeight = 50;
 
-    this.insignifNodeColor = '#758E4F';
-    this.signifNodeColor = '#FFCC00';
+    this.insignifNodeColor = '#FFCC00';
+    this.signifNodeColor = '#758E4F';
     this.nodeRadius = 3;
 
     this.ctx = null;
