@@ -14,7 +14,7 @@ import { selectRow } from '../../modules/actions/customTable';
 import './geneEssentialitiesPlot.css';
 
 const LOSS_OF_FITNESS_SCORE_LABEL = 'Loss of fitness score';
-const FC_CORRECTED_LABEL = 'Log fold change';
+const FC_CORRECTED_LABEL = 'Corrected log fold change';
 
 class geneEssentialitiesPlot extends React.Component {
   constructor(props) {
@@ -480,7 +480,7 @@ class geneEssentialitiesPlot extends React.Component {
             onClick={() => this.onSelectAttributeToPlot('fc_corrected')}
             active={attributeToPlot === 'fc_corrected'}
           >
-            LogFC
+            Corrected log fold change
           </Button>
           <Button
             outline

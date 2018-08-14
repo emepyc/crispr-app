@@ -155,7 +155,7 @@ export function IsPanCancerEssential(props) {
   );
   return (
     <React.Fragment>
-      <div>Is pan cancer essential?</div>
+      <div>Pan-cancer core fitness</div>
       <div
         className="container d-flex"
         style={{

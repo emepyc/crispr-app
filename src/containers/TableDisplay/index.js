@@ -114,7 +114,8 @@ class TableDisplay extends React.Component {
             {this.columnKeys['logFC'] && (
               <th>
                 <nobr>
-                  LogFC <SortArrows {...this.props} field="fc_corrected" />
+                  Corrected log fold change{' '}
+                  <SortArrows {...this.props} field="fc_corrected" />
                 </nobr>
               </th>
             )}
