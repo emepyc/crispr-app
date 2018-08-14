@@ -16,6 +16,8 @@ import './geneEssentialitiesPlot.css';
 const LOSS_OF_FITNESS_SCORE_LABEL = 'Loss of fitness score';
 const FC_CORRECTED_LABEL = 'Corrected log fold change';
 
+const significantField = 'bagel_bf_scaled';
+
 class geneEssentialitiesPlot extends React.Component {
   constructor(props) {
     super(props);
@@ -173,11 +175,15 @@ class geneEssentialitiesPlot extends React.Component {
         false
       );
       ctx.fillStyle =
-        d.attributes[attribute] < 0 ? signifNodeColor : insignifNodeColor;
+        d.attributes[significantField] < 0
+          ? signifNodeColor
+          : insignifNodeColor;
       ctx.fill();
       ctx.lineWidth = 1;
       ctx.strokeStyle =
-        d.attributes[attribute] <= 0 ? signifNodeColor : insignifNodeColor;
+        d.attributes[significantField] <= 0
+          ? signifNodeColor
+          : insignifNodeColor;
       ctx.stroke();
     }
 
