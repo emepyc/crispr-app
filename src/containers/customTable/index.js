@@ -71,6 +71,7 @@ class CustomTable extends React.Component {
       pageSize: 10,
       pageNumber: 1,
       sort: 'fc_corrected',
+      sortDirection: 1,
       totalHits: null,
 
       // tooltip
@@ -92,13 +93,13 @@ class CustomTable extends React.Component {
   };
 
   fetchParams = () => {
-    const { sort, pageSize, pageNumber } = this.state;
+    const { sort, sortDirection, pageSize, pageNumber } = this.state;
 
     const searchAndFilter = this.combineSearchAndFilter();
     // const searchAndFilter = mergeFilters([...this.state.filter, this.state.search]);
 
     const params = {
-      sort,
+      sort: sortDirection === -1 ? `-${sort}` : sort,
       filter: JSON.stringify(searchAndFilter),
       'page[size]': pageSize,
       'page[number]': pageNumber
@@ -403,6 +404,19 @@ class CustomTable extends React.Component {
       });
   };
 
+  setSort = sortField => {
+    this.setState(
+      {
+        sort: sortField,
+        sortDirection:
+          sortField === this.state.sort ? this.state.sortDirection * -1 : 1
+      },
+      () => {
+        this.fetch();
+      }
+    );
+  };
+
   render() {
     const { data } = this.state;
 
@@ -471,7 +485,10 @@ class CustomTable extends React.Component {
         <TableDisplay
           {...this.props}
           data={data}
+          sort={this.state.sort}
+          sortDirection={this.state.sortDirection}
           loading={this.state.loading}
+          onSortChange={this.setSort}
         />
       </div>
     );

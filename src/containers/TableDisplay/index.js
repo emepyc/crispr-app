@@ -1,8 +1,55 @@
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import ArrowUp from '@fortawesome/fontawesome-free-solid/faArrowUp';
+import ArrowDown from '@fortawesome/fontawesome-free-solid/faArrowDown';
 import faSpinner from '@fortawesome/fontawesome-free-solid/faSpinner';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Table } from 'reactstrap';
+
+class SortArrows extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  setSort = (onSortChange, field) => {
+    onSortChange(field);
+  };
+
+  render() {
+    const { onSortChange, field } = this.props;
+
+    const ArrowDownStyle =
+      field === this.props.sort && this.props.sortDirection === 1
+        ? {
+            opacity: 1
+          }
+        : {
+            opacity: 0.3
+          };
+
+    const ArrowUpStyle =
+      field === this.props.sort && this.props.sortDirection === -1
+        ? {
+            opacity: 1
+          }
+        : {
+            opacity: 0.3
+          };
+
+    return (
+      <span onClick={() => this.setSort(onSortChange, field)}>
+        <FontAwesomeIcon
+          style={{ ...ArrowDownStyle, fontSize: '0.9em' }}
+          icon={ArrowDown}
+        />
+        <FontAwesomeIcon
+          style={{ ...ArrowUpStyle, fontSize: '0.9em' }}
+          icon={ArrowUp}
+        />
+      </span>
+    );
+  }
+}
 
 class TableDisplay extends React.Component {
   constructor(props) {
@@ -54,11 +101,28 @@ class TableDisplay extends React.Component {
       <Table responsive>
         <thead>
           <tr>
-            {this.columnKeys['gene'] && <th>Gene</th>}
-            {this.columnKeys['model'] && <th>Model</th>}
-            {this.columnKeys['logFC'] && <th>LogFC</th>}
+            {this.columnKeys['gene'] && (
+              <th>
+                Gene <SortArrows {...this.props} field="gene_symbol" />
+              </th>
+            )}
+            {this.columnKeys['model'] && (
+              <th>
+                Model <SortArrows {...this.props} field="model_name" />
+              </th>
+            )}
+            {this.columnKeys['logFC'] && (
+              <th>
+                <nobr>
+                  LogFC <SortArrows {...this.props} field="fc_corrected" />
+                </nobr>
+              </th>
+            )}
             {this.columnKeys['lossOfFitnessScore'] && (
-              <th>Loss of fitness score</th>
+              <th>
+                Loss of fitness score{' '}
+                <SortArrows {...this.props} field="bagel_bf_scaled" />
+              </th>
             )}
           </tr>
         </thead>
