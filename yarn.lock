@@ -36,7 +36,7 @@
   dependencies:
     classnames "^2.2.5"
 
-"@vx/point@0.0.165":
+"@vx/point@0.0.165", "@vx/point@^0.0.165":
   version "0.0.165"
   resolved "https://registry.yarnpkg.com/@vx/point/-/point-0.0.165.tgz#7ebde5da3d86954fe31a56f923f31550f0b4b867"
 

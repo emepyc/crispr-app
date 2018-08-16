@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row, Col } from 'reactstrap';
 import PieChart from '../pieChart';
+import DonutChart from '../donutChart';
 import HomeSectionDescription from '../homeSectionDescription';
 import TissuesSummaryDescription from '../tissuesSummaryDescription';
 
@@ -8,15 +9,11 @@ const tissuesSummaryDisplay = () => {
   return (
     <div>
       <Row>
-        <Col xs={{ size: 12, offset: 0 }} sm={{ size: 6, offset: 0 }}>
-          <PieChart />
+        <Col md={{ size: 12 }} lg={{ size: 6 }}>
+          <DonutChart />
         </Col>
 
-        <Col
-          className={'my-auto'}
-          xs={{ size: 12, offset: 0 }}
-          sm={{ size: 6 }}
-        >
+        <Col className={'my-auto'} md={{ size: 12 }} lg={{ size: 6 }}>
           <HomeSectionDescription>
             <TissuesSummaryDescription />
           </HomeSectionDescription>

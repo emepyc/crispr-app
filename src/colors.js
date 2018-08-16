@@ -1,17 +1,32 @@
 export default {
-  Skin: '#977272',
-  Ovary: '#1C8072',
-  Bone: '#0E9C25',
-  Breast: '#884B97',
-  'Central Nervous System': '#615D36',
-  'Haematopoietic and Lymphoid Tissue': '#B20000',
-  'Large Intestine': '#A95A00',
-  Lung: '#2E67AF',
-  Pancreas: '#A60066',
-  'Peripheral Nervous System': '#5E3A00',
-  'Biliary Tract': '#9DB205',
-  Endometrium: '#38FCA8'
+  Skin: '#a6cee3',
+  Ovary: '#1f78b4',
+  Bone: '#b2df8a',
+  Breast: '#33a02c',
+  'Central Nervous System': '#fb9a99',
+  'Haematopoietic and Lymphoid Tissue': '#e31a1c',
+  'Large Intestine': '#fdbf6f',
+  Lung: '#ff7f00',
+  Pancreas: '#cab2d6',
+  'Peripheral Nervous System': '#6a3d9a',
+  'Biliary Tract': '#ffff99',
+  Endometrium: '#b15928'
 };
+
+// export default {
+//   Skin: '#977272',
+//   Ovary: '#1C8072',
+//   Bone: '#0E9C25',
+//   Breast: '#884B97',
+//   'Central Nervous System': '#615D36',
+//   'Haematopoietic and Lymphoid Tissue': '#B20000',
+//   'Large Intestine': '#A95A00',
+//   Lung: '#2E67AF',
+//   Pancreas: '#A60066',
+//   'Peripheral Nervous System': '#5E3A00',
+//   'Biliary Tract': '#9DB205',
+//   Endometrium: '#38FCA8'
+// };
 
 // Tissues and Types
 // Colors

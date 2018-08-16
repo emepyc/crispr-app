@@ -27,6 +27,8 @@ class PieChart extends React.Component {
   }
 
   resize = () => {
+    console.log(this.refs['piechart-container']);
+    console.log(this.refs['piechart-container'].offsetWidth);
     this.setState({
       containerWidth: this.refs['piechart-container'].offsetWidth
     });
