@@ -95,7 +95,7 @@ class DonutChart extends React.Component {
     const donutChartSideOffset = this.calculateSideOffset(tissues) * 3;
 
     const margin = {
-      top: donutChartSideOffset || 0,
+      top: 70,
       left: donutChartSideOffset || 0,
       right: donutChartSideOffset || 0,
       bottom: 0
@@ -105,7 +105,7 @@ class DonutChart extends React.Component {
 
     return (
       <div style={{ position: 'relative' }} ref={this.containerElement}>
-        <svg width={pieChartWidth} height={pieChartWidth}>
+        <svg width={pieChartWidth} height={300}>
           <Group top={radius + margin.top} left={radius + margin.left}>
             <Pie
               data={tissues}
