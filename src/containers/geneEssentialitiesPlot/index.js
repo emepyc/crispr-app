@@ -9,6 +9,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'reactstrap';
 import tntUtils from 'tnt.utils';
+import { Row, Col } from 'reactstrap';
+import colors from '../../colors';
 
 import { selectRow } from '../../modules/actions/customTable';
 import './geneEssentialitiesPlot.css';
@@ -440,6 +442,44 @@ class geneEssentialitiesPlot extends React.Component {
     );
   };
 
+  mouseOverTissue = tissue => {
+    console.log(tissue);
+  };
+
+  tissueFilterElement = (tissue, key) => {
+    return (
+      <div
+        style={{ color: tissue ? colors[tissue.tissue] : '' }}
+        key={key}
+        onMouseOver={() => this.mouseOverTissue(tissue)}
+      >
+        {tissue ? tissue.tissue : ''}
+      </div>
+    );
+  };
+
+  tissuesInBlocks = (tissues, blocks) => {
+    const tissuesPerBlock = Math.round(tissues.length / blocks);
+    if (tissues.length === 0) {
+      return <div />;
+    }
+
+    return (
+      <Row>
+        {[...Array(blocks).keys()].map(block => (
+          <Col xs={12 / blocks} key={block}>
+            {[...Array(tissuesPerBlock).keys()].map(pos => {
+              return this.tissueFilterElement(
+                tissues[block * tissuesPerBlock + pos],
+                block * tissuesPerBlock + pos
+              );
+            })}
+          </Col>
+        ))}
+      </Row>
+    );
+  };
+
   render() {
     const { marginTop, marginLeft, height, brushHeight } = this;
     const { containerWidth, attributeToPlot } = this.state;
@@ -608,6 +648,15 @@ class geneEssentialitiesPlot extends React.Component {
               }}
             />
           </div>
+          <div
+            style={{
+              marginLeft: marginLeft,
+              fontSize: '0.8em',
+              cursor: 'pointer'
+            }}
+          >
+            {this.tissuesInBlocks(this.props.tissues, 3)}
+          </div>
         </div>
       </React.Fragment>
     );
@@ -616,7 +665,8 @@ class geneEssentialitiesPlot extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    selectedEssentiality: state.rowSelected
+    selectedEssentiality: state.rowSelected,
+    tissues: state.tissues // TODO: We need to use all the tissues because this.props.data does not contain tissue information. Once it does, it would be better to take the tissues from there so we only display the tissues in the data
   };
 };
 

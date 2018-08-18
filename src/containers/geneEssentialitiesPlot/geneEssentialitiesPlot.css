@@ -1,7 +1,6 @@
 .essentialities-plot-container {
   position: relative;
-  height: 500px;
-  width: 500px;
+  height: 350px;
 }
 .essentialities-plot-container .star-plot-toplevel-container {
   position: absolute;
