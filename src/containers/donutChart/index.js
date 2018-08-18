@@ -3,7 +3,8 @@ import * as d3 from 'd3';
 import { Group } from '@vx/group';
 import { Pie, Line } from '@vx/shape';
 import { Point } from '@vx/point';
-// import Tooltip from "@vx/tooltip";
+import { withTooltip, TooltipWithBounds } from '@vx/tooltip';
+import { localPoint } from '@vx/event';
 import React from 'react';
 import { tableTissueFilter } from '../../modules/actions/table';
 import { connect } from 'react-redux';
@@ -88,8 +89,29 @@ class DonutChart extends React.Component {
     });
   };
 
+  _handleMouseOverBar = (event, tissue) => {
+    const coords = localPoint(event.target.ownerSVGElement, event);
+    this.props.showTooltip({
+      tooltipLeft: coords.x,
+      tooltipTop: coords.y,
+      tooltipData: (
+        <div>
+          {tissue.data.tissue}: <strong>{tissue.data.counts}</strong>
+        </div>
+      )
+    });
+  };
+
   render() {
     const { tissues } = this.props;
+    const {
+      tooltipData,
+      tooltipLeft,
+      tooltipTop,
+      tooltipOpen,
+      hideTooltip
+    } = this.props;
+
     const pieChartWidth = this.state.containerWidth;
 
     const donutChartSideOffset = this.calculateSideOffset(tissues) * 3;
@@ -133,13 +155,21 @@ class DonutChart extends React.Component {
               onClick={d => event => {
                 this.gotoTable(d);
               }}
-              onMouseOver={d => event => {
-                console.log('mouseover!');
-                console.log(d);
-              }}
+              onMouseMove={d => event => this._handleMouseOverBar(event, d)}
+              onMouseOut={() => hideTooltip}
             />
           </Group>
         </svg>
+        {tooltipOpen && (
+          <TooltipWithBounds
+            // set this to random so it correctly updates with parent bounds
+            key={Math.random()}
+            top={tooltipTop}
+            left={tooltipLeft}
+          >
+            {tooltipData}
+          </TooltipWithBounds>
+        )}
       </div>
     );
   }
@@ -157,4 +187,6 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DonutChart);
+export default withTooltip(
+  connect(mapStateToProps, mapDispatchToProps)(DonutChart)
+);
