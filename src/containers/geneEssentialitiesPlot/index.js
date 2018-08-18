@@ -87,6 +87,9 @@ class geneEssentialitiesPlot extends React.Component {
         node.attributes.model_name === model
     );
     const found = nodes[foundIndex];
+    if (!found) {
+      return null;
+    }
     return [
       found.attributes.fc_corrected,
       found.attributes.bagel_bf_scaled,
@@ -538,16 +541,19 @@ class geneEssentialitiesPlot extends React.Component {
           </Button>
         </div>
 
-        <div style={{ marginLeft: `${marginLeft}px` }}>
-          <Button
-            outline
-            color="secondary"
-            onClick={() => this.highlightDefaultNode()}
-            active={this.defaultNodeHighlighted()}
-          >
-            Highlight {this.props.gene} - {this.props.model}
-          </Button>
-        </div>
+        {this.props.gene &&
+          this.props.model && (
+            <div style={{ marginLeft: `${marginLeft}px` }}>
+              <Button
+                outline
+                color="secondary"
+                onClick={() => this.highlightDefaultNode()}
+                active={this.defaultNodeHighlighted()}
+              >
+                Highlight {this.props.gene} - {this.props.model}
+              </Button>
+            </div>
+          )}
 
         <div ref="plot-container">
           <svg
