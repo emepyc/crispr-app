@@ -50,6 +50,9 @@ class TablePage extends React.Component {
       return;
     }
     const { tissue } = this.props;
+    this.setState({
+      tissue
+    });
     this.setParamsInUrl(
       {
         tissue

@@ -485,10 +485,7 @@ class CustomTable extends React.Component {
             <InputGroupAddon addonType="prepend">
               <InputGroupText>Search</InputGroupText>
             </InputGroupAddon>
-            <Input
-              value={this.state.searchQuery}
-              onChange={e => this.search(e)}
-            />
+            <Input value={searchQuery} onChange={e => this.search(e)} />
           </InputGroup>
         </div>
 

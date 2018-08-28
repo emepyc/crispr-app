@@ -90,7 +90,6 @@ class GenePage extends React.Component {
     const gene = this.getTerm(loc, 'gene');
     const model = this.getTerm(loc, 'model');
     const tissue = this.getTerm(loc, 'tissue');
-    // TODO: Include reading the range from the url
 
     return pickBy({ gene, model, tissue }, identity);
   };
