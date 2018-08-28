@@ -1,15 +1,16 @@
 import React from 'react';
 import { Row, Col } from 'reactstrap';
-import PieChart from '../pieChart';
 import DonutChart from '../donutChart';
 import HomeSectionDescription from '../homeSectionDescription';
 import TissuesSummaryDescription from '../tissuesSummaryDescription';
+
+import 'animate.css';
 
 const tissuesSummaryDisplay = () => {
   return (
     <div>
       <Row>
-        <Col md={{ size: 12 }} lg={{ size: 6 }}>
+        <Col md={{ size: 12 }} lg={{ size: 6 }} className="animated fadeInLeft">
           <DonutChart />
         </Col>
 

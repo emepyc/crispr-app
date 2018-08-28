@@ -11,6 +11,7 @@
     "@vx/point": "^0.0.165",
     "@vx/shape": "^0.0.166",
     "@vx/tooltip": "^0.0.165",
+    "animate.css": "^3.7.0",
     "axios": "^0.18.0",
     "bootstrap": "^4.0.0",
     "chance": "^1.0.13",

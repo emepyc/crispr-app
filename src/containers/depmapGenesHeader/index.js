@@ -3,12 +3,13 @@ import React from 'react';
 
 import Logo from '../../assets/projectScore.png';
 import './depmapGenesHeader.css';
+import 'animate.css';
 
 const header = () => {
   return (
     <Jumbotron className="text-center mb-3">
       <Container>
-        <Row>
+        <Row className="animated fadeInDown">
           <Col md={{ size: 8, offset: 2 }} xs={12}>
             <img src={Logo} style={{ maxWidth: '100%', height: 'auto' }} />
           </Col>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Jumbotron } from 'reactstrap';
+import { Container } from 'reactstrap';
 import Searchbox from '../searchbox';
 import DepmapGenesHeader from '../depmapGenesHeader';
 import HomeProjectDescription from '../HomeProjectDescription';

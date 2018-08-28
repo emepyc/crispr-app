@@ -17,6 +17,7 @@ import Organ8 from './organ-8.png';
 import Organ9 from './organ-9.png';
 import Gene from './dna.png';
 import './tissuesSummaryDescription.css';
+import 'animate.css';
 
 class TissuesSummaryDesc extends React.Component {
   constructor(props) {
@@ -71,7 +72,7 @@ class TissuesSummaryDesc extends React.Component {
     );
 
     return (
-      <div>
+      <div className="animated fadeInRight">
         <div style={{ marginLeft: '5px' }}>
           <span style={{ marginRight: '15px' }}>
             <img
