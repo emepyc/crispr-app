@@ -4,7 +4,7 @@ import CustomTable from '../customTable';
 import Filters from '../filters';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import queryString from 'query-string';
+import queryString from 'qs';
 import pickBy from 'lodash.pickby';
 import identity from 'lodash.identity';
 import { tableTissueFilter } from '../../modules/actions/table';

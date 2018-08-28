@@ -33,8 +33,9 @@ export function fetchModelEssentialities(model) {
       return axios
         .get(`${API_BASEURL}/models/${model}/datasets/crispr`, {
           params: {
-            filter: JSON.stringify(filters),
-            'page[size]': 0
+            'page[size]': 0,
+            'fields[crispr_data]':
+              'bagel_bf_scaled,fc_corrected,gene_symbol,model_name'
           }
         })
         .then(modelEssentialities => {
