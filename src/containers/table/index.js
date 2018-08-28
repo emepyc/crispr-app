@@ -8,7 +8,7 @@ import $ from 'jquery';
 import axios from 'axios';
 import cols from './columns';
 import { history } from '../../store/store';
-import queryString from 'query-string';
+import queryString from 'qs';
 import FilterBox from '../filterBox';
 import TissuesChips from '../tissueChip';
 import ValuesFilter from '../valuesFilter';

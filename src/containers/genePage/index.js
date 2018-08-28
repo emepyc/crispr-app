@@ -1,6 +1,6 @@
 import identity from 'lodash.identity';
 import pickBy from 'lodash.pickby';
-import queryString from 'query-string';
+import queryString from 'qs';
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
