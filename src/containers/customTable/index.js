@@ -418,7 +418,17 @@ class CustomTable extends React.Component {
   };
 
   render() {
-    const { data } = this.state;
+    const {
+      data,
+      totalHits,
+      pageNumber,
+      pageSize,
+      tooltipOpen,
+      searchQuery,
+      sort,
+      sortDirection,
+      loading
+    } = this.state;
 
     const navPrevClass = classnames({
       disabled: this.isFirstPage()
@@ -434,8 +444,8 @@ class CustomTable extends React.Component {
             &lt;
           </NavLink>
           <small style={{ padding: '0.75rem 0.25rem' }}>
-            Page {this.state.pageNumber} of{' '}
-            {1 + ~~(this.state.totalHits / this.state.pageSize)}
+            Page <b>{pageNumber}</b> of {1 + ~~(totalHits / pageSize)}{' '}
+            <small style={{ color: '#999999' }}>({totalHits} total rows)</small>
           </small>
           <NavLink className={navNextClass} href="#" onClick={this.goNext}>
             &gt;
@@ -460,13 +470,13 @@ class CustomTable extends React.Component {
             placement="auto"
             target="download-element"
             toggle={this.tooltipToggle}
-            isOpen={this.state.tooltipOpen}
+            isOpen={tooltipOpen}
           >
             Download data in CSV
-            {this.state.totalHits > this.maxSizeDownload && (
+            {totalHits > this.maxSizeDownload && (
               <div>
-                Only the first {this.maxSizeDownload} rows (out of{' '}
-                {this.state.totalHits}) will be downloaded
+                Only the first {this.maxSizeDownload} rows (out of {totalHits})
+                will be downloaded
               </div>
             )}
           </Tooltip>
@@ -485,9 +495,9 @@ class CustomTable extends React.Component {
         <TableDisplay
           {...this.props}
           data={data}
-          sort={this.state.sort}
-          sortDirection={this.state.sortDirection}
-          loading={this.state.loading}
+          sort={sort}
+          sortDirection={sortDirection}
+          loading={loading}
           onSortChange={this.setSort}
         />
       </div>
