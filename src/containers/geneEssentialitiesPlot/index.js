@@ -35,7 +35,7 @@ class geneEssentialitiesPlot extends React.Component {
     this.height = 300;
     this.marginTop = 50;
     this.marginLeft = 50;
-    this.brushHeight = 50;
+    this.brushHeight = 40;
     this.brushOffset = 10;
 
     this.insignifNodeColor = '#FFCC00';
@@ -321,7 +321,7 @@ class geneEssentialitiesPlot extends React.Component {
       .enter()
       .append('path')
       .attr('class', 'handle--custom')
-      .attr('fill', '#666')
+      .attr('fill', '#aaa')
       .attr('fill-opacity', 0.8)
       .attr('stroke', '#000')
       .attr('stroke-width', 1.5)
@@ -335,6 +335,11 @@ class geneEssentialitiesPlot extends React.Component {
           .startAngle(0)
           .endAngle((d, i) => (i ? Math.PI : -Math.PI))
       );
+
+    d3
+      .select(brushContainer)
+      .select('rect.selection')
+      .attr('fill', '#aaa');
 
     // create brush function redraw scatterplot with selection
     const brushed = () => {
@@ -589,12 +594,25 @@ class geneEssentialitiesPlot extends React.Component {
         <div ref="plot-container">
           <svg
             ref="essentialities-plot-brush"
-            style={{ paddingLeft: '50px' }}
+            style={{ paddingLeft: '25px' }}
             height={brushHeight}
-            width={containerWidth + brushOffset + 1}
+            width={containerWidth + brushOffset * 2 + 1}
           >
-            <path ref="essentialities-plot-brush-line" className="line" />
-            <g ref="essentialities-plot-brush-container" className="brush" />
+            <path
+              transform="translate(25, 0)"
+              ref="essentialities-plot-brush-line"
+              className="line"
+              style={{
+                fill: 'none',
+                stroke: '#003F83',
+                strokeWidth: '2px'
+              }}
+            />
+            <g
+              transform="translate(25, 0)"
+              ref="essentialities-plot-brush-container"
+              className="brush"
+            />
           </svg>
           <div
             className="essentialities-plot-container"
