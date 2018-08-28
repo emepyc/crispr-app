@@ -36,6 +36,7 @@ class geneEssentialitiesPlot extends React.Component {
     this.marginTop = 50;
     this.marginLeft = 50;
     this.brushHeight = 50;
+    this.brushOffset = 10;
 
     this.insignifNodeColor = '#FFCC00';
     this.signifNodeColor = '#758E4F';
@@ -280,7 +281,7 @@ class geneEssentialitiesPlot extends React.Component {
   };
 
   plotEssentialities(data) {
-    const { marginTop, marginLeft, height, brushHeight } = this;
+    const { marginTop, marginLeft, height, brushHeight, brushOffset } = this;
     const { containerWidth, attributeToPlot } = this.state;
     const elementCanvas = this.refs['essentialities-plot-canvas'];
     const axisLeft = this.refs['essentialities-plot-axis-left'];
@@ -301,7 +302,6 @@ class geneEssentialitiesPlot extends React.Component {
     );
 
     d3.select(eventsContainer).on('mousemove', this.mouseMoveOnCanvas);
-    // .on('mouseout', this.mouseOutOnCanvas);
 
     const brushLine = d3
       .area()
@@ -310,14 +310,45 @@ class geneEssentialitiesPlot extends React.Component {
       .y0(brushHeight)
       .y1(d => yScaleBrush(d.attributes[this.state.attributeToPlot]));
 
-    //create brush function redraw scatterplot with selection
+    d3
+      .select(brushContainer)
+      .selectAll('.handle--custom')
+      .remove();
+    const handle = d3
+      .select(brushContainer)
+      .selectAll('.handle--custom')
+      .data([{ type: 'w' }, { type: 'e' }])
+      .enter()
+      .append('path')
+      .attr('class', 'handle--custom')
+      .attr('fill', '#666')
+      .attr('fill-opacity', 0.8)
+      .attr('stroke', '#000')
+      .attr('stroke-width', 1.5)
+      .attr('cursor', 'ew-resize')
+      .attr(
+        'd',
+        d3
+          .arc()
+          .innerRadius(0)
+          .outerRadius(brushOffset)
+          .startAngle(0)
+          .endAngle((d, i) => (i ? Math.PI : -Math.PI))
+      );
+
+    // create brush function redraw scatterplot with selection
     const brushed = () => {
       const selection = d3.event.selection;
       this.xScale.domain(selection.map(xScaleBrush.invert, xScaleBrush));
+      handle.attr(
+        'transform',
+        (d, i) => 'translate(' + selection[i] + ',' + brushHeight / 2 + ')'
+      );
       this.plotOnCanvas();
     };
 
     const canvas = d3.select(elementCanvas);
+
     this.ctx = canvas.node().getContext('2d');
 
     const yExtent = d3.extent(
@@ -484,7 +515,7 @@ class geneEssentialitiesPlot extends React.Component {
   };
 
   render() {
-    const { marginTop, marginLeft, height, brushHeight } = this;
+    const { marginTop, marginLeft, height, brushHeight, brushOffset } = this;
     const { containerWidth, attributeToPlot } = this.state;
 
     const yAxisLabel =
@@ -558,9 +589,9 @@ class geneEssentialitiesPlot extends React.Component {
         <div ref="plot-container">
           <svg
             ref="essentialities-plot-brush"
-            className="leave-space"
+            style={{ paddingLeft: '50px' }}
             height={brushHeight}
-            width={containerWidth - marginLeft}
+            width={containerWidth + brushOffset + 1}
           >
             <path ref="essentialities-plot-brush-line" className="line" />
             <g ref="essentialities-plot-brush-container" className="brush" />

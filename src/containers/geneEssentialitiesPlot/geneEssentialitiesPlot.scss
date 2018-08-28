@@ -1,7 +1,6 @@
 .essentialities-plot-container {
   position: relative;
   height: 350px;
-  // width: 350px;
 
   .star-plot-toplevel-container {
     position: absolute;
@@ -9,7 +8,6 @@
     top: 0;
     &.leave-space {
       margin-left: 50px;
-      // margin-top: -50px;
     }
     &.top {
       z-index: 2;
