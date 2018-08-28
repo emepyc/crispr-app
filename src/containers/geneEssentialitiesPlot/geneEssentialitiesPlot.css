@@ -18,12 +18,3 @@
   margin-left: 50px;
   margin-top: -50px;
 }
-
-.leave-space {
-  margin-left: 50px;
-}
-.leave-space path {
-  fill: none;
-  stroke: #003f83;
-  stroke-width: 2px;
-}

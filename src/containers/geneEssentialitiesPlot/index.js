@@ -304,16 +304,16 @@ class geneEssentialitiesPlot extends React.Component {
     d3.select(eventsContainer).on('mousemove', this.mouseMoveOnCanvas);
 
     const brushLine = d3
-      .area()
+      .line()
       .curve(d3.curveMonotoneX)
       .x(d => xScaleBrush(d.index))
-      .y0(brushHeight)
-      .y1(d => yScaleBrush(d.attributes[this.state.attributeToPlot]));
+      .y(d => yScaleBrush(d.attributes[this.state.attributeToPlot]));
 
     d3
       .select(brushContainer)
       .selectAll('.handle--custom')
       .remove();
+
     const handle = d3
       .select(brushContainer)
       .selectAll('.handle--custom')
@@ -395,6 +395,8 @@ class geneEssentialitiesPlot extends React.Component {
       .select(brushContainer)
       .call(brush)
       .call(brush.move, this.xScale.range());
+
+    handle.raise();
 
     this.xAxis = d3.axisBottom(this.xScale).tickFormat(d3.format('.0f'));
     this.yAxis = d3.axisLeft(this.yScale);
