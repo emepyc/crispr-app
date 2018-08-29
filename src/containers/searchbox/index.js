@@ -9,7 +9,7 @@ import React from 'react';
 import Autosuggest from 'react-autosuggest';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Col, Container, Row } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 
 import { fetchTissues } from '../../modules/actions/tissues';
 import './searchbox.css';
@@ -203,7 +203,7 @@ class Searchbox extends React.Component {
       <Row>
         <Col xs={{ size: 8, offset: 2 }} md={{ size: 6, offset: 3 }}>
           <div className="text-center searchbox-container">
-            <div className="autosuggest-container">
+            <div className="autosuggest-container z1">
               <Autosuggest
                 suggestions={suggestions}
                 onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}

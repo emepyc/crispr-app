@@ -109,7 +109,7 @@ class TissuesSummaryDesc extends React.Component {
           <FontAwesomeIcon
             icon={faBullsEye}
             fixedWidth
-            style={{ fontSize: '2.1em', color: '#0061a5', marginRight: '15px' }}
+            style={{ fontSize: '2.7em', color: '#0061a5', marginRight: '15px' }}
           />
           <span style={{ verticalAlign: 'super' }}>
             497 unique priority targets
@@ -119,7 +119,7 @@ class TissuesSummaryDesc extends React.Component {
           <FontAwesomeIcon
             icon={faClock}
             fixedWidth
-            style={{ fontSize: '2.1em', color: '#0061a5', marginRight: '15px' }}
+            style={{ fontSize: '2.7em', color: '#0061a5', marginRight: '15px' }}
           />
           <span style={{ verticalAlign: 'super' }}>
             Last update: 15 July 2018

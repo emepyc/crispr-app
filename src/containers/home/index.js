@@ -3,6 +3,7 @@ import { Container } from 'reactstrap';
 import Searchbox from '../searchbox';
 import DepmapGenesHeader from '../depmapGenesHeader';
 import HomeProjectDescription from '../HomeProjectDescription';
+import HomeProgrammeDescription from '../HomeProgrammeDescription';
 import HomeSection from '../homeSection';
 import TissuesSummary from '../tissuesSummary';
 
@@ -19,6 +20,10 @@ const Home = () => (
 
     <HomeSection>
       <HomeProjectDescription />
+    </HomeSection>
+
+    <HomeSection>
+      <HomeProgrammeDescription />
     </HomeSection>
   </Container>
 );

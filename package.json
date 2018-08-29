@@ -27,8 +27,6 @@
     "es6-promise": "^4.2.4",
     "history": "^4.7.2",
     "husky": "^0.14.3",
-    "json-schema-faker": "^0.5.0-rc13",
-    "json-server": "^0.12.1",
     "jszip": "^3.1.5",
     "lint-staged": "^6.1.0",
     "lodash.debounce": "^4.0.8",
@@ -72,8 +70,6 @@
     "precommit": "lint-staged",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "preserve-mock-data": "node mockData/generate-mock.js",
-    "serve-mock-data": "json-server --watch mockData/db.json --port 3111"
+    "test": "react-scripts test --env=jsdom"
   }
 }
