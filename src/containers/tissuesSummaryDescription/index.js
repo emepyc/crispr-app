@@ -18,6 +18,8 @@ import Organ9 from './organ-9.png';
 import Gene from './dna.png';
 import './tissuesSummaryDescription.css';
 import 'animate.css';
+import TrackVisibility from 'react-on-screen';
+import classnames from 'classnames';
 
 class TissuesSummaryDesc extends React.Component {
   constructor(props) {
@@ -71,61 +73,89 @@ class TissuesSummaryDesc extends React.Component {
       </span>
     );
 
-    return (
-      <div className="animated fadeInRight">
-        <div style={{ marginLeft: '5px' }}>
-          <span style={{ marginRight: '15px' }}>
-            <img
-              height={'50px'}
-              width={'50px'}
-              src={PetriDiagram}
-              alt="Cell line"
-            />
-          </span>
-          {this.props.nmodels} cell lines.
-        </div>
-        <div style={{ marginTop: '15px', marginLeft: '5px' }}>
-          {/*<span style={{'margin-right': '15px'}}><img height={'50px'} width={'50px'} src={Organ2} alt="Cell line"/></span>{this.props.ntissues} tissues.*/}
-          <IconLoop duration="1000">
-            {icon1}
-            {icon2}
-            {icon3}
-            {icon4}
-            {icon5}
-            {icon6}
-            {icon7}
-            {icon8}
-            {icon9}
-          </IconLoop>
-          <span>{this.props.ntissues} tissues.</span>
-        </div>
-        <div style={{ marginLeft: '7px' }}>
+    const ComponentToTrack = ({ isVisible }) => {
+      const visibilityClasses = isVisible
+        ? classnames({
+            animated: true,
+            fadeInRight: true
+          })
+        : {};
+
+      const visibilityStyles = !isVisible
+        ? {
+            visibility: 'hidden'
+          }
+        : {};
+
+      return (
+        <div className={visibilityClasses} style={visibilityStyles}>
+          <div style={{ marginLeft: '5px' }}>
+            <span style={{ marginRight: '15px' }}>
+              <img
+                height={'50px'}
+                width={'50px'}
+                src={PetriDiagram}
+                alt="Cell line"
+              />
+            </span>
+            {this.props.nmodels} cell lines.
+          </div>
+          <div style={{ marginTop: '15px', marginLeft: '5px' }}>
+            <IconLoop duration="1000">
+              {icon1}
+              {icon2}
+              {icon3}
+              {icon4}
+              {icon5}
+              {icon6}
+              {icon7}
+              {icon8}
+              {icon9}
+            </IconLoop>
+            <span>{this.props.ntissues} tissues.</span>
+          </div>
+          <div style={{ marginLeft: '7px' }}>
+            <div style={{ marginTop: '15px' }}>
+              <img height={'47px'} width={'47px'} src={Gene} />
+              <span style={{ marginLeft: '20px' }}>6,830 fitness genes</span>
+            </div>
+          </div>
           <div style={{ marginTop: '15px' }}>
-            <img height={'47px'} width={'47px'} src={Gene} />
-            <span style={{ marginLeft: '20px' }}>6,830 fitness genes</span>
+            <FontAwesomeIcon
+              icon={faBullsEye}
+              fixedWidth
+              style={{
+                fontSize: '2.7em',
+                color: '#0061a5',
+                marginRight: '15px'
+              }}
+            />
+            <span style={{ verticalAlign: 'super' }}>
+              497 unique priority targets
+            </span>
+          </div>
+          <div style={{ marginTop: '15px' }}>
+            <FontAwesomeIcon
+              icon={faClock}
+              fixedWidth
+              style={{
+                fontSize: '2.7em',
+                color: '#0061a5',
+                marginRight: '15px'
+              }}
+            />
+            <span style={{ verticalAlign: 'super' }}>
+              Last update: 15 July 2018
+            </span>
           </div>
         </div>
-        <div style={{ marginTop: '15px' }}>
-          <FontAwesomeIcon
-            icon={faBullsEye}
-            fixedWidth
-            style={{ fontSize: '2.7em', color: '#0061a5', marginRight: '15px' }}
-          />
-          <span style={{ verticalAlign: 'super' }}>
-            497 unique priority targets
-          </span>
-        </div>
-        <div style={{ marginTop: '15px' }}>
-          <FontAwesomeIcon
-            icon={faClock}
-            fixedWidth
-            style={{ fontSize: '2.7em', color: '#0061a5', marginRight: '15px' }}
-          />
-          <span style={{ verticalAlign: 'super' }}>
-            Last update: 15 July 2018
-          </span>
-        </div>
-      </div>
+      );
+    };
+
+    return (
+      <TrackVisibility partialVisibility once>
+        <ComponentToTrack />
+      </TrackVisibility>
     );
   }
 }

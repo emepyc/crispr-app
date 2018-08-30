@@ -49,6 +49,7 @@
     "react": "^16.2.0",
     "react-autosuggest": "^9.3.4",
     "react-dom": "^16.2.0",
+    "react-on-screen": "^2.0.4",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.9",

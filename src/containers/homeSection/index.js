@@ -1,5 +1,5 @@
 import React from 'react';
-import './homeSection.css';
+// import './homeSection.css';
 
 const homeSection = props => {
   const classNames = [

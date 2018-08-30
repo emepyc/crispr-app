@@ -9,7 +9,7 @@ import TissuesSummary from '../tissuesSummary';
 
 const Home = () => (
   <Container>
-    <HomeSection customStyle={{ padding: '100px 25px 100px 25px' }}>
+    <HomeSection>
       <DepmapGenesHeader className="text-center" />
       <Searchbox />
     </HomeSection>
