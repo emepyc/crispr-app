@@ -8,7 +8,7 @@ import 'animate.css';
 
 const header = () => {
   return (
-    <Jumbotron className="text-center mb-3">
+    <Jumbotron className="text-center mb-1">
       <div className="animated fadeInUp text-center">
         <h1 className="display-1" style={{ color: 'black' }}>
           DepMap | Genes

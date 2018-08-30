@@ -14,7 +14,7 @@ const Home = () => (
       <Searchbox />
     </HomeSection>
 
-    <HomeSection customStyle={{ borderTop: '1px solid green' }}>
+    <HomeSection>
       <TissuesSummary />
     </HomeSection>
 
