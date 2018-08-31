@@ -34,16 +34,6 @@ const Masthead = () => {
             className="d-inline-block align-top"
           />
         </a>
-
-        <div className="depmap-genes my-auto">
-          <a
-            target="_blank"
-            href="https://depmap.sanger.ac.uk/programmes#genes"
-          >
-            DepMap | Genes
-          </a>
-        </div>
-
         <div className="ml-md-1 my-auto">
           <header className="navbar-nav">
             <NavLink

@@ -10,6 +10,7 @@ import { tableTissueFilter } from '../../modules/actions/table';
 import { connect } from 'react-redux';
 import colors from '../../colors';
 import { history } from '../../store/store';
+import './donutChart.css';
 
 function Label({ radius, arc, x, y, maxX, center, children }) {
   const midAngle = (arc.endAngle + arc.startAngle) / 2;
@@ -53,7 +54,7 @@ class DonutChart extends React.Component {
 
     this.containerElement = React.createRef();
     this.state = {
-      containerWidth: -1
+      containerWidth: 0
     };
   }
 
@@ -90,6 +91,32 @@ class DonutChart extends React.Component {
   };
 
   _handleMouseOverBar = (event, tissue) => {
+    // info in the center of the donut chart
+    const explanationElement = this.refs['explanation-message'];
+    explanationElement.innerHTML = `${tissue.data.tissue}<br /><strong>${
+      tissue.data.counts
+    }</strong> cell lines`;
+
+    // style of slices
+    const slices = d3.select(this.containerElement.current).selectAll('path');
+    slices.each(function() {
+      this.parentNode.classList.add('faded');
+    });
+    event.target.parentNode.classList.remove('faded');
+  };
+
+  _handleMouseOutBar = () => {
+    const { hideTooltip } = this.props;
+    d3
+      .select(this.containerElement.current)
+      .selectAll('path')
+      .each(function() {
+        this.parentNode.classList.remove('faded');
+      });
+    hideTooltip();
+  };
+
+  _handleMouseMoveBar = (event, tissue) => {
     const coords = localPoint(event.target.ownerSVGElement, event);
     this.props.showTooltip({
       tooltipLeft: coords.x,
@@ -104,13 +131,7 @@ class DonutChart extends React.Component {
 
   render() {
     const { tissues } = this.props;
-    const {
-      tooltipData,
-      tooltipLeft,
-      tooltipTop,
-      tooltipOpen,
-      hideTooltip
-    } = this.props;
+    const { tooltipData, tooltipLeft, tooltipTop, tooltipOpen } = this.props;
 
     const pieChartWidth = this.state.containerWidth;
 
@@ -127,7 +148,21 @@ class DonutChart extends React.Component {
 
     return (
       <div style={{ position: 'relative' }} ref={this.containerElement}>
-        <svg width={pieChartWidth} height={300}>
+        <div
+          id="explanation"
+          className="my-auto"
+          style={{
+            top: `${radius + radius * 0.5}px`,
+            left: `${radius + donutChartSideOffset - radius * 1.5 / 2}px`,
+            borderRadius: `${radius * 1.5 / 2}`,
+            width: `${radius * 1.5}px`
+          }}
+        >
+          <span ref="explanation-message" className="reset">
+            Here is the info
+          </span>
+        </div>
+        <svg className="donutChart" width={pieChartWidth} height={300}>
           <Group top={radius + margin.top} left={radius + margin.left}>
             <Pie
               data={tissues}
@@ -152,11 +187,16 @@ class DonutChart extends React.Component {
                   </Label>
                 );
               }}
-              onClick={d => event => {
+              onClick={d => () => {
                 this.gotoTable(d);
               }}
-              onMouseMove={d => event => this._handleMouseOverBar(event, d)}
-              onMouseOut={() => hideTooltip}
+              onMouseOver={d => event => {
+                this._handleMouseOverBar(event, d);
+              }}
+              onMouseMove={d => event => {
+                this._handleMouseMoveBar(event, d);
+              }}
+              onMouseOut={() => this._handleMouseOutBar}
             />
           </Group>
         </svg>

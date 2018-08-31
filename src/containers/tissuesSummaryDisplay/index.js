@@ -14,7 +14,7 @@ const TrackedComponent = ({ isVisible }) => {
         animated: true,
         fadeInLeft: true
       })
-    : {};
+    : classnames({});
 
   const visibilityStyles = !isVisible
     ? {
