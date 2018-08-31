@@ -17,9 +17,7 @@ import Organ8 from './organ-8.png';
 import Organ9 from './organ-9.png';
 import Gene from './dna.png';
 import './tissuesSummaryDescription.css';
-import 'animate.css';
-import TrackVisibility from 'react-on-screen';
-import classnames from 'classnames';
+import FadeIn from '../FadeIn';
 
 class TissuesSummaryDesc extends React.Component {
   constructor(props) {
@@ -73,20 +71,7 @@ class TissuesSummaryDesc extends React.Component {
       </span>
     );
 
-    const ComponentToTrack = ({ isVisible }) => {
-      const visibilityClasses = isVisible
-        ? classnames({
-            animated: true,
-            fadeInRight: true
-          })
-        : {};
-
-      const visibilityStyles = !isVisible
-        ? {
-            visibility: 'hidden'
-          }
-        : {};
-
+    const ComponentToTrack = ({ visibilityClasses, visibilityStyles }) => {
       return (
         <div className={visibilityClasses} style={visibilityStyles}>
           <div style={{ marginLeft: '5px' }}>
@@ -153,9 +138,9 @@ class TissuesSummaryDesc extends React.Component {
     };
 
     return (
-      <TrackVisibility partialVisibility once>
-        <ComponentToTrack />
-      </TrackVisibility>
+      <FadeIn action="fadeInRight">
+        <ComponentToTrack extra="hello" />
+      </FadeIn>
     );
   }
 }

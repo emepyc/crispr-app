@@ -3,25 +3,9 @@ import { Row, Col } from 'reactstrap';
 import DonutChart from '../donutChart';
 import HomeSectionDescription from '../homeSectionDescription';
 import TissuesSummaryDescription from '../tissuesSummaryDescription';
-import classnames from 'classnames';
-import TrackVisibility from 'react-on-screen';
+import FadeIn from '../FadeIn';
 
-import 'animate.css';
-
-const TrackedComponent = ({ isVisible }) => {
-  const visibilityClasses = isVisible
-    ? classnames({
-        animated: true,
-        fadeInLeft: true
-      })
-    : classnames({});
-
-  const visibilityStyles = !isVisible
-    ? {
-        visibility: 'hidden'
-      }
-    : {};
-
+const TrackedComponent = ({ visibilityClasses, visibilityStyles }) => {
   return (
     <Row>
       <Col
@@ -43,9 +27,9 @@ const TrackedComponent = ({ isVisible }) => {
 };
 
 const TissuesSummaryDisplay = () => (
-  <TrackVisibility partialVisibility once>
+  <FadeIn action="fadeInLeft">
     <TrackedComponent />
-  </TrackVisibility>
+  </FadeIn>
 );
 
 export default TissuesSummaryDisplay;
