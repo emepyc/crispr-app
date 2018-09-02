@@ -158,9 +158,7 @@ class DonutChart extends React.Component {
             width: `${radius * 1.5}px`
           }}
         >
-          <span ref="explanation-message" className="reset">
-            Here is the info
-          </span>
+          <span ref="explanation-message" className="reset" />
         </div>
         <svg className="donutChart" width={pieChartWidth} height={300}>
           <Group top={radius + margin.top} left={radius + margin.left}>
