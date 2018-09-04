@@ -38,7 +38,7 @@ function ExternalLinks(props) {
     } = geneInfo.data.attributes;
 
     return (
-      <div style={{ marginTop: '20px', float: 'right' }}>
+      <div style={{ float: 'right' }}>
         <span style={{ marginRight: '10px', verticalAlign: 'middle' }}>
           Link to:{' '}
         </span>
