@@ -156,8 +156,6 @@ class CustomTable extends React.Component {
       loading: true
     });
 
-    // this.setExtent(params);
-
     axios
       .get(`${API_BASEURL}/datasets/crispr`, {
         params: { ...params }

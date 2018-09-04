@@ -212,10 +212,20 @@ class geneEssentialitiesPlot extends React.Component {
     if (!node) {
       return;
     }
-    const index = node[4] !== undefined ? node[4] : this.rowToNode(node);
-    const nodeWithIndex = [node[0], node[1], node[2], index];
+    const index = node[5] !== undefined ? node[5] : this.rowToNode(node);
+    const nodeWithIndex = [node[0], node[1], node[2], node[3], index];
     const { marginLeft } = this;
-    const [gene, model, essentiality, genePos] = nodeWithIndex;
+    const [
+      gene,
+      model,
+      log_fold_change,
+      fitness_score,
+      genePos
+    ] = nodeWithIndex;
+    const essentiality =
+      this.state.attributeToPlot === 'fc_corrected'
+        ? log_fold_change
+        : fitness_score;
     const elementTooltip = this.refs['essentialities-plot-tooltip'];
     const guideX = this.refs['essentialities-plot-xline'];
     const guideY = this.refs['essentialities-plot-yline'];
@@ -236,7 +246,7 @@ class geneEssentialitiesPlot extends React.Component {
         this.xScale(genePos) + marginLeft,
         this.yScale(essentiality),
         tooltip,
-        `Gene: <b>${gene}</b><br/>Model: <b>${model}</b><br/>Essentiality score:<b>${essentiality}</b>`
+        `Gene: <b>${gene}</b><br/>Model: <b>${model}</b><br/>Corrected log fold change:<b>${log_fold_change}</b><br/>Loss of fitness score:<b>${fitness_score}</b>`
       );
       this.setState({
         nodeHighlighted: [gene, model]
@@ -271,7 +281,8 @@ class geneEssentialitiesPlot extends React.Component {
     const nodeData = [
       closest.attributes.gene_symbol,
       closest.attributes.model_name,
-      closest.attributes[this.state.attributeToPlot],
+      closest.attributes.fc_corrected,
+      closest.attributes.bagel_bf_scaled,
       closest.index
     ];
     this.highlightNode(nodeData);
