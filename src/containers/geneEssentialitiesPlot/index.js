@@ -7,9 +7,8 @@ import findIndex from 'lodash.findindex';
 import sortBy from 'lodash.sortby';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button } from 'reactstrap';
+import { Button, ButtonGroup, Row, Col } from 'reactstrap';
 import tntUtils from 'tnt.utils';
-import { Row, Col } from 'reactstrap';
 import colors from '../../colors';
 
 import { selectRow } from '../../modules/actions/customTable';
@@ -561,22 +560,24 @@ class geneEssentialitiesPlot extends React.Component {
             marginBottom: '10px'
           }}
         >
-          <Button
-            outline
-            color="secondary"
-            onClick={() => this.onSelectAttributeToPlot('fc_corrected')}
-            active={attributeToPlot === 'fc_corrected'}
-          >
-            Corrected log fold change
-          </Button>
-          <Button
-            outline
-            color="secondary"
-            onClick={() => this.onSelectAttributeToPlot('bagel_bf_scaled')}
-            active={attributeToPlot === 'bagel_bf_scaled'}
-          >
-            Loss of fitness score
-          </Button>
+          <ButtonGroup>
+            <Button
+              outline
+              color="secondary"
+              onClick={() => this.onSelectAttributeToPlot('fc_corrected')}
+              active={attributeToPlot === 'fc_corrected'}
+            >
+              Corrected log fold change
+            </Button>
+            <Button
+              outline
+              color="secondary"
+              onClick={() => this.onSelectAttributeToPlot('bagel_bf_scaled')}
+              active={attributeToPlot === 'bagel_bf_scaled'}
+            >
+              Loss of fitness score
+            </Button>
+          </ButtonGroup>
         </div>
 
         {this.props.gene &&
