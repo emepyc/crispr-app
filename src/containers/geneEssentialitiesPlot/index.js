@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 import { Button, ButtonGroup, Row, Col } from 'reactstrap';
 import tntUtils from 'tnt.utils';
 import colors from '../../colors';
-
 import { selectRow } from '../../modules/actions/customTable';
 import './geneEssentialitiesPlot.css';
 
@@ -300,7 +299,10 @@ class geneEssentialitiesPlot extends React.Component {
       d => d.attributes[this.state.attributeToPlot]
     );
 
-    d3.select(eventsContainer).on('mousemove', this.mouseMoveOnCanvas);
+    d3
+      .select(eventsContainer)
+      .on('mousemove', this.mouseMoveOnCanvas)
+      .on('mouseout', this.mouseOutOnCanvas);
 
     const brushLine = d3
       .line()
@@ -348,6 +350,7 @@ class geneEssentialitiesPlot extends React.Component {
         'transform',
         (d, i) => 'translate(' + selection[i] + ',' + brushHeight / 2 + ')'
       );
+      this.props.selectRow(null);
       this.plotOnCanvas();
     };
 
@@ -649,7 +652,8 @@ class geneEssentialitiesPlot extends React.Component {
                 style={{
                   display: 'none',
                   stroke: '#eeeeee',
-                  strokeWidth: '2px'
+                  strokeWidth: '2px',
+                  pointerEvents: 'none'
                 }}
               />
               <line
@@ -661,7 +665,8 @@ class geneEssentialitiesPlot extends React.Component {
                 style={{
                   display: 'none',
                   stroke: '#eeeeee',
-                  strokeWidth: '2px'
+                  strokeWidth: '2px',
+                  pointerEvents: 'none'
                 }}
               />
               <g ref="essentialities-plot-axis-bottom" />
