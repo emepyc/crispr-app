@@ -29,8 +29,6 @@ export function fetchAnalyses() {
     axios
       .get(`${API_BASEURL}/analyses`)
       .then(resp => {
-        console.log('analyses response...');
-        console.log(resp);
         dispatch(analysesIsLoading(false));
         dispatch(analysesFetchDataSuccess(resp.data));
       })

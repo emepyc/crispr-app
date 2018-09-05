@@ -2,25 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { fetchModelEssentialities } from '../../modules/actions/modelEssentialities';
-import ModelEssentialitiesSummary from '../modelEssentialitiesSummary';
+// import ModelEssentialitiesSummary from '../modelEssentialitiesSummary';
 import ModelEssentialitiesDetails from '../modelEssentialitiesDetails';
 import Filters from '../filters';
 
 class ModelEssentialities extends React.Component {
   constructor(props) {
     super(props);
-
-    // this.summary = data => {
-    //   if (!data.data) {
-    //     return {
-    //       genes: {}
-    //     };
-    //   }
-    //
-    //   const summary = {};
-    //
-    //   return summary;
-    // };
   }
 
   componentDidUpdate(prevProps) {

@@ -89,31 +89,35 @@ export function SignificantEssentialitiesSummary(props) {
   const significant = significantEssentialities.length;
   const total = essentialities.length;
 
-  const inScore = scoreRange
-    ? significantEssentialities.filter(
-        essentiality =>
-          essentiality.attributes.fc_corrected >= scoreRange[0] &&
-          essentiality.attributes.fc_corrected <= scoreRange[1]
-      ).length
-    : significant;
+  // const inScore = scoreRange
+  //   ? significantEssentialities.filter(
+  //       essentiality =>
+  //         essentiality.attributes.fc_corrected >= scoreRange[0] &&
+  //         essentiality.attributes.fc_corrected <= scoreRange[1]
+  //     ).length
+  //   : significant;
 
   if (!total) {
     return <div />;
   }
   const radius = Math.min(width, height) / 2;
-  const cellLinesSuffix = inScore === 1 ? '' : 's';
+  // const cellLinesSuffix = inScore === 1 ? '' : 's';
+  const cellLinesSuffix = significant === 1 ? '' : 's';
   return (
     <React.Fragment>
       <div>
-        Essential in <b>{inScore}</b> cell line{cellLinesSuffix}
+        {/*Essential in <b>{inScore}</b> cell line{cellLinesSuffix}*/}
+        Essential in <b>{significant}</b> cell line{cellLinesSuffix}
       </div>
       <svg width={width} height={height}>
         <Group top={height / 2 - margin.top} left={width / 2}>
           <Pie
             data={[
-              { pos: 0, opacity: 0.7, number: inScore },
-              { pos: 1, opacity: 0.1, number: total - significant },
-              { pos: 2, opacity: 0.3, number: significant - inScore }
+              // { pos: 0, opacity: 0.7, number: inScore },
+              // { pos: 1, opacity: 0.1, number: total - significant },
+              // { pos: 2, opacity: 0.3, number: significant - inScore }
+              { pos: 0, opacity: 0.7, number: total },
+              { pos: 1, opacity: 0.3, number: total - significant }
             ]}
             pieValue={d => d.number}
             pieSort={d => d.pos}
@@ -130,7 +134,8 @@ export function SignificantEssentialitiesSummary(props) {
           alignmentBaseline={'middle'}
           textAnchor={'middle'}
         >
-          {~~(inScore * 100 / total)}%
+          {/*{~~(inScore * 100 / total)}%*/}
+          {~~(significant * 100 / total)}%
         </text>
       </svg>
     </React.Fragment>
