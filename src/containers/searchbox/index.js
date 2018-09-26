@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 
 import { fetchTissues } from '../../modules/actions/tissues';
+import { history } from '../../store/store';
 import './searchbox.css';
 
 const API_BASEURL = process.env.REACT_APP_API_BASEURL;
@@ -82,7 +83,8 @@ class Searchbox extends React.Component {
     this.state = {
       value: '',
       isLoading: false,
-      suggestions: []
+      suggestions: [],
+      currentSuggestion: null
     };
 
     // this.lastRequestId = null;
@@ -165,12 +167,93 @@ class Searchbox extends React.Component {
 
         this.setState({
           isLoading: false,
-          suggestions: suggestionsNotEmpty
+          suggestions: suggestionsNotEmpty,
+          currentSuggestion:
+            suggestionsNotEmpty[0].items[0].symbol ||
+            suggestionsNotEmpty[0].items[0].symbol
         });
       });
   }
 
-  onChange = (event, { newValue }) => {
+  upDownOption = method => {
+    const suggestions = this.state.suggestions;
+
+    if (!this.state.currentSuggestion) {
+      return (
+        suggestions[0].items[0].attributes.symbol ||
+        suggestions[0].items[0].attributes.model_name
+      );
+    }
+    for (let i = 0; i < suggestions.length; i++) {
+      const suggestion = suggestions[i];
+      for (let j = 0; j < suggestion.items.length; j++) {
+        const item = suggestion.items[j];
+        const sameTissue = item.tissue === this.state.currentSuggestion.tissue;
+        const sameGene = this.state.currentSuggestion.attributes
+          ? item.attributes.symbol ===
+            this.state.currentSuggestion.attributes.symbol
+          : true;
+        const sameModel = this.state.currentSuggestion.attributes
+          ? item.attributes.model_name ===
+            this.state.currentSuggestion.attributes.model_name
+          : true;
+        if (sameTissue && sameGene && sameModel) {
+          let nexti;
+          let nextj;
+          if (method === 'up') {
+            nexti = i;
+            nextj = j - 1;
+            if (nextj === -1) {
+              if (i === 0) {
+                nexti = suggestions.length - 1;
+              } else {
+                nexti = i - 1;
+              }
+              nextj = suggestions[nexti].items.length - 1;
+            }
+          }
+          if (method === 'down') {
+            nexti = i;
+            nextj = j + 1;
+            if (nextj === suggestion.items.length) {
+              nextj = 0;
+              if (i < suggestions.length - 1) {
+                nexti = i + 1;
+              } else {
+                nexti = 0;
+              }
+            }
+          }
+          return (
+            suggestions[nexti].items[nextj].tissue ||
+            suggestions[nexti].items[nextj].attributes.symbol ||
+            suggestions[nexti].items[nextj].attributes.model_name
+          );
+        }
+      }
+    }
+  };
+
+  onChange = (event, { newValue, method }) => {
+    if (method === 'down' || method === 'up') {
+      // newValue = this.state.suggestions[0].items[0].attributes.symbol || this.state.suggestions[0].items[0].attributes.model_name;
+      newValue = this.upDownOption(method);
+    }
+    if (method === 'enter') {
+      if (this.state.currentSuggestion.tissue) {
+        history.push(`/table?tissue=${this.state.currentSuggestion.tissue}`);
+      } else if (this.state.currentSuggestion.attributes) {
+        if (this.state.currentSuggestion.attributes.symbol) {
+          history.push(
+            `/gene/${this.state.currentSuggestion.attributes.symbol}`
+          );
+        } else if (this.state.currentSuggestion.attributes.model_name) {
+          history.push(
+            `/model/${this.state.currentSuggestion.attributes.model_name}`
+          );
+        }
+      }
+    }
     this.setState({
       value: newValue
     });
@@ -186,6 +269,14 @@ class Searchbox extends React.Component {
     this.setState({
       suggestions: []
     });
+  };
+
+  onSuggestionHighlighted = ({ suggestion }) => {
+    if (suggestion) {
+      this.setState({
+        currentSuggestion: suggestion
+      });
+    }
   };
 
   render() {
@@ -216,6 +307,7 @@ class Searchbox extends React.Component {
                 multiSection={true}
                 getSectionSuggestions={getSectionSuggestions}
                 renderSectionTitle={renderSectionTitle}
+                onSuggestionHighlighted={this.onSuggestionHighlighted}
               />
             </div>
             <span className="search-icon">
