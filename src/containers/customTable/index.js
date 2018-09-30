@@ -342,6 +342,9 @@ class CustomTable extends React.Component {
       return;
     }
 
+    this.setState({
+      pageNumber: 1
+    });
     const searchFilter = {
       or: [
         {
