@@ -14,7 +14,7 @@ const modelEssentialitiesDetails = props => {
     <div className="gene-essentialities-details-container">
       <Row>
         <Col xs={12} lg={6} className="my-auto">
-          <GeneEssentialitiesPlot data={props.data} />
+          <GeneEssentialitiesPlot data={props.data} contextPage="model" />
         </Col>
         <Col xs={12} lg={6}>
           <CustomTable

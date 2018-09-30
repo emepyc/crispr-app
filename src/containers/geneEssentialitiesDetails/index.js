@@ -23,6 +23,7 @@ const geneEssentialitiesDetails = props => {
             data={props.data}
             model={props.model}
             gene={props.gene}
+            contextPage="gene"
           />
         </Col>
         <Col xs={12} lg={6} style={{ paddingLeft: '30px' }}>
