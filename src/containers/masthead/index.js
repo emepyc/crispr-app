@@ -1,6 +1,7 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import cancer_dep_map from './DependencyMapLogo.png';
-import { NavLink, Link } from 'react-router-dom';
+import Searchbox from '../mastheadSearchbox';
 import './masthead.css';
 import sangerLogo from './SangerLogo.png';
 
@@ -51,6 +52,7 @@ const Masthead = () => {
             >
               Downloads
             </NavLink>
+            {window.location.pathname !== '/' && <Searchbox />}
           </header>
         </div>
       </div>

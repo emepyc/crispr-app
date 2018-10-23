@@ -288,11 +288,12 @@ class CustomTable extends React.Component {
     if (
       prevProps.tissue === this.props.tissue &&
       prevProps.gene === this.props.gene &&
-      prevProps.model === this.props.model &&
-      prevProps.scoreRange === this.props.scoreRange
+      prevProps.model === this.props.model
+      // prevProps.scoreRange === this.props.scoreRange
     ) {
       return;
     }
+    this.getParams(this.setExtent);
     this.getParams(this.fetch);
   }
 
