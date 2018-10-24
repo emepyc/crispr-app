@@ -13,18 +13,18 @@ class Filters extends React.Component {
   }
 
   render() {
-    const { tissue } = this.props;
+    const { tissue, gene, model, tablePage } = this.props;
     const tissuesFilter = <TissuesChips tissue={tissue} />;
     const scoreFilter = <ScoreSlider />;
     return (
       <div style={{ marginLeft: '10px' }}>
         <Row>
           <Col xs={12} lg={6}>
-            {this.props.gene && <GeneEssentialitiesSummary {...this.props} />}
-            {this.props.model && <ModelEssentialitiesSummary {...this.props} />}
+            {gene && <GeneEssentialitiesSummary {...this.props} />}
+            {model && <ModelEssentialitiesSummary {...this.props} />}
           </Col>
           <Col xs={6} lg={3}>
-            {(this.props.gene || this.props.tablePage) && (
+            {(gene || tablePage) && (
               <FilterBox header={'Tissues'} body={tissuesFilter} />
             )}
           </Col>

@@ -29,14 +29,32 @@ class TablePage extends React.Component {
       return parts[parts.length - 1];
     }
 
-    const search = queryString.parse(loc.search);
+    const search = queryString.parse(
+      loc.search.indexOf('?') === 0 ? loc.search.substring(1) : loc.search
+    );
     return search[type];
   };
 
   setParamsInUrl = (newParams, history) => {
     const oldQueryParams = queryString.parse(history.location.search);
+    const oldQueryParamsClean = Object.keys(oldQueryParams).reduce(
+      (acc, paramName) => {
+        if (paramName.indexOf('?') === 0) {
+          return {
+            ...acc,
+            [paramName.substring(1)]: oldQueryParams[paramName]
+          };
+        }
+        return {
+          ...acc,
+          [paramName]: oldQueryParams[paramName]
+        };
+      },
+      {}
+    );
+
     const newQueryParams = queryString.stringify({
-      ...oldQueryParams,
+      ...oldQueryParamsClean,
       ...newParams
     });
     history.replace({
