@@ -42,7 +42,8 @@ class ModelPage extends React.Component {
 
     this.state = {
       gene: null,
-      model: null
+      model: null,
+      newModelFromUrl: null
     };
   }
 
@@ -73,11 +74,18 @@ class ModelPage extends React.Component {
       gene: params.gene,
       model: params.model
     });
+
+    this.props.history.listen(() => {
+      this.setState({
+        newModelFromUrl: this.getParamsFromUrl(this.props.history.location)
+          .model
+      });
+    });
   }
 
   render() {
     const { gene, model, tissue, scoreRange, modelInfo } = this.props; // This comes from the redux state
-    const { gene: geneLoc, model: modelLoc } = this.state; // This comes from the internal state
+    const { newModelFromUrl, gene: geneLoc, model: modelLoc } = this.state; // This comes from the internal state
 
     return (
       <div
@@ -89,12 +97,12 @@ class ModelPage extends React.Component {
         >
           <ExternalLinks modelInfo={modelInfo} />
 
-          <h2>Model: {model || modelLoc}</h2>
+          <h2>Model: {newModelFromUrl || model || modelLoc}</h2>
         </div>
         <div style={{ paddingLeft: '30px', paddingRight: '30px' }}>
           <ModelEssentialities
             gene={gene || geneLoc}
-            model={model || modelLoc}
+            model={newModelFromUrl || model || modelLoc}
             tissue={tissue} // Is this needed in the model page??
             scoreRange={scoreRange}
           />

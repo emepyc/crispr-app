@@ -13,7 +13,7 @@ class Filters extends React.Component {
   }
 
   render() {
-    const { tissue, gene, model, tablePage } = this.props;
+    const { gene, model, tissue, tablePage } = this.props;
     const tissuesFilter = <TissuesChips tissue={tissue} />;
     const scoreFilter = <ScoreSlider />;
     return (

@@ -69,7 +69,8 @@ class GenePage extends React.Component {
 
     this.state = {
       gene: null,
-      model: null
+      model: null,
+      newGeneFromUrl: null
     };
   }
 
@@ -100,12 +101,18 @@ class GenePage extends React.Component {
       gene: params.gene,
       model: params.model
     });
+
+    this.props.history.listen(() => {
+      this.setState({
+        newGeneFromUrl: this.getParamsFromUrl(this.props.history.location).gene
+      });
+    });
   }
 
   render() {
     const { gene, model, tissue, scoreRange, geneInfo } = this.props; // This comes from the redux state
     // TODO: Encode the score range in the Location? (and other parameters)
-    const { gene: geneLoc, model: modelLoc } = this.state; // This comes from the component state
+    const { newGeneFromUrl, gene: geneLoc, model: modelLoc } = this.state; // This comes from the component state
 
     return (
       <div
@@ -117,12 +124,12 @@ class GenePage extends React.Component {
         >
           <ExternalLinks geneInfo={geneInfo} />
 
-          <h2>Gene: {gene || geneLoc}</h2>
+          <h2>Gene: {newGeneFromUrl || gene || geneLoc}</h2>
           <GeneName gene={geneInfo} />
         </div>
         <div style={{ paddingLeft: '30px', paddingRight: '30px' }}>
           <GeneEssentialities
-            gene={gene || geneLoc}
+            gene={newGeneFromUrl || gene || geneLoc}
             model={model || modelLoc}
             tissue={tissue}
             scoreRange={scoreRange}

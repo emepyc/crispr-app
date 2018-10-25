@@ -168,9 +168,10 @@ class Searchbox extends React.Component {
         this.setState({
           isLoading: false,
           suggestions: suggestionsNotEmpty,
-          currentSuggestion:
-            suggestionsNotEmpty[0].items[0].symbol ||
-            suggestionsNotEmpty[0].items[0].symbol
+          currentSuggestion: suggestionsNotEmpty.length
+            ? suggestionsNotEmpty[0].items[0].symbol ||
+              suggestionsNotEmpty[0].items[0].symbol
+            : ''
         });
       });
   }

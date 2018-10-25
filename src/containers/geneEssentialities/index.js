@@ -31,8 +31,8 @@ class GeneEssentialities extends React.Component {
     if (scoreRange) {
       return data.filter(
         essentiality =>
-          essentiality.attributes.fc_corrected > scoreRange[0] &&
-          essentiality.attributes.fc_corrected < scoreRange[1]
+          essentiality.attributes.fc_corrected >= scoreRange[0] &&
+          essentiality.attributes.fc_corrected <= scoreRange[1]
       );
     }
     return data;
