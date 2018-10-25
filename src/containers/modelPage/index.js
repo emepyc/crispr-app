@@ -4,8 +4,8 @@ import queryString from 'qs';
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-
 import ModelEssentialities from '../modelEssentialities';
+import { getParamsFromUrl } from '../../utils';
 
 function LogoExternalLink(props) {
   const { src, link, width } = props;
@@ -47,29 +47,8 @@ class ModelPage extends React.Component {
     };
   }
 
-  getTerm = (loc, type) => {
-    // The term can be in the pathname (table is part of the genePage or model pages
-    // or in the search (table page)
-    const index = loc.pathname.indexOf(`${type}/`);
-    if (index !== -1) {
-      const parts = loc.pathname.split('/');
-      return parts[parts.length - 1];
-    }
-
-    const search = queryString.parse(loc.search);
-    return search[type];
-  };
-
-  getParamsFromUrl = loc => {
-    const gene = this.getTerm(loc, 'gene');
-    const model = this.getTerm(loc, 'model');
-    const tissue = this.getTerm(loc, 'tissue');
-
-    return pickBy({ gene, model, tissue }, identity);
-  };
-
   componentDidMount() {
-    const params = this.getParamsFromUrl(this.props.location);
+    const params = getParamsFromUrl(this.props.location);
     this.setState({
       gene: params.gene,
       model: params.model
@@ -77,8 +56,7 @@ class ModelPage extends React.Component {
 
     this.props.history.listen(() => {
       this.setState({
-        newModelFromUrl: this.getParamsFromUrl(this.props.history.location)
-          .model
+        newModelFromUrl: getParamsFromUrl(this.props.history.location).model
       });
     });
   }

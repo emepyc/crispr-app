@@ -9,6 +9,7 @@ import UniprotLogo from '../../assets/UniprotLogo.gif';
 import EnsemblLogo from '../../assets/EnsemblLogo.jpg';
 import OpenTargetsLogo from '../../assets/OpenTargetsLogo.png';
 import GeneEssentialities from '../geneEssentialities';
+import { getParamsFromUrl } from '../../utils';
 
 function GeneName(props) {
   const { gene } = props;
@@ -74,31 +75,8 @@ class GenePage extends React.Component {
     };
   }
 
-  getTerm = (loc, type) => {
-    // The term can be in the pathname (table is part of the genePage or model pages
-    // or in the search (table page)
-    const index = loc.pathname.indexOf(`${type}/`);
-    if (index !== -1) {
-      const parts = loc.pathname.split('/');
-      return parts[parts.length - 1];
-    }
-
-    const search = queryString.parse(
-      loc.search.indexOf('?') === 0 ? loc.search.substring(1) : loc.search
-    );
-    return search[type];
-  };
-
-  getParamsFromUrl = loc => {
-    const gene = this.getTerm(loc, 'gene');
-    const model = this.getTerm(loc, 'model');
-    const tissue = this.getTerm(loc, 'tissue');
-
-    return pickBy({ gene, model, tissue }, identity);
-  };
-
   componentDidMount() {
-    const params = this.getParamsFromUrl(this.props.location);
+    const params = getParamsFromUrl(this.props.location);
     this.setState({
       gene: params.gene,
       model: params.model
@@ -106,7 +84,7 @@ class GenePage extends React.Component {
 
     this.props.history.listen(() => {
       this.setState({
-        newGeneFromUrl: this.getParamsFromUrl(this.props.history.location).gene
+        newGeneFromUrl: getParamsFromUrl(this.props.history.location).gene
       });
     });
   }
