@@ -83,7 +83,9 @@ class GenePage extends React.Component {
       return parts[parts.length - 1];
     }
 
-    const search = queryString.parse(loc.search);
+    const search = queryString.parse(
+      loc.search.indexOf('?') === 0 ? loc.search.substring(1) : loc.search
+    );
     return search[type];
   };
 
