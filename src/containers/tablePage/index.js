@@ -17,16 +17,17 @@ class TablePage extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.tissue === this.props.tissue) {
-      return;
-    }
-    const { tissue } = this.props;
-    this.setState({
-      tissue
-    });
-    setParamsInUrl({
-      tissue
-    });
+    // if (prevProps.tissue === this.props.tissue) {
+    //   console.log(`no update the table page because tissues have not changed`);
+    //   return;
+    // }
+    // const { tissue } = this.props;
+    // this.setState({
+    //   tissue
+    // });
+    // setParamsInUrl({
+    //   tissue
+    // });
   }
 
   componentDidMount() {

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { FormGroup, Input } from 'reactstrap';
 import { tableTissueFilter } from '../../modules/actions/table';
 import { fetchTissues } from '../../modules/actions/tissues';
-// import {scoreExtent, scoreRange} from "../../modules/actions/scoreSlider";
+import { setParamsInUrl } from '../../utils';
 
 class Chip extends React.Component {
   constructor(props) {
@@ -12,8 +12,10 @@ class Chip extends React.Component {
 
   tissueChanged = ev => {
     const newTissue = ev.target.value;
-    // this.props.resetScoreExtent();
     this.props.setTissue(newTissue);
+    setParamsInUrl({
+      tissue: newTissue
+    });
   };
 
   componentDidMount() {
@@ -60,10 +62,6 @@ const mapDispatchToProps = dispatch => {
   return {
     setTissue: tissue => dispatch(tableTissueFilter(tissue)),
     fetchTissues: () => dispatch(fetchTissues())
-    // resetScoreExtent: () => {
-    //   dispatch(scoreExtent([-9, 9]));
-    //   dispatch(scoreRange(null));
-    // },
   };
 };
 

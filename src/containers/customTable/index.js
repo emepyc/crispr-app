@@ -118,7 +118,7 @@ class CustomTable extends React.Component {
   };
 
   setExtent = () => {
-    this.getParamsNoScoreRange().then(filter => {
+    return this.getParamsNoScoreRange().then(filter => {
       return axios
         .get(`${API_BASEURL}/datasets/crispr`, {
           params: {
@@ -142,7 +142,7 @@ class CustomTable extends React.Component {
             .then(resp => {
               const max = resp.data.data[0].attributes.fc_corrected;
               this.props.setScoreExtent([min, max]);
-              this.props.setScoreRange([min, max]);
+              return this.props.setScoreRange([min, max]);
             });
         });
     });
@@ -312,6 +312,15 @@ class CustomTable extends React.Component {
     ) {
       this.getParams(this.setExtent);
     }
+
+    // console.log("fetching new data!!");
+    // if (this.props.scoreRange) {
+    //   console.log(`tissue:${this.props.tissue}, gene:${this.props.gene}, model:${this.props.model}, scoreRange:${this.props.scoreRange[0]},${this.props.scoreRange[1]}`);
+    // } else {
+    //   console.log(`tissue:${this.props.tissue}, gene:${this.props.gene}, model:${this.props.model}, scoreRange:${this.props.scoreRange}`);
+    //
+    // }
+
     this.getParams(this.fetch);
   }
 

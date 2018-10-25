@@ -99,7 +99,7 @@ class ScoreSlider extends React.Component {
           min={scoreExtent[0]}
           max={scoreExtent[1]}
           value={scoreRange || scoreExtent}
-          step={0.1}
+          step={0.00001}
           defaultValue={scoreExtent}
           onChange={this.rangeChanged}
         />
