@@ -118,6 +118,11 @@ class CustomTable extends React.Component {
   };
 
   setExtent = () => {
+    // We show the table spinner when the extent is loading
+    this.setState({
+      loading: true
+    });
+
     return this.getParamsNoScoreRange().then(filter => {
       return axios
         .get(`${API_BASEURL}/datasets/crispr`, {
@@ -282,7 +287,7 @@ class CustomTable extends React.Component {
     // this.setExtent();
   }
 
-  compareRanges(prevRange, currRange) {
+  rangesAreEqual(prevRange, currRange) {
     if (prevRange === currRange) {
       return true;
     }
@@ -296,32 +301,30 @@ class CustomTable extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    // If nothing has changed, don't fetch new data
     if (
       prevProps.tissue === this.props.tissue &&
       prevProps.gene === this.props.gene &&
       prevProps.model === this.props.model &&
-      this.compareRanges(prevProps.scoreRange, this.props.scoreRange)
+      this.rangesAreEqual(prevProps.scoreRange, this.props.scoreRange)
     ) {
       return;
     }
+
+    // If anything but the range has changed, set a new extent (a fetch is automatically triggered in the next condition because of the extent change)
     if (
       (prevProps.tissue !== this.props.tissue ||
         prevProps.gene !== this.props.gene ||
         prevProps.model !== this.props.model) &&
-      this.compareRanges(prevProps.scoreRange, this.props.scoreRange)
+      this.rangesAreEqual(prevProps.scoreRange, this.props.scoreRange)
     ) {
       this.getParams(this.setExtent);
     }
 
-    // console.log("fetching new data!!");
-    // if (this.props.scoreRange) {
-    //   console.log(`tissue:${this.props.tissue}, gene:${this.props.gene}, model:${this.props.model}, scoreRange:${this.props.scoreRange[0]},${this.props.scoreRange[1]}`);
-    // } else {
-    //   console.log(`tissue:${this.props.tissue}, gene:${this.props.gene}, model:${this.props.model}, scoreRange:${this.props.scoreRange}`);
-    //
-    // }
-
-    this.getParams(this.fetch);
+    // If there is a change in anything, fetch new data
+    if (!this.rangesAreEqual(prevProps.scoreRange, this.props.scoreRange)) {
+      this.getParams(this.fetch);
+    }
   }
 
   goPrev = () => {
