@@ -49,7 +49,7 @@ export default class Downloads extends React.Component {
                   </sup>
                 </th>
                 <th>
-                  CRISPRcleanR Corrected Log Fold Change Values
+                  Copy Number Bias Corrected Log Fold Change Values
                   <sup>
                     <a href="#" id="CorrectedDataFilesTooltip">
                       ?
