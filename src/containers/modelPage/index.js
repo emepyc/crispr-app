@@ -7,6 +7,14 @@ import { withRouter } from 'react-router';
 import ModelEssentialities from '../modelEssentialities';
 import { getParamsFromUrl } from '../../utils';
 
+function TissueName(props) {
+  const { model } = props;
+  if (!model.data) {
+    return <div />;
+  }
+  return <div>Tissue: {model.data.attributes.tissue}</div>;
+}
+
 function LogoExternalLink(props) {
   const { src, link, width } = props;
   return (
@@ -64,6 +72,7 @@ class ModelPage extends React.Component {
   render() {
     const { gene, model, tissue, scoreRange, modelInfo } = this.props; // This comes from the redux state
     const { newModelFromUrl, gene: geneLoc, model: modelLoc } = this.state; // This comes from the internal state
+    console.log(modelInfo);
 
     return (
       <div
@@ -71,11 +80,12 @@ class ModelPage extends React.Component {
       >
         <div
           className="section"
-          style={{ borderBottom: '1px solid green', paddingBottom: '40px' }}
+          style={{ borderBottom: '1px solid green', paddingBottom: '20px' }}
         >
           <ExternalLinks modelInfo={modelInfo} />
 
           <h2>Model: {newModelFromUrl || model || modelLoc}</h2>
+          <TissueName model={modelInfo} />
         </div>
         <div style={{ paddingLeft: '30px', paddingRight: '30px' }}>
           <ModelEssentialities
