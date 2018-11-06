@@ -5,8 +5,10 @@ import { withRouter } from 'react-router';
 import UniprotLogo from '../../assets/UniprotLogo.gif';
 import EnsemblLogo from '../../assets/EnsemblLogo.jpg';
 import OpenTargetsLogo from '../../assets/OpenTargetsLogo.png';
+import GeneCardsLogo from '../../assets/logo_genecards.png';
 import GeneEssentialities from '../geneEssentialities';
 import { getParamsFromUrl } from '../../utils';
+import { Tooltip } from 'reactstrap';
 
 function GeneName(props) {
   const { gene } = props;
@@ -54,6 +56,11 @@ function ExternalLinks(props) {
           src={OpenTargetsLogo}
           link={`https://www.targetvalidation.org/target/${ensemblId}/associations`}
           width="40"
+        />
+        <LogoExternalLink
+          src={GeneCardsLogo}
+          link={`https://www.genecards.org/cgi-bin/carddisp.pl?gene=${geneSymbol}`}
+          width="80"
         />
       </div>
     );
