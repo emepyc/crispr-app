@@ -3,7 +3,7 @@ import { Group } from '@vx/group';
 import React from 'react';
 
 export function SignificantEssentialitiesSummary(props) {
-  const { width, height, essentialities, scoreRange } = props;
+  const { width, height, essentialities } = props;
 
   const significantEssentialities = essentialities.filter(
     essentiality => essentiality.attributes.fc_corrected < 0
@@ -19,33 +19,23 @@ export function SignificantEssentialitiesSummary(props) {
   const significant = significantEssentialities.length;
   const total = essentialities.length;
 
-  const inScore = scoreRange
-    ? significantEssentialities.filter(
-        essentiality =>
-          essentiality.attributes.fc_corrected >= scoreRange[0] &&
-          essentiality.attributes.fc_corrected <= scoreRange[1]
-      ).length
-    : significant;
-
   if (!total) {
     return <div />;
   }
 
-  const labelSuffix = inScore.length === 1 ? '' : 's';
-
   const radius = Math.min(width, height) / 2;
+  const cellLinesSuffix = significant === 1 ? '' : 's';
   return (
     <React.Fragment>
       <div>
-        <b>{inScore}</b> essential gene{labelSuffix}
+        <b>{significant}</b> essential gene{cellLinesSuffix}
       </div>
       <svg width={width} height={height}>
         <Group top={height / 2 - margin.top} left={width / 2}>
           <Pie
             data={[
-              { pos: 0, opacity: 0.7, number: inScore },
-              { pos: 1, opacity: 0.1, number: total - significant },
-              { pos: 2, opacity: 0.3, number: significant - inScore }
+              { pos: 0, opacity: 0.7, number: significant },
+              { pos: 1, opacity: 0.3, number: total - significant }
             ]}
             pieValue={d => d.number}
             pieSort={d => d.pos}
@@ -62,7 +52,7 @@ export function SignificantEssentialitiesSummary(props) {
           alignmentBaseline={'middle'}
           textAnchor={'middle'}
         >
-          {~~(inScore * 100 / total)}%
+          {~~(significant * 100 / total)}%
         </text>
       </svg>
     </React.Fragment>
