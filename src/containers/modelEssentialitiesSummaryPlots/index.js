@@ -28,14 +28,14 @@ export function SignificantEssentialitiesSummary(props) {
   return (
     <React.Fragment>
       <div>
-        <b>{significant}</b> essential gene{cellLinesSuffix}
+        <b>{significant}</b> loss of fitness gene{cellLinesSuffix}
       </div>
       <svg width={width} height={height}>
         <Group top={height / 2 - margin.top} left={width / 2}>
           <Pie
             data={[
               { pos: 0, opacity: 0.7, number: significant },
-              { pos: 1, opacity: 0.3, number: total - significant }
+              { pos: 1, opacity: 0.1, number: total - significant }
             ]}
             pieValue={d => d.number}
             pieSort={d => d.pos}

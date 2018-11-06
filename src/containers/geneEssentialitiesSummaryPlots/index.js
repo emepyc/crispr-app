@@ -41,14 +41,14 @@ export function SignificantCancerTypesSummary(props) {
   return (
     <React.Fragment>
       <div>
-        Essential in <b>{significant}</b> cancer type{typeSuffix}
+        Loss of fitness in <b>{significant}</b> cancer type{typeSuffix}
       </div>
       <svg width={width} height={height}>
         <Group top={height / 2 - margin.top} left={width / 2}>
           <Pie
             data={[
-              { pos: 1, number: total - significant },
-              { pos: 0, number: significant }
+              { pos: 0, opacity: 0.1, number: significant },
+              { pos: 1, opacity: 0.7, number: total - significant }
             ]}
             pieValue={d => d.number}
             pieSort={d => d.pos}
@@ -99,14 +99,14 @@ export function SignificantEssentialitiesSummary(props) {
   return (
     <React.Fragment>
       <div>
-        Essential in <b>{significant}</b> cell line{cellLinesSuffix}
+        Loss of fitness in <b>{significant}</b> cell line{cellLinesSuffix}
       </div>
       <svg width={width} height={height}>
         <Group top={height / 2 - margin.top} left={width / 2}>
           <Pie
             data={[
               { pos: 0, opacity: 0.7, number: significant },
-              { pos: 1, opacity: 0.3, number: total - significant }
+              { pos: 1, opacity: 0.1, number: total - significant }
             ]}
             pieValue={d => d.number}
             pieSort={d => d.pos}
