@@ -10,7 +10,8 @@ export default {
   Pancreas: '#cab2d6',
   'Peripheral Nervous System': '#6a3d9a',
   'Biliary Tract': '#ffff99',
-  Endometrium: '#b15928'
+  Endometrium: '#b15928',
+  'Soft Tissue': '#fda4dd'
 };
 
 // export default {

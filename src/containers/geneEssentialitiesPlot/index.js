@@ -502,12 +502,23 @@ class geneEssentialitiesPlot extends React.Component {
 
   tissueFilterElement = (tissue, key) => {
     return (
-      <div
-        style={{ color: tissue ? colors[tissue.tissue] : '' }}
-        key={key}
-        onMouseOver={() => this.mouseOverTissue(tissue)}
-      >
-        {tissue ? tissue.tissue : ''}
+      <div>
+        <div
+          style={{
+            display: 'inline-block',
+            backgroundColor: tissue ? colors[tissue.tissue] : '',
+            width: '10px',
+            height: '10px',
+            borderRadius: '5px'
+          }}
+        />
+        <span
+          style={{ paddingLeft: '5px' }}
+          key={key}
+          onMouseOver={() => this.mouseOverTissue(tissue)}
+        >
+          {tissue ? tissue.tissue : ''}
+        </span>
       </div>
     );
   };
@@ -732,7 +743,7 @@ class geneEssentialitiesPlot extends React.Component {
               cursor: 'pointer'
             }}
           >
-            {this.tissuesInBlocks(tissues, 3)}
+            {contextPage === 'gene' && this.tissuesInBlocks(tissues, 3)}
           </div>
         </div>
       </React.Fragment>
