@@ -1,18 +1,18 @@
-// import { Col, Container, Jumbotron, Row } from 'reactstrap';
 import { Jumbotron } from 'reactstrap';
 import React from 'react';
 
-// import Logo from '../../assets/projectScore.png';
+import Logo from '../../assets/CRISPR_project_final_logo.png';
 import './depmapGenesHeader.css';
 import 'animate.css';
 
 const header = () => {
   return (
     <Jumbotron className="text-center mb-1">
-      <div className="animated fadeInUp text-center">
-        <h1 className="display-1" style={{ color: 'black' }}>
-          DepMap | Genes
-        </h1>
+      <div
+        className="animated fadeInUp text-center"
+        style={{ marginTop: '60px', marginBottom: '80px' }}
+      >
+        <img src={Logo} />
       </div>
       <p className="lead">Genetic screens to identify cancer dependencies</p>
       <p className="my-2" style={{ textAlign: 'center' }}>
